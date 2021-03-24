@@ -30,7 +30,9 @@ public class ComplexNumber
 
   public ComplexNumber multiply(ComplexNumber other)
   {
-    return null;
+    double real = (realValue * other.getRealValue()) - (imaginaryValue * other.getImaginaryValue());
+    double i = (realValue * other.getImaginaryValue()) + (imaginaryValue * other.getRealValue());
+    return new ComplexNumber(real, i);
   }
 
   public ComplexNumber divide(ComplexNumber other)
