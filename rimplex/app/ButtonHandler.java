@@ -33,6 +33,8 @@ public class ButtonHandler implements ActionListener
     {
       if (!inputString.isEmpty())
       {
+        GUI.expression.add(inputString.strip());
+        GUI.expression.add(buttonPressed);
         GUI.updateFields("(" + inputString.strip() + ") " + e.getActionCommand());
       }
     }
