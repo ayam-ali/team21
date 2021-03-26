@@ -2,6 +2,7 @@ package app;
 
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -22,6 +23,8 @@ import javax.swing.JTextField;
  */
 public class GUI
 {
+  
+  static ArrayList<String> expression = new ArrayList<String>();
   private static JTextArea display = new JTextArea();
   private static JTextField inputField = new JTextField();
 
@@ -83,6 +86,7 @@ public class GUI
   
   static void reset() {
     display.setText("");
+    expression = new ArrayList<>();
     clear();
   }
   

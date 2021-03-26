@@ -55,7 +55,7 @@ public class ComplexNumber
   }
 
   public double getImaginaryValue()
-  {
+  { 
     return imaginaryValue;
   }
 
