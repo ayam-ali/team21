@@ -1,8 +1,5 @@
 package app;
 
-import java.awt.Color;
-import java.awt.ComponentOrientation;
-
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 
@@ -11,13 +8,22 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
-import javax.swing.border.LineBorder;
-import javax.swing.border.SoftBevelBorder;
+import javax.swing.JTextField;
 
+/**
+ * GUI - Creates objects for displays and input fields. 
+ * 
+ * Modifications:
+ * - Anderson (3/25) - changed input field to JTextField to prevent \n chars.
+ *                     Added string formatter to remove \n for redundancy.
+ * 
+ * @author Eric Anderson, 
+ * @version 3/25/2021
+ */
 public class GUI
 {
   private static JTextArea display = new JTextArea();
-  private static JTextArea inputField = new JTextArea();
+  private static JTextField inputField = new JTextField();
 
   public static void main(String[] args) {
     JFrame main;
@@ -89,7 +95,14 @@ public class GUI
     clear();
   }
   
+  /**
+   * getInputFieldText - gets user input from field.
+   * 
+   * 
+   * *EMA (3/25) - added logic to remove newlines from expressions. 
+   * @return inputField string.
+   */
   static String getInputFieldText() {
-    return inputField.getText();
+    return inputField.getText().replaceAll("\r", "").replaceAll("\n", "");
   }
 }

@@ -3,6 +3,15 @@ package app;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * ButtonHandler - responds to button presses and inputs.
+ * 
+ * Modifications:
+ * - Anderson (3/25) - added .strip before displaying input string.
+ * 
+ * @author Eric Anderson, 
+ * @version 3/25/2021
+ */
 public class ButtonHandler implements ActionListener
 {
 
@@ -10,13 +19,23 @@ public class ButtonHandler implements ActionListener
   public void actionPerformed(ActionEvent e)
   {
     String buttonPressed = e.getActionCommand();
-    if (buttonPressed.equals("Reset")) {
+    String inputString = GUI.getInputFieldText();
+    
+    if (buttonPressed.equals("Reset"))
+    {
       GUI.reset();
-    } else if (buttonPressed.equals("Clear")) {
+    }
+    else if (buttonPressed.equals("Clear"))
+    {
       GUI.clear();
-    } else {
-      GUI.updateFields("("+ GUI.getInputFieldText() + ") " + e.getActionCommand());
-    }    
+    }
+    else
+    {
+      if (!inputString.isEmpty())
+      {
+        GUI.updateFields("(" + inputString.strip() + ") " + e.getActionCommand());
+      }
+    }
   }
 
 }
