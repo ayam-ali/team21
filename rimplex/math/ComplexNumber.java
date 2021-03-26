@@ -72,7 +72,7 @@ public class ComplexNumber
     }
     else
     {
-      result = "" + realValue + imaginaryValue + "i";
+      result = "" + realValue + "+" + imaginaryValue + "i";
     }
     return result;
   }
