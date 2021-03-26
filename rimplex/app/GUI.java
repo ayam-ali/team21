@@ -23,9 +23,10 @@ import javax.swing.JTextField;
  */
 public class GUI
 {
+  
+  static ArrayList<String> expression = new ArrayList<String>();
   private static JTextArea display = new JTextArea();
   private static JTextField inputField = new JTextField();
-  static ArrayList<String> expression = new ArrayList<String>();
 
   public static void main(String[] args) {
     JFrame main;
@@ -85,6 +86,7 @@ public class GUI
   
   static void reset() {
     display.setText("");
+    expression = new ArrayList<>();
     clear();
   }
   
