@@ -1,7 +1,7 @@
 package math;
 
 import java.util.*;
-
+ 
 public class Calculator
 {
   private String recentResult;
