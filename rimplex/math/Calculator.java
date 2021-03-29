@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * Calculator class.
  * 
- * @author The team
+ * @author Ava Momberger && Rhea Morris
  * @version 3/24/2021
  */
 public class Calculator
@@ -63,7 +63,7 @@ public class Calculator
   {
     // examples: "3+5i", "4", "9i"
     ComplexNumber value = null;
-    if ((!numString.contains(plus) && !numString.contains(minus)) || numString.indexOf(minus) == 0)
+    if ((!numString.contains(plus) && !numString.contains(minus)) || (!numString.contains(plus) && numString.indexOf(minus) == 0))
     {
       // purely imaginary number
       if (numString.contains("i"))
@@ -82,7 +82,7 @@ public class Calculator
       // number with both real and imaginary parts
       int operation;
       Double imaginary;
-      if (numString.contains(minus)) {
+      if (numString.contains(minus) && numString.indexOf(minus) != 0) {
         operation = numString.indexOf(minus); 
         imaginary = Double
             .parseDouble(numString.substring(operation).replace('i', Character.MIN_VALUE));

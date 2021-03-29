@@ -80,12 +80,22 @@ public class ComplexNumber
    */
   public ComplexNumber divide(ComplexNumber other)
   {
-    double real = ((realValue * other.getRealValue())
-        + (imaginaryValue * other.getImaginaryValue()))
-        / (Math.pow(imaginaryValue, 2) + Math.pow(other.getImaginaryValue(), 2));
-    double i = ((realValue * other.getRealValue()) - (imaginaryValue * other.getImaginaryValue()))
-        / (Math.pow(imaginaryValue, 2) + Math.pow(other.getImaginaryValue(), 2));
-    return new ComplexNumber(real, i);
+    ComplexNumber result;
+    ComplexNumber numerator;
+    double denominator;
+    
+    if (other.getImaginaryValue() != 0) { 
+      ComplexNumber conjugate = new ComplexNumber(other.getRealValue(), other.getImaginaryValue() * -1);
+      numerator = this.multiply(conjugate);
+      denominator = Math.pow(other.getRealValue(), 2) + Math.pow(other.getImaginaryValue(), 2);
+    } else {
+      numerator = this;
+      denominator = other.getRealValue();
+    }
+
+    if (denominator == 0) return null;
+    
+    return new ComplexNumber(numerator.getRealValue()/denominator, numerator.getImaginaryValue()/denominator);
   }
 
   /**
@@ -118,16 +128,16 @@ public class ComplexNumber
     String result = "";
     if (realValue == 0 && imaginaryValue != 0)
     {
-      result = "" + imaginaryValue + "i";
+      result = String.format("%.3fi", imaginaryValue);
     }
     else if (imaginaryValue == 0)
     {
-      result = "" + realValue;
+      result = String.format("%.3f", realValue);
     }
     else
     {
-      result = (imaginaryValue < 0) ? "" + realValue + imaginaryValue + "i" 
-          : "" + realValue + "+" + imaginaryValue + "i";
+      result = (imaginaryValue < 0) ? "" + String.format("%.3f", realValue) + String.format("%.3f", imaginaryValue) + "i" 
+          : "" + String.format("%.3f", realValue) + "+" + String.format("%.3f", imaginaryValue) + "i";
     }
     return result;
   }
