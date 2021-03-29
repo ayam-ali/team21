@@ -3,6 +3,9 @@ package app;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import math.Calculator;
+import math.ComplexNumber;
+
 /**
  * ButtonHandler - responds to button presses and inputs.
  * 
@@ -13,38 +16,71 @@ import java.awt.event.ActionListener;
  */
 public class ButtonHandler implements ActionListener
 {
-
+  Calculator calc = new Calculator();
+  
   @Override
   public void actionPerformed(final ActionEvent e)
   {
     String buttonPressed = e.getActionCommand();
-    String inputString = GUIUtils.getInputFieldText();
+    String inputString = getInputFieldText();
 
     if (buttonPressed.equals("Reset"))
     {
-      GUIUtils.reset();
+      reset();
     }
     else if (buttonPressed.equals("Clear"))
     {
-      GUIUtils.clear();
+      clear();
     }
     else if (buttonPressed.equals("="))
     {
-      String solved = "";
-      // expression = new ArrayList<>();
-      // expression.add(solved);
-      // GUIUtils.updateFields(inputString.strip() + buttonPressed);
+      RimplexWindow.expression.add(inputString.strip());
+      ComplexNumber solved = calc.calculate(RimplexWindow.expression);
+      
+      updateFields("(" + inputString.strip() + ") " + buttonPressed + " (" + solved.toString() + ")");
 
     }
     else
     {
       if (!inputString.isEmpty())
       {
-        GUI.expression.add(inputString.strip());
-        GUI.expression.add(buttonPressed);
-        GUIUtils.updateFields("(" + inputString.strip() + ") " + e.getActionCommand());
+        RimplexWindow.expression.add(inputString.strip());
+        updateFields("(" + inputString.strip() + ") " + e.getActionCommand());
       }
+      else
+      {
+        updateFields(e.getActionCommand());
+      }
+      RimplexWindow.expression.add(buttonPressed);
+
     }
   }
 
+  private static void clear()
+  {
+    RimplexWindow.inputField.setText("");
+  }
+
+  private static void reset()
+  {
+    RimplexWindow.display.setText("<html>");
+    clear();
+  }
+
+  private static void updateFields(final String newDisplay)
+  {
+    RimplexWindow.display.setText(RimplexWindow.display.getText() + italicize(newDisplay) + " ");
+    clear();
+  }
+
+  private static String italicize(final String toItalicize)
+  {
+    String str = toItalicize.replace("i", "<i>i</i>");
+    return str;
+  }
+
+  private static String getInputFieldText()
+  {
+    return RimplexWindow.inputField.getText().replaceAll("\r", "").replaceAll("\n", "");
+  }
 }
