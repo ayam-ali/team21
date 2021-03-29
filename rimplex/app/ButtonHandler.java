@@ -9,7 +9,8 @@ import math.ComplexNumber;
 /**
  * ButtonHandler - responds to button presses and inputs.
  * 
- * Modifications: - Anderson (3/25) - added .strip before displaying input string.
+ * Modifications: - Anderson (3/25) - added .strip before displaying input string. Ali (3/28) -
+ * clearing up and adding javadoc comments
  * 
  * @author Eric Anderson,
  * @version 3/25/2021
@@ -17,7 +18,7 @@ import math.ComplexNumber;
 public class ButtonHandler implements ActionListener
 {
   Calculator calc = new Calculator();
-  
+
   @Override
   public void actionPerformed(final ActionEvent e)
   {
@@ -36,8 +37,9 @@ public class ButtonHandler implements ActionListener
     {
       RimplexWindow.expression.add(inputString.strip());
       ComplexNumber solved = calc.calculate(RimplexWindow.expression);
-      
-      updateFields("(" + inputString.strip() + ") " + buttonPressed + " (" + solved.toString() + ")");
+
+      updateFields(
+          "(" + inputString.strip() + ") " + buttonPressed + " (" + solved.toString() + ")");
 
     }
     else
@@ -56,29 +58,53 @@ public class ButtonHandler implements ActionListener
     }
   }
 
+  /**
+   * Clears the input field.
+   */
   private static void clear()
   {
     RimplexWindow.inputField.setText("");
   }
 
+  /**
+   * Resets the display and clears the input field.
+   */
   private static void reset()
   {
     RimplexWindow.display.setText("<html>");
     clear();
   }
 
+  /**
+   * Updates the fields, italicizes i.
+   * 
+   * @param newDisplay
+   *          to be displayed
+   */
   private static void updateFields(final String newDisplay)
   {
     RimplexWindow.display.setText(RimplexWindow.display.getText() + italicize(newDisplay) + " ");
     clear();
   }
 
+  /**
+   * Italicizes i in the imaginary numbers.
+   * 
+   * @param toItalicize
+   *          to change to italics
+   * @return italicized version of the string
+   */
   private static String italicize(final String toItalicize)
   {
     String str = toItalicize.replace("i", "<i>i</i>");
     return str;
   }
 
+  /**
+   * Gets the current input field.
+   * 
+   * @return the input field as a string
+   */
   private static String getInputFieldText()
   {
     return RimplexWindow.inputField.getText().replaceAll("\r", "").replaceAll("\n", "");

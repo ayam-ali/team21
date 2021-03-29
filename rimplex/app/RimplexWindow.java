@@ -19,7 +19,8 @@ import javax.swing.border.EtchedBorder;
  * GUI - Creates objects for displays and input fields.
  * 
  * Modifications: - Anderson (3/25) - changed input field to JTextField to prevent \n chars. Added
- * string formatter to remove \n for redundancy.
+ * string formatter to remove \n for redundancy. Ali (3/28) - Changed symbols, changed window size,
+ * cleared up, and added javadoc comments.
  * 
  * @author Eric Anderson,
  * @version 3/25/2021
@@ -30,11 +31,17 @@ public class RimplexWindow extends JFrame
   static JLabel display;
   static JTextField inputField;
   static ArrayList<String> expression;
-  
+
   private static final long serialVersionUID = 1L;
   private ButtonHandler buttonHandler;
   private JPanel buttonPanel;
 
+  /**
+   * The constructor for the rimplex window.
+   * 
+   * @param buttonHandler
+   *          to deal with the buttons
+   */
   public RimplexWindow(final ButtonHandler buttonHandler)
   {
     super("Rimplex");
@@ -45,9 +52,15 @@ public class RimplexWindow extends JFrame
     createInputField();
 
     makeLayout();
-    setSize(400, 200);
+    setSize(400, 250);
   }
 
+  /**
+   * Adds the buttons to the panel and provides the action listener.
+   * 
+   * @param name
+   *          for what is going to be on the button
+   */
   private void addButton(final String name)
   {
     JButton button = new JButton(name);
@@ -55,6 +68,11 @@ public class RimplexWindow extends JFrame
     buttonPanel.add(button);
   }
 
+  /**
+   * Creates the button panel for what is to be layout.
+   * 
+   * @return a JPanel for the panel
+   */
   private JPanel createButtonPanel()
   {
     JPanel result = new JPanel();
@@ -62,6 +80,9 @@ public class RimplexWindow extends JFrame
     return result;
   }
 
+  /**
+   * Creates the display that is going to contain the expressions.
+   */
   private static void createDisplay()
   {
     display = new JLabel();
@@ -71,17 +92,26 @@ public class RimplexWindow extends JFrame
     display.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
   }
 
+  /**
+   * Creates the array list for the expressions.
+   */
   private static void createExpression()
   {
     expression = new ArrayList<>();
   }
 
+  /**
+   * Creates an input field for the user to input numbers.
+   */
   private static void createInputField()
   {
     inputField = new JTextField();
     inputField.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
   }
 
+  /**
+   * Creates the layout and sets the buttons.
+   */
   private void makeLayout()
   {
     this.setLayout(new GridLayout(3, 1));
@@ -93,8 +123,8 @@ public class RimplexWindow extends JFrame
     addButton("Reset");
     addButton("-");
     addButton("+");
-    addButton("*");
-    addButton("/");
+    addButton("×");
+    addButton("÷");
     addButton("=");
 
     this.add(buttonPanel);

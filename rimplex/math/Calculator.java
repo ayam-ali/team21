@@ -1,67 +1,121 @@
 package math;
 
 import java.util.*;
- 
+
+/**
+ * Calculator class.
+ * 
+ * @author The team
+ * @version 3/24/2021
+ */
 public class Calculator
 {
+  private String plus = "+";
+  private String minus = "-";
+  private String multiply = "×";
+  private String divide = "÷";
+
   private String recentResult;
-  
-  public Calculator() {
+
+  /**
+   * The default constructor for calculator.
+   */
+  public Calculator()
+  {
     recentResult = "0";
   }
-  
-  public ComplexNumber calculate(List<String> input) {
+
+  /**
+   * Handles the running calculations using the helper methods.
+   * 
+   * @param input
+   *          for the list of numbers and operands
+   * @return a complex number for the result
+   */
+  public ComplexNumber calculate(List<String> input)
+  {
     // example input: {"7i", "+", "4-2i"}
     // this part handles running calculations
-    if (isOperation(input.get(0))) {
+    if (isOperation(input.get(0)))
+    {
       input.add(0, recentResult);
     }
-    
+
     ComplexNumber total = parseComplex(input.get(0));
-    for (int i = 2; i < input.size(); i += 2) {
+    for (int i = 2; i < input.size(); i += 2)
+    {
       ComplexNumber num = parseComplex(input.get(i));
-      total = performOperation(total, num, input.get(i-1));
+      total = performOperation(total, num, input.get(i - 1));
     }
-    
+
     recentResult = total.toString();
     return total;
   }
-  
-  private ComplexNumber parseComplex(String numString) {
+
+  /**
+   * Parses the string to know if it is real, imaginary or both.
+   * 
+   * @param numString
+   *          the given string
+   * @return a complex number for the value
+   */
+  private ComplexNumber parseComplex(String numString)
+  {
     // examples: "3+5i", "4", "9i"
     ComplexNumber value = null;
-    if (!numString.contains("+") && !numString.contains("-")) {
+    if (!numString.contains(plus) && !numString.contains(minus))
+    {
       // purely imaginary number
-      if (numString.contains("i")) {
+      if (numString.contains("i"))
+      {
         numString = numString.replace('i', Character.MIN_VALUE);
         value = new ComplexNumber(0.0, Double.parseDouble(numString));
-      } else {
+      }
+      else
+      {
         // purely real number
         value = new ComplexNumber(Double.parseDouble(numString), 0.0);
       }
-    } else {
+    }
+    else
+    {
       // number with both real and imaginary parts
-      int operation = (numString.contains("+")) ? numString.indexOf("+") : numString.indexOf("-");
+      int operation = (numString.contains(plus)) ? numString.indexOf(plus)
+          : numString.indexOf(minus);
       Double real = Double.parseDouble(numString.substring(0, operation));
-      Double imaginary = Double.parseDouble(numString.substring(operation+1).replace('i', Character.MIN_VALUE));
+      Double imaginary = Double
+          .parseDouble(numString.substring(operation + 1).replace('i', Character.MIN_VALUE));
       value = new ComplexNumber(real, imaginary);
     }
     return value;
   }
-  
-  private ComplexNumber performOperation(ComplexNumber first, ComplexNumber second, String operand) {
+
+  /**
+   * Helper method to handle the operations.
+   * 
+   * @param first
+   *          complex number to perform operation on
+   * @param second
+   *          complex number to be perform operation on
+   * @param operand
+   *          to know which operation to be performed
+   * @return a complex number for the result
+   */
+  private ComplexNumber performOperation(ComplexNumber first, ComplexNumber second, String operand)
+  {
     ComplexNumber result = null;
-    switch (operand) {
+    switch (operand)
+    {
       case "+":
         result = first.add(second);
         break;
       case "-":
         result = first.subtract(second);
         break;
-      case "*":
+      case "×":
         result = first.multiply(second);
         break;
-      case "/":
+      case "÷":
         result = first.divide(second);
         break;
       default:
@@ -69,9 +123,17 @@ public class Calculator
     }
     return result;
   }
-  
-  private boolean isOperation(String string) {
-    return string == "+" || string == "-" || string == "*" || string == "/";
+
+  /**
+   * Returns if the string is either of the operators.
+   * 
+   * @param string
+   *          to see which operand
+   * @return the operand
+   */
+  private boolean isOperation(String string)
+  {
+    return string == plus || string == minus || string == multiply || string == divide;
   }
-  
+
 }
