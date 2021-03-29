@@ -126,7 +126,8 @@ public class ComplexNumber
     }
     else
     {
-      result = "" + realValue + "+" + imaginaryValue + "i";
+      result = (imaginaryValue < 0) ? "" + realValue + imaginaryValue + "i" 
+          : "" + realValue + "+" + imaginaryValue + "i";
     }
     return result;
   }

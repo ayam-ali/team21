@@ -38,7 +38,7 @@ public class Calculator
     // this part handles running calculations
     if (isOperation(input.get(0)))
     {
-      input.add(0, recentResult);
+      input.add(0, recentResult);                             
     }
 
     ComplexNumber total = parseComplex(input.get(0));
@@ -63,7 +63,7 @@ public class Calculator
   {
     // examples: "3+5i", "4", "9i"
     ComplexNumber value = null;
-    if (!numString.contains(plus) && !numString.contains(minus))
+    if ((!numString.contains(plus) && !numString.contains(minus)) || numString.indexOf(minus) == 0)
     {
       // purely imaginary number
       if (numString.contains("i"))
@@ -80,11 +80,18 @@ public class Calculator
     else
     {
       // number with both real and imaginary parts
-      int operation = (numString.contains(plus)) ? numString.indexOf(plus)
-          : numString.indexOf(minus);
+      int operation;
+      Double imaginary;
+      if (numString.contains(minus)) {
+        operation = numString.indexOf(minus); 
+        imaginary = Double
+            .parseDouble(numString.substring(operation).replace('i', Character.MIN_VALUE));
+      } else {
+        operation = numString.indexOf(plus);
+        imaginary = Double
+            .parseDouble(numString.substring(operation + 1).replace('i', Character.MIN_VALUE));
+      }
       Double real = Double.parseDouble(numString.substring(0, operation));
-      Double imaginary = Double
-          .parseDouble(numString.substring(operation + 1).replace('i', Character.MIN_VALUE));
       value = new ComplexNumber(real, imaginary);
     }
     return value;
