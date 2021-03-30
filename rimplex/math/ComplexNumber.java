@@ -3,6 +3,8 @@ package math;
 /**
  * An object class to represent a complex number.
  * 
+ * Modifcations: Ali (3/28) clearing up and added javadoc comments for clarifaction.
+ * 
  * @author Ava Momberger && Rhea Morris
  * @version 3/24/2021
  */
@@ -11,8 +13,13 @@ public class ComplexNumber
   private double realValue;
   private double imaginaryValue;
 
-  /*
-   * Constructs a complex number
+  /**
+   * The constructor for complexNumber.
+   * 
+   * @param realValue
+   *          for the real value
+   * @param imaginaryValue
+   *          for the imaginary part
    */
   public ComplexNumber(double realValue, double imaginaryValue)
   {
@@ -20,12 +27,12 @@ public class ComplexNumber
     this.imaginaryValue = imaginaryValue;
   }
 
-  /*
-   * Adds two complex numbers
+  /**
+   * To add numbers together.
    * 
-   * @param other the complex number to add with
-   * 
-   * @result the result of adding the two complex numbers together
+   * @param other
+   *          to be added
+   * @return the sum of the two numbers
    */
   public ComplexNumber add(ComplexNumber other)
   {
@@ -35,12 +42,12 @@ public class ComplexNumber
     return num;
   }
 
-  /*
-   * Subtracts two complex numbers
+  /**
+   * To subtract numbers.
    * 
-   * @param other the complex number to subtract
-   * 
-   * @result the result of subtracting the two complex numbers
+   * @param other
+   *          number to be subtracted
+   * @return the difference between the two numbers
    */
   public ComplexNumber subtract(ComplexNumber other)
   {
@@ -50,12 +57,12 @@ public class ComplexNumber
     return num;
   }
 
-  /*
-   * Multiply two complex numbers
+  /**
+   * To multiply two numbers.
    * 
-   * @param other the complex number to multiply by
-   * 
-   * @result the result of multiplying the two complex numbers
+   * @param other
+   *          number to be multiplied
+   * @return the product of the two numbers
    */
   public ComplexNumber multiply(ComplexNumber other)
   {
@@ -64,59 +71,72 @@ public class ComplexNumber
     return new ComplexNumber(real, i);
   }
 
-  /*
-   * Multiply two complex numbers
+  /**
+   * To divide two numbers.
    * 
-   * @param other the complex number to multiply by
-   * 
-   * @result the result of multiplying the two complex numbers
+   * @param other
+   *          number to be divided
+   * @return the quotient of the two numbers
    */
   public ComplexNumber divide(ComplexNumber other)
   {
-    double real = ((realValue * other.getRealValue())
-        + (imaginaryValue * other.getImaginaryValue()))
-        / (Math.pow(imaginaryValue, 2) + Math.pow(other.getImaginaryValue(), 2));
-    double i = ((realValue * other.getRealValue()) - (imaginaryValue * other.getImaginaryValue()))
-        / (Math.pow(imaginaryValue, 2) + Math.pow(other.getImaginaryValue(), 2));
-    return new ComplexNumber(real, i);
+    ComplexNumber numerator;
+    double denominator;
+    
+    if (other.getImaginaryValue() != 0) { 
+      ComplexNumber conjugate = new ComplexNumber(other.getRealValue(), other.getImaginaryValue() * -1);
+      numerator = this.multiply(conjugate);
+      denominator = Math.pow(other.getRealValue(), 2) + Math.pow(other.getImaginaryValue(), 2);
+    } else {
+      numerator = this;
+      denominator = other.getRealValue();
+    }
+
+    if (denominator == 0) return null;
+    
+    return new ComplexNumber(numerator.getRealValue()/denominator, numerator.getImaginaryValue()/denominator);
   }
 
-  /*
-   * Gets the real number part of a complex number
+  /**
+   * Gets the real value.
    * 
+   * @return real value
    */
   public double getRealValue()
   {
     return realValue;
   }
 
-  /*
-   * Gets the imaginary number part of a complex number
+  /**
+   * Gets the imaginary value.
    * 
+   * @return imaginary value
    */
   public double getImaginaryValue()
   {
     return imaginaryValue;
   }
 
-  /*
-   * returns a string format of the complex number
+  /**
+   * The to string to be shown.
    * 
+   * @return the string for the result
    */
   public String toString()
   {
     String result = "";
     if (realValue == 0 && imaginaryValue != 0)
     {
-      result = "" + imaginaryValue + "i";
+      result = String.format("%.3fi", imaginaryValue);
     }
     else if (imaginaryValue == 0)
     {
-      result = "" + realValue;
+      result = String.format("%.3f", realValue);
     }
     else
     {
-      result = "" + realValue + "+" + imaginaryValue + "i";
+      result = (imaginaryValue < 0) ? "" + String.format("%.3f", realValue) + String.format("%.3f", imaginaryValue) + "i" 
+          : "" + String.format("%.3f", realValue) + "+" + String.format("%.3f", imaginaryValue) + "i";
     }
     return result;
   }
