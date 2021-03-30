@@ -3,7 +3,7 @@ package math;
 import java.util.*;
 
 /**
- * Calculator class.
+ * Calculator class test push.
  * 
  * @author Ava Momberger && Rhea Morris
  * @version 3/24/2021
