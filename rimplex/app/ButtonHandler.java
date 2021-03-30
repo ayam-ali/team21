@@ -13,7 +13,7 @@ import math.ComplexNumber;
  * Modifications: - Anderson (3/25) - added .strip before displaying input string. Ali (3/28) -
  * clearing up and adding javadoc comments
  * 
- * @author Eric Anderson,
+ * @author Eric Anderson, Eric Hernandez-Diaz
  * @version 3/25/2021
  */
 public class ButtonHandler implements ActionListener
@@ -74,6 +74,7 @@ public class ButtonHandler implements ActionListener
     RimplexWindow.display.setText("<html>");
     RimplexWindow.expression = new ArrayList<>();
     clear();
+    RimplexWindow.expression = new ArrayList<>();
   }
 
   /**

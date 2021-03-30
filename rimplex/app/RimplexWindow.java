@@ -1,12 +1,9 @@
 package app;
 
 import java.awt.FlowLayout;
-
 import java.awt.Font;
 import java.awt.GridLayout;
-import java.awt.Toolkit;
 import java.util.ArrayList;
-
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -22,7 +19,7 @@ import javax.swing.border.EtchedBorder;
  * string formatter to remove \n for redundancy. Ali (3/28) - Changed symbols, changed window size,
  * cleared up, and added javadoc comments.
  * 
- * @author Eric Anderson,
+ * @author Eric Anderson, Eric Hernandez-Diaz
  * @version 3/25/2021
  */
 public class RimplexWindow extends JFrame
@@ -129,27 +126,4 @@ public class RimplexWindow extends JFrame
 
     this.add(buttonPanel);
   }
-
-  /*
-   * static ArrayList<String> expression = new ArrayList<String>(); static JLabel display = new
-   * JLabel(); static JTextField inputField = new JTextField();
-   * 
-   * public static void main(final String[] args) { JFrame main; JPanel buttonPanel;
-   * 
-   * main = new JFrame("Rimplex"); main.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-   * main.setLayout(new GridLayout(3, 1)); main.setSize(400, 200);
-   * main.setIconImage(Toolkit.getDefaultToolkit().getImage("..\\iconRimplex.png"));
-   * 
-   * buttonPanel = GUIUtils.createButtons();
-   * 
-   * Font f = display.getFont(); display.setFont(f.deriveFont(Font.PLAIN));
-   * 
-   * display.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED)); // temporary border
-   * inputField.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED)); // temporary
-   * border
-   * 
-   * display.setText("<html>"); main.add(display); main.add(inputField); main.add(buttonPanel);
-   * 
-   * main.setVisible(true); }
-   */
 }

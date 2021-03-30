@@ -2,6 +2,12 @@ package app;
 
 import javax.swing.JFrame;
 
+/**
+ * Driver - creates new RimplexWindow. 
+ * 
+ * @author Eric Hernandez-Diaz
+ * @version 3/30/2021
+ */
 public class Driver
 {
   /**
