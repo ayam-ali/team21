@@ -11,7 +11,7 @@ import math.ComplexNumber;
  * ButtonHandler - responds to button presses and inputs.
  * 
  * Modifications: - Anderson (3/25) - added .strip before displaying input string. Ali (3/28) -
- * clearing up and adding javadoc comments
+ * clear up and javadoc comments. Ali (3/30) Editing, clarifications, and comments.
  * 
  * @author Eric Anderson, Eric Hernandez-Diaz
  * @version 3/25/2021
@@ -19,6 +19,8 @@ import math.ComplexNumber;
 public class ButtonHandler implements ActionListener
 {
   Calculator calc = new Calculator();
+  String rPar = "(";
+  String lPar = ") ";
 
   @Override
   public void actionPerformed(final ActionEvent e)
@@ -39,7 +41,8 @@ public class ButtonHandler implements ActionListener
       RimplexWindow.expression.add(inputString.strip());
       ComplexNumber solved = calc.calculate(RimplexWindow.expression);
 
-      updateFields("(" + inputString.strip() + ") " + buttonPressed + " (" + solved.toString() + ")");
+      updateFields(
+          rPar + inputString.strip() + lPar + buttonPressed + " (" + solved.toString() + ")");
 
     }
     else
@@ -47,7 +50,7 @@ public class ButtonHandler implements ActionListener
       if (!inputString.isEmpty())
       {
         RimplexWindow.expression.add(inputString.strip());
-        updateFields("(" + inputString.strip() + ") " + e.getActionCommand());
+        updateFields(rPar + inputString.strip() + lPar + e.getActionCommand());
       }
       else
       {

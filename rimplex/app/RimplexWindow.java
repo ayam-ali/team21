@@ -1,5 +1,6 @@
 package app;
 
+import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
@@ -17,9 +18,9 @@ import javax.swing.border.EtchedBorder;
  * 
  * Modifications: - Anderson (3/25) - changed input field to JTextField to prevent \n chars. Added
  * string formatter to remove \n for redundancy. Ali (3/28) - Changed symbols, changed window size,
- * cleared up, and added javadoc comments.
+ * cleared up, and added javadoc comments. Ali (3/30) color change, and clarifications
  * 
- * @author Eric Anderson, Eric Hernandez-Diaz
+ * @author Eric Anderson, Eric Hernandez-Diaz, Ayam Ali
  * @version 3/25/2021
  */
 public class RimplexWindow extends JFrame
@@ -63,6 +64,10 @@ public class RimplexWindow extends JFrame
     JButton button = new JButton(name);
     button.addActionListener(buttonHandler);
     buttonPanel.add(button);
+
+    // changes the color of the button
+    Color purple = new Color(175, 175, 225);
+    changeColor(button, purple);
   }
 
   /**
@@ -107,6 +112,21 @@ public class RimplexWindow extends JFrame
   }
 
   /**
+   * To change the color of a button.
+   * 
+   * @param button
+   *          to change color of
+   * @param color
+   *          to change to
+   */
+  private void changeColor(final JButton button, final Color color)
+  {
+    button.setBackground(color);
+    button.setOpaque(true);
+    button.setBorderPainted(false);
+  }
+
+  /**
    * Creates the layout and sets the buttons.
    */
   private void makeLayout()
@@ -115,7 +135,7 @@ public class RimplexWindow extends JFrame
     this.add(display);
     this.add(inputField);
 
-    // create buttons
+    // create buttons and adds color
     addButton("Clear");
     addButton("Reset");
     addButton("-");

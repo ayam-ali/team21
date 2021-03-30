@@ -3,45 +3,63 @@ package math;
 /**
  * An object class to represent a complex number.
  * 
- * Modifcations: Ali (3/28) clearing up and added javadoc comments for clarifaction.
+ * Modifcations: Ali (3/28) clear up and javadoc comments for clarifaction. Ali (3/30) Editing &
+ * clean up
  * 
- * @author Ava Momberger && Rhea Morris
+ * @author Ava Momberger, Rhea Morris, Eric Hernandez
  * @version 3/24/2021
  */
 public class ComplexNumber
 {
+  private static String iString = "i";
+  private static String zero = "0";
+
   private double real;
   private double img;
 
-  public ComplexNumber(double real, double img)
+  /**
+   * The constructor for Complex number.
+   * 
+   * @param real
+   *          number in the expression
+   * @param img
+   *          the imaginary number in the expression
+   */
+  public ComplexNumber(final double real, final double img)
   {
     this.real = real;
     this.img = img;
   }
 
+  /**
+   * Get the real part.
+   * 
+   * @return double for the real part
+   */
   public double getRealPart()
   {
-    // TODO Auto-generated method stub
     return real;
   }
 
+  /**
+   * Gets the imaginary part.
+   * 
+   * @return double for the imaginary part
+   */
   public double getImaginaryPart()
   {
-    // TODO Auto-generated method stub
+
     return img;
   }
 
-  public ComplexNumber add(ComplexNumber other)
-  {
-    double r = getRealPart() + other.getRealPart();
-
-    double i = getImaginaryPart() + other.getImaginaryPart();
-
-    // returning the output complex number
-    return new ComplexNumber(r, i);
-  }
-
-  public static ComplexNumber parse(String string)
+  /**
+   * Parses the string into a complex number.
+   * 
+   * @param string
+   *          of the expression
+   * @return a complex number
+   */
+  public static ComplexNumber parse(final String string)
   {
     String str = string;
     String real = "";
@@ -80,29 +98,60 @@ public class ComplexNumber
 
     if (real.isEmpty())
     {
-      real = "0";
+      real = zero;
     }
 
-    if (img.isEmpty() && string.contains("i"))
+    if (img.isEmpty() && string.contains(iString))
     {
       img = "1";
     }
     else if (img.isEmpty())
     {
-      img = "0";
+      img = zero;
     }
 
     return new ComplexNumber(Double.parseDouble(real), Double.parseDouble(img));
   }
 
-  public ComplexNumber subtract(ComplexNumber other)
+  /**
+   * Adds two complex numbers.
+   * 
+   * @param other
+   *          number to add to
+   * @return complex number with the solution
+   */
+  public ComplexNumber add(final ComplexNumber other)
+  {
+    double r = getRealPart() + other.getRealPart();
+
+    double i = getImaginaryPart() + other.getImaginaryPart();
+
+    // returning the output complex number
+    return new ComplexNumber(r, i);
+  }
+
+  /**
+   * To subtract numbers.
+   *
+   * @param other
+   *          number to be subtracted
+   * @return the difference between the two numbers
+   */
+  public ComplexNumber subtract(final ComplexNumber other)
   {
     double r = getRealPart() - other.getRealPart();
     double i = getImaginaryPart() - other.getImaginaryPart();
     return new ComplexNumber(r, i);
   }
 
-  public ComplexNumber multiply(ComplexNumber other)
+  /**
+   * To multiply two numbers.
+   *
+   * @param other
+   *          number to be multiplied
+   * @return the product of the two numbers
+   */
+  public ComplexNumber multiply(final ComplexNumber other)
   {
     double r = (getRealPart() * other.getRealPart())
         + (getImaginaryPart() * other.getImaginaryPart() * -1);
@@ -118,122 +167,28 @@ public class ComplexNumber
    *          number to be divided
    * @return the quotient of the two numbers
    */
-  public ComplexNumber divide(ComplexNumber other)
+  public ComplexNumber divide(final ComplexNumber other)
   {
     ComplexNumber numerator = this.multiply(other.conjugate());
     ComplexNumber denominator = other.multiply(other.conjugate());
 
-    double real = numerator.getRealPart() / denominator.getRealPart();
+    double realNum = numerator.getRealPart() / denominator.getRealPart();
     double imaginary = numerator.getImaginaryPart() / denominator.getRealPart();
-    return new ComplexNumber(real, imaginary);
+    return new ComplexNumber(realNum, imaginary);
   }
 
+  /**
+   * Helper method to assist divide, gets the conjugate.
+   * 
+   * @return complex number
+   */
   public ComplexNumber conjugate()
   {
     return new ComplexNumber(getRealPart(), getImaginaryPart() * -1);
   }
 
-  // private double realValue;
-  // private double imaginaryValue;
-  //
-  // /**
-  // * The constructor for complexNumber.
-  // *
-  // * @param realValue
-  // * for the real value
-  // * @param imaginaryValue
-  // * for the imaginary part
-  // */
-  // public ComplexNumber(double realValue, double imaginaryValue)
-  // {
-  // this.realValue = realValue;
-  // this.imaginaryValue = imaginaryValue;
-  // }
-  //
-  // /**
-  // * To add numbers together.
-  // *
-  // * @param other
-  // * to be added
-  // * @return the sum of the two numbers
-  // */
-  // public ComplexNumber add(ComplexNumber other)
-  // {
-  // double real = this.realValue + other.realValue;
-  // double imaginary = this.imaginaryValue + other.imaginaryValue;
-  // ComplexNumber num = new ComplexNumber(real, imaginary);
-  // return num;
-  // }
-  //
-  // /**
-  // * To subtract numbers.
-  // *
-  // * @param other
-  // * number to be subtracted
-  // * @return the difference between the two numbers
-  // */
-  // public ComplexNumber subtract(ComplexNumber other)
-  // {
-  // double real = this.realValue - other.realValue;
-  // double imaginary = this.imaginaryValue - other.imaginaryValue;
-  // ComplexNumber num = new ComplexNumber(real, imaginary);
-  // return num;
-  // }
-  //
-  // /**
-  // * To multiply two numbers.
-  // *
-  // * @param other
-  // * number to be multiplied
-  // * @return the product of the two numbers
-  // */
-  // public ComplexNumber multiply(ComplexNumber other)
-  // {
-  // double real = (realValue * other.getRealValue()) - (imaginaryValue *
-  // other.getImaginaryValue());
-  // double i = (realValue * other.getImaginaryValue()) + (imaginaryValue * other.getRealValue());
-  // return new ComplexNumber(real, i);
-  // }
-  //
-  // /**
-  // * To divide two numbers.
-  // *
-  // * @param other
-  // * number to be divided
-  // * @return the quotient of the two numbers
-  // */
-  // public ComplexNumber divide(ComplexNumber other)
-  // {
-  // double real = ((realValue * other.getRealValue())
-  // + (imaginaryValue * other.getImaginaryValue()))
-  // / (Math.pow(imaginaryValue, 2) + Math.pow(other.getImaginaryValue(), 2));
-  // double i = ((realValue * other.getRealValue()) - (imaginaryValue * other.getImaginaryValue()))
-  // / (Math.pow(imaginaryValue, 2) + Math.pow(other.getImaginaryValue(), 2));
-  // return new ComplexNumber(real, i);
-  // }
-  //
-  // /**
-  // * Gets the real value.
-  // *
-  // * @return real value
-  // */
-  // public double getRealValue()
-  // {
-  // return realValue;
-  // }
-  //
-  // /**
-  // * Gets the imaginary value.
-  // *
-  // * @return imaginary value
-  // */
-  // public double getImaginaryValue()
-  // {
-  // return imaginaryValue;
-  // }
-  //
   /**
-   * The to string to be shown.
+   * The to string to be shown. If the solution is an integer, it will return it as so.
    *
    * @return the string for the result
    */
@@ -261,24 +216,20 @@ public class ComplexNumber
 
     if (getImaginaryPart() != 0)
     {
-      if (getImaginaryPart() > 0)
-      {
-        i = "" + tempI + "i";
-      }
-      else
-      {
-        i = "" + tempI + "i";
-      }
+
+      i = "" + tempI + iString;
+
     }
-    
+
     // change
     String result = "";
     if (real == 0 && getImaginaryPart() != 0)
     {
       result = "" + i;
     }
-    else if (getRealPart() == 0 && getImaginaryPart() == 0) {
-      result = "0";
+    else if (getRealPart() == 0 && getImaginaryPart() == 0)
+    {
+      result = zero;
     }
     else if (getImaginaryPart() == 0)
     {
