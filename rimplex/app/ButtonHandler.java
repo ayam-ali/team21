@@ -2,6 +2,7 @@ package app;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import math.Calculator;
 import math.ComplexNumber;
@@ -38,8 +39,7 @@ public class ButtonHandler implements ActionListener
       RimplexWindow.expression.add(inputString.strip());
       ComplexNumber solved = calc.calculate(RimplexWindow.expression);
 
-      updateFields(
-          "(" + inputString.strip() + ") " + buttonPressed + " (" + solved.toString() + ")");
+      updateFields("(" + inputString.strip() + ") " + buttonPressed + " (" + solved.toString() + ")");
 
     }
     else
@@ -72,6 +72,7 @@ public class ButtonHandler implements ActionListener
   private static void reset()
   {
     RimplexWindow.display.setText("<html>");
+    RimplexWindow.expression = new ArrayList<>();
     clear();
   }
 

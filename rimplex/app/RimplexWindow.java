@@ -123,8 +123,8 @@ public class RimplexWindow extends JFrame
     addButton("Reset");
     addButton("-");
     addButton("+");
-    addButton("×");
-    addButton("÷");
+    addButton("\u00D7");
+    addButton("\u00F7");
     addButton("=");
 
     this.add(buttonPanel);
