@@ -82,16 +82,24 @@ public class Calculator
       // number with both real and imaginary parts
       int operation;
       Double imaginary;
+      Double real;
       if (numString.contains(minus) && numString.indexOf(minus) != 0) {
         operation = numString.indexOf(minus); 
         imaginary = Double
             .parseDouble(numString.substring(operation).replace('i', Character.MIN_VALUE));
+        real = Double.parseDouble(numString.substring(0, operation));
       } else {
         operation = numString.indexOf(plus);
-        imaginary = Double
-            .parseDouble(numString.substring(operation + 1).replace('i', Character.MIN_VALUE));
+        if (numString.indexOf("i") > operation) {
+          imaginary = Double
+              .parseDouble(numString.substring(operation + 1).replace('i', Character.MIN_VALUE));
+          real = Double.parseDouble(numString.substring(0, operation));
+        } else {
+          imaginary = Double
+              .parseDouble(numString.substring(0, operation).replace('i', Character.MIN_VALUE));
+          real = Double.parseDouble(numString.substring(operation + 1));
+        }
       }
-      Double real = Double.parseDouble(numString.substring(0, operation));
       value = new ComplexNumber(real, imaginary);
     }
     return value;
