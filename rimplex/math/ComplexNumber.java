@@ -270,20 +270,8 @@ public class ComplexNumber
         i = "" + tempI + "i";
       }
     }
-
-    // String result = "";
-    // if (real == 0 && getImaginaryPart() != 0)
-    // {
-    // result = "" + getImaginaryPart() + "i";
-    // }
-    // else if (getImaginaryPart() == 0)
-    // {
-    // result = "" + real;
-    // }
-    // else
-    // {
-    // result = "" + real + "+" + getImaginaryPart() + "i";
-    // }
+    
+    // change
     String result = "";
     if (real == 0 && getImaginaryPart() != 0)
     {
