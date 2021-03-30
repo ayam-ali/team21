@@ -82,7 +82,7 @@ public class Calculator
       // number with both real and imaginary parts
       int operation;
       Double imaginary;
-      if (numString.contains(minus) && numString.indexOf(minus) != 0) {
+      if (numString.contains(minus)) {
         operation = numString.indexOf(minus); 
         imaginary = Double
             .parseDouble(numString.substring(operation).replace('i', Character.MIN_VALUE));
