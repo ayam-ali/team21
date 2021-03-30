@@ -2,6 +2,7 @@ package app;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import math.Calculator;
 import math.ComplexNumber;
@@ -73,6 +74,7 @@ public class ButtonHandler implements ActionListener
   {
     RimplexWindow.display.setText("<html>");
     clear();
+    RimplexWindow.expression = new ArrayList<>();
   }
 
   /**
