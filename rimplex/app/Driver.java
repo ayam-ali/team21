@@ -19,6 +19,7 @@ public class Driver
   {
     RimplexWindow gui = new RimplexWindow(new ButtonHandler());
     gui.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    gui.setSize(300, 225);
     gui.setVisible(true);
   }
 }

@@ -1,15 +1,25 @@
 package app;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.Insets;
+import java.awt.dnd.DropTarget;
 import java.util.ArrayList;
 import javax.swing.BorderFactory;
+import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.EtchedBorder;
 
@@ -59,11 +69,20 @@ public class RimplexWindow extends JFrame
    * @param name
    *          for what is going to be on the button
    */
-  private void addButton(final String name)
+  private void addButton(final String name, int x, int y, int width, int height)
   {
+    GridBagConstraints gbc = new GridBagConstraints();
+    gbc.gridx = x;
+    gbc.gridy = y;
+    gbc.gridwidth = width;
+    gbc.gridheight = height;
+    gbc.weightx = .25;
+    gbc.fill = GridBagConstraints.HORIZONTAL;
+    gbc.insets = new Insets(2, 2, 2, 2);
     JButton button = new JButton(name);
+    button.setSize(width, height);
     button.addActionListener(buttonHandler);
-    buttonPanel.add(button);
+    buttonPanel.add(button, gbc);
 
     // changes the color of the button
     Color purple = new Color(175, 175, 225);
@@ -78,7 +97,7 @@ public class RimplexWindow extends JFrame
   private JPanel createButtonPanel()
   {
     JPanel result = new JPanel();
-    result.setLayout(new FlowLayout());
+    result.setLayout(new GridBagLayout());
     return result;
   }
 
@@ -131,19 +150,65 @@ public class RimplexWindow extends JFrame
    */
   private void makeLayout()
   {
-    this.setLayout(new GridLayout(3, 1));
-    this.add(display);
-    this.add(inputField);
-
+    this.setLayout(new BorderLayout());
+//    this.add(display);
+//    this.add(inputField);
+    GridBagConstraints gbc = new GridBagConstraints();
+    gbc.gridx = 0;
+    gbc.gridy = 0;
+    gbc.gridheight = 2;
+    gbc.gridwidth = 5;
+    gbc.weightx = 1/12;
+    gbc.weighty = 1;
+    gbc.fill = GridBagConstraints.BOTH;
+    buttonPanel.add(inputField, gbc);
+    
     // create buttons and adds color
-    addButton("Clear");
-    addButton("Reset");
-    addButton("-");
-    addButton("+");
-    addButton("\u00D7");
-    addButton("\u00F7");
-    addButton("=");
+    // row 1
+    addButton("+-", 0, 3, 1, 1);
+    addButton("C", 1, 3, 1, 1);
+    addButton("<-", 2, 3, 1, 1);
+    addButton("+", 3, 3, 1, 1);
+    addButton("R", 4, 3, 1, 1);
+    // row 2
+    addButton("1", 0, 4, 1, 1);
+    addButton("2", 1, 4, 1, 1);
+    addButton("3", 2, 4, 1, 1);
+    addButton("-", 3, 4, 1, 1);
+    addButton("Inv", 4, 4, 1, 1);
+    // row 3
+    addButton("4", 0, 5, 1, 1);
+    addButton("5", 1, 5, 1, 1);
+    addButton("6", 2, 5, 1, 1);
+    addButton("X", 3, 5, 1, 1);
+    addButton("(", 4, 5, 1, 1);
+    // row 4
+    addButton("7", 0, 6, 1, 1);
+    addButton("8", 1, 6, 1, 1);
+    addButton("9", 2, 6, 1, 1);
+    addButton("/", 3, 6, 1, 1);
+    addButton(")", 4, 6, 1, 1);
+    // row 5
+    addButton("0", 0, 7, 2, 1);
+    addButton("i", 2, 7, 1, 1);
+    addButton("=", 3, 7, 1, 1);
+    addButton(".", 4, 7, 1, 1);
 
-    this.add(buttonPanel);
+
+//    addButton("Clear");
+//    addButton("Reset");
+//    addButton("-");
+//    addButton("+");
+//    addButton("\u00D7");
+//    addButton("\u00F7");
+//    addButton("=");
+
+    this.add(buttonPanel, BorderLayout.CENTER);
+    JMenuBar menu = new JMenuBar();
+    JMenu item = new JMenu(">");
+    item.add(display);
+    menu.add(item);
+    this.add(menu, BorderLayout.EAST);
+    this.pack();
   }
 }

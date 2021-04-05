@@ -28,14 +28,14 @@ public class ButtonHandler implements ActionListener
     String buttonPressed = e.getActionCommand();
     String inputString = getInputFieldText();
 
-    if (buttonPressed.equals("Reset"))
+    if (buttonPressed.equals("R"))
     {
       reset();
     }
-    else if (buttonPressed.equals("Clear"))
+    else if (buttonPressed.equals("C"))
     {
       clear();
-    }
+    } 
     else if (buttonPressed.equals("="))
     {
       RimplexWindow.expression.add(inputString.strip());
