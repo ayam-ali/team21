@@ -131,6 +131,36 @@ public class ComplexNumber
   }
 
   /**
+   * Finds the new complex number when raised to a power.
+   * 
+   * @param base
+   *          the base to be used for the exponential calculation.
+   * @param power
+   *          the power that the base will be raised to.
+   * @return new complex number raised to the power.
+   */
+  public ComplexNumber exponent(final ComplexNumber base, final int power)
+  {
+    ComplexNumber result = base;
+    int pow = power;
+    if (power == 1)
+    {
+      return result;
+    }
+    else if (pow == 0)
+    {
+      return ComplexNumber.parse("1");
+    }
+
+    while (pow > 1)
+    {
+      result = result.multiply(base);
+      pow--;
+    }
+    return result;
+  }
+
+  /**
    * To subtract numbers.
    *
    * @param other
