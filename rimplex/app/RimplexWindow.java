@@ -21,6 +21,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.border.EtchedBorder;
 
 /**
@@ -69,7 +70,7 @@ public class RimplexWindow extends JFrame
    * @param name
    *          for what is going to be on the button
    */
-  private void addButton(final String name, int x, int y, int width, int height)
+  private JButton addButton(final String name, int x, int y, int width, int height)
   {
     GridBagConstraints gbc = new GridBagConstraints();
     gbc.gridx = x;
@@ -87,6 +88,7 @@ public class RimplexWindow extends JFrame
     // changes the color of the button
     Color purple = new Color(175, 175, 225);
     changeColor(button, purple);
+    return button;
   }
 
   /**
@@ -151,57 +153,59 @@ public class RimplexWindow extends JFrame
   private void makeLayout()
   {
     this.setLayout(new BorderLayout());
-//    this.add(display);
-//    this.add(inputField);
+    // this.add(display);
+    // this.add(inputField);
     GridBagConstraints gbc = new GridBagConstraints();
     gbc.gridx = 0;
     gbc.gridy = 0;
     gbc.gridheight = 2;
     gbc.gridwidth = 5;
-    gbc.weightx = 1/12;
+    gbc.weightx = 1 / 12;
     gbc.weighty = 1;
     gbc.fill = GridBagConstraints.BOTH;
     buttonPanel.add(inputField, gbc);
-    
+
     // create buttons and adds color
     // row 1
     addButton("+-", 0, 3, 1, 1);
     addButton("C", 1, 3, 1, 1);
-    addButton("<-", 2, 3, 1, 1);
+    addButton("←", 2, 3, 1, 1); // if "←" does not work use "<-" instead
     addButton("+", 3, 3, 1, 1);
     addButton("R", 4, 3, 1, 1);
+
     // row 2
     addButton("1", 0, 4, 1, 1);
     addButton("2", 1, 4, 1, 1);
     addButton("3", 2, 4, 1, 1);
     addButton("-", 3, 4, 1, 1);
     addButton("Inv", 4, 4, 1, 1);
+
     // row 3
     addButton("4", 0, 5, 1, 1);
     addButton("5", 1, 5, 1, 1);
     addButton("6", 2, 5, 1, 1);
-    addButton("X", 3, 5, 1, 1);
-    addButton("(", 4, 5, 1, 1);
+    addButton("X", 3, 5, 1, 1); // unicode for multiplication \u00D7
+    addButton("(", 4, 5, 1, 1); // unicode for division \u00F7
     // row 4
     addButton("7", 0, 6, 1, 1);
     addButton("8", 1, 6, 1, 1);
     addButton("9", 2, 6, 1, 1);
     addButton("/", 3, 6, 1, 1);
     addButton(")", 4, 6, 1, 1);
+
     // row 5
     addButton("0", 0, 7, 2, 1);
     addButton("i", 2, 7, 1, 1);
     addButton("=", 3, 7, 1, 1);
     addButton(".", 4, 7, 1, 1);
 
+    // row 6
+    addButton("√", 5, 4, 1, 1); // unicode for square root is \u221A
+    addButton("LOG", 5, 3, 1, 1);
 
-//    addButton("Clear");
-//    addButton("Reset");
-//    addButton("-");
-//    addButton("+");
-//    addButton("\u00D7");
-//    addButton("\u00F7");
-//    addButton("=");
+    // resizing the words so they fit better
+    addButton("Fraction Decimal", 5, 6, 1, 1).setFont(new Font("", Font.PLAIN, 10));
+    addButton("Conjugate", 5, 5, 1, 1).setFont(new Font("", Font.PLAIN, 12));
 
     this.add(buttonPanel, BorderLayout.CENTER);
     JMenuBar menu = new JMenuBar();
@@ -211,4 +215,17 @@ public class RimplexWindow extends JFrame
     this.add(menu, BorderLayout.EAST);
     this.pack();
   }
+
+  /**
+   * Private method to make the words underneath each other
+   */
+  // private JButton overUnder(JButton button, String str1, String str2)
+  // {
+  // button.setLayout(new BorderLayout());
+  // JLabel label1 = new JLabel(str1);
+  // JLabel label2 = new JLabel(str2);
+  // button.add(BorderLayout.NORTH, label1).setFont(new Font("", Font.PLAIN, 6));
+  // button.add(BorderLayout.SOUTH, label2).setFont(new Font("", Font.PLAIN, 6));
+  // return button;
+  // }
 }
