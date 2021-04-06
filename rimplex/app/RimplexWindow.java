@@ -159,7 +159,7 @@ public class RimplexWindow extends JFrame
     gbc.gridx = 0;
     gbc.gridy = 0;
     gbc.gridheight = 2;
-    gbc.gridwidth = 5;
+    gbc.gridwidth = 10;
     gbc.weightx = 1 / 12;
     gbc.weighty = 1;
     gbc.fill = GridBagConstraints.BOTH;
