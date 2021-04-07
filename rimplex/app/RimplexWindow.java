@@ -38,7 +38,6 @@ public class RimplexWindow extends JFrame
 {
 
   static JLabel display;
-  static JTextField inputField;
   static ArrayList<String> expression;
 
   private static final long serialVersionUID = 1L;
@@ -58,7 +57,6 @@ public class RimplexWindow extends JFrame
     this.buttonPanel = createButtonPanel();
     createDisplay();
     createExpression();
-    createInputField();
 
     makeLayout();
     setSize(400, 250);
@@ -124,15 +122,6 @@ public class RimplexWindow extends JFrame
   }
 
   /**
-   * Creates an input field for the user to input numbers.
-   */
-  private static void createInputField()
-  {
-    inputField = new JTextField();
-    inputField.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
-  }
-
-  /**
    * To change the color of a button.
    * 
    * @param button
@@ -159,17 +148,17 @@ public class RimplexWindow extends JFrame
     gbc.gridx = 0;
     gbc.gridy = 0;
     gbc.gridheight = 2;
-    gbc.gridwidth = 10;
+    gbc.gridwidth = 6;
     gbc.weightx = 1 / 12;
     gbc.weighty = 1;
     gbc.fill = GridBagConstraints.BOTH;
-    buttonPanel.add(inputField, gbc);
+    buttonPanel.add(display, gbc);
 
     // create buttons and adds color
     // row 1
     addButton("+-", 0, 3, 1, 1);
     addButton("C", 1, 3, 1, 1);
-    addButton("←", 2, 3, 1, 1); // if "←" does not work use "<-" instead
+    addButton("\u2190", 2, 3, 1, 1); // if "" does not work use "<-" instead
     addButton("+", 3, 3, 1, 1);
     addButton("R", 4, 3, 1, 1);
 
@@ -184,13 +173,13 @@ public class RimplexWindow extends JFrame
     addButton("4", 0, 5, 1, 1);
     addButton("5", 1, 5, 1, 1);
     addButton("6", 2, 5, 1, 1);
-    addButton("X", 3, 5, 1, 1); // unicode for multiplication \u00D7
+    addButton("\u00D7", 3, 5, 1, 1); // unicode for multiplication \u00D7
     addButton("(", 4, 5, 1, 1); // unicode for division \u00F7
     // row 4
     addButton("7", 0, 6, 1, 1);
     addButton("8", 1, 6, 1, 1);
     addButton("9", 2, 6, 1, 1);
-    addButton("/", 3, 6, 1, 1);
+    addButton("\u00F7", 3, 6, 1, 1);
     addButton(")", 4, 6, 1, 1);
 
     // row 5
@@ -200,7 +189,7 @@ public class RimplexWindow extends JFrame
     addButton(".", 4, 7, 1, 1);
 
     // row 6
-    addButton("√", 5, 4, 1, 1); // unicode for square root is \u221A
+    addButton("\u221A", 5, 4, 1, 1); // unicode for square root is \u221A
     addButton("LOG", 5, 3, 1, 1);
 
     // resizing the words so they fit better
@@ -210,7 +199,7 @@ public class RimplexWindow extends JFrame
     this.add(buttonPanel, BorderLayout.CENTER);
     JMenuBar menu = new JMenuBar();
     JMenu item = new JMenu(">");
-    item.add(display);
+//    item.add(display);
     menu.add(item);
     this.add(menu, BorderLayout.EAST);
     this.pack();
