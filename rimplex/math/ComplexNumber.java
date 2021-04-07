@@ -218,6 +218,16 @@ public class ComplexNumber
   }
 
   /**
+   * Change the Sign
+   * 
+   * @return complex number
+   */
+  public ComplexNumber changeSign()
+  {
+    return new ComplexNumber(getRealPart() * -1, getImaginaryPart());
+  }
+
+  /**
    * The to string to be shown. If the solution is an integer, it will return it as so.
    *
    * @return the string for the result
