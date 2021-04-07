@@ -59,7 +59,7 @@ public class Calculator
    *          to see which operand
    * @return the operand
    */
-  private boolean isOperation(final String string)
+  public boolean isOperation(final String string)
   {
     return string == plus || string == minus || string == multiply || string == divide;
   }

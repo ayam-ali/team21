@@ -19,6 +19,8 @@ import math.ComplexNumber;
 public class ButtonHandler implements ActionListener
 {
   Calculator calc = new Calculator();
+  String currentOperand = "";
+  boolean missingParam = false;
   String rPar = "(";
   String lPar = ") ";
 
@@ -26,7 +28,6 @@ public class ButtonHandler implements ActionListener
   public void actionPerformed(final ActionEvent e)
   {
     String buttonPressed = e.getActionCommand();
-    String inputString = getInputFieldText();
 
     if (buttonPressed.equals("R"))
     {
@@ -35,29 +36,44 @@ public class ButtonHandler implements ActionListener
     else if (buttonPressed.equals("C"))
     {
       clear();
-    } 
-    else if (buttonPressed.equals("="))
+    }
+    else if (buttonPressed.equals("\u2190")) // backspace
     {
-      RimplexWindow.expression.add(inputString.strip());
-      ComplexNumber solved = calc.calculate(RimplexWindow.expression);
-
-      updateFields(
-          rPar + inputString.strip() + lPar + buttonPressed + " (" + solved.toString() + ")");
+      String displayText = getDisplayText();
+      updateDisplay(displayText.substring(0, displayText.length() - 1));
 
     }
-    else
-    {
-      if (!inputString.isEmpty())
-      {
-        RimplexWindow.expression.add(inputString.strip());
-        updateFields(rPar + inputString.strip() + lPar + e.getActionCommand());
+    else if (calc.isOperation(buttonPressed))
+    { // operation symbol
+      if (!missingParam)
+      { // if there is a left paren but no right paren
+        RimplexWindow.expression.add(currentOperand);
+        RimplexWindow.expression.add(buttonPressed);
+        appendToDisplay(buttonPressed);
+        currentOperand = "";
       }
       else
-      {
-        updateFields(e.getActionCommand());
+      { // if there are no paren missing
+        currentOperand = currentOperand + buttonPressed;
+        appendToDisplay(buttonPressed);
       }
-      RimplexWindow.expression.add(buttonPressed);
 
+    }
+    else if (buttonPressed.equals(lPar))
+    { // left paren
+      missingParam = true;
+      appendToDisplay(buttonPressed);
+      currentOperand = currentOperand + buttonPressed;
+    } 
+    else if (buttonPressed.equals(rPar)) {
+      // right paren
+      missingParam = false;
+      appendToDisplay(buttonPressed);
+      currentOperand = currentOperand + buttonPressed;
+    } else 
+    {
+      appendToDisplay(buttonPressed);
+      currentOperand = currentOperand + buttonPressed;
     }
   }
 
@@ -66,7 +82,7 @@ public class ButtonHandler implements ActionListener
    */
   private static void clear()
   {
-    RimplexWindow.inputField.setText("");
+    RimplexWindow.display.setText("<html>");
   }
 
   /**
@@ -77,19 +93,17 @@ public class ButtonHandler implements ActionListener
     RimplexWindow.display.setText("<html>");
     RimplexWindow.expression = new ArrayList<>();
     clear();
-    RimplexWindow.expression = new ArrayList<>();
   }
 
   /**
-   * Updates the fields, italicizes i.
+   * Updates the display, italicizes i.
    * 
    * @param newDisplay
    *          to be displayed
    */
-  private static void updateFields(final String newDisplay)
+  private static void updateDisplay(final String newDisplay)
   {
-    RimplexWindow.display.setText(RimplexWindow.display.getText() + italicize(newDisplay) + " ");
-    clear();
+    RimplexWindow.display.setText(italicize(newDisplay));
   }
 
   /**
@@ -106,12 +120,22 @@ public class ButtonHandler implements ActionListener
   }
 
   /**
-   * Gets the current input field.
+   * Gets the current display field.
    * 
    * @return the input field as a string
    */
-  private static String getInputFieldText()
+  private static String getDisplayText()
   {
-    return RimplexWindow.inputField.getText().replaceAll("\r", "").replaceAll("\n", "");
+    return RimplexWindow.display.getText();
+  }
+
+  private static void appendToDisplay(String str)
+  {
+    RimplexWindow.display.setText(RimplexWindow.display.getText() + italicize(str));
+  }
+
+  private static void addToExpression(String str)
+  {
+    RimplexWindow.expression.add(str);
   }
 }
