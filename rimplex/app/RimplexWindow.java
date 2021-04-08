@@ -2,26 +2,18 @@ package app;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.GridLayout;
 import java.awt.Insets;
-import java.awt.dnd.DropTarget;
 import java.util.ArrayList;
 import javax.swing.BorderFactory;
-import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
 import javax.swing.JPanel;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
-import javax.swing.SwingConstants;
 import javax.swing.border.EtchedBorder;
 
 /**
@@ -81,6 +73,7 @@ public class RimplexWindow extends JFrame
     gbc.insets = new Insets(2, 2, 2, 2);
     JButton button = new JButton(name);
     button.setSize(width, height);
+    button.setFocusable(false);
     button.addActionListener(buttonHandler);
     buttonPanel.add(button, gbc);
 
@@ -113,7 +106,7 @@ public class RimplexWindow extends JFrame
     display.setText("<html>");
     display.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
     display.setFocusable(true);
-    display.addKeyListener(new KeyHandler());
+    display.addKeyListener(new ButtonHandler());
   }
 
   /**
