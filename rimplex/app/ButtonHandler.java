@@ -40,7 +40,12 @@ public class ButtonHandler implements ActionListener
     else if (buttonPressed.equals("\u2190")) // backspace
     {
       String displayText = getDisplayText();
-      updateDisplay(displayText.substring(0, displayText.length() - 1));
+
+      // TODO fix the deleting of i
+      if (!displayText.equals("<html>"))
+      {
+        updateDisplay(displayText.substring(0, displayText.length() - 1));
+      }
 
     }
     else if (calc.isOperation(buttonPressed))
@@ -64,14 +69,17 @@ public class ButtonHandler implements ActionListener
       missingParam = true;
       appendToDisplay(buttonPressed);
       currentOperand = currentOperand + buttonPressed;
-    } 
-    else if (buttonPressed.equals(rPar)) {
+    }
+    else if (buttonPressed.equals(rPar))
+    {
       // right paren
       missingParam = false;
       appendToDisplay(buttonPressed);
       currentOperand = currentOperand + buttonPressed;
-    } else 
+    }
+    else
     {
+      // add the numbers or anything else
       appendToDisplay(buttonPressed);
       currentOperand = currentOperand + buttonPressed;
     }
@@ -101,7 +109,7 @@ public class ButtonHandler implements ActionListener
    * @param newDisplay
    *          to be displayed
    */
-  private static void updateDisplay(final String newDisplay)
+  static void updateDisplay(final String newDisplay)
   {
     RimplexWindow.display.setText(italicize(newDisplay));
   }
@@ -124,17 +132,29 @@ public class ButtonHandler implements ActionListener
    * 
    * @return the input field as a string
    */
-  private static String getDisplayText()
+  static String getDisplayText()
   {
     return RimplexWindow.display.getText();
   }
 
-  private static void appendToDisplay(String str)
+  /**
+   * Appends to the display.
+   * 
+   * @param str
+   *          to be added
+   */
+  static void appendToDisplay(final String str)
   {
     RimplexWindow.display.setText(RimplexWindow.display.getText() + italicize(str));
   }
 
-  private static void addToExpression(String str)
+  /**
+   * adds to the current expression.
+   * 
+   * @param str
+   *          to be added
+   */
+  private static void addToExpression(final String str)
   {
     RimplexWindow.expression.add(str);
   }

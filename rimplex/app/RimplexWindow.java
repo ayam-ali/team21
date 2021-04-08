@@ -60,6 +60,7 @@ public class RimplexWindow extends JFrame
 
     makeLayout();
     setSize(400, 250);
+
   }
 
   /**
@@ -111,6 +112,8 @@ public class RimplexWindow extends JFrame
     display.setFont(font.deriveFont(Font.PLAIN));
     display.setText("<html>");
     display.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
+    display.setFocusable(true);
+    display.addKeyListener(new KeyHandler());
   }
 
   /**
@@ -191,15 +194,17 @@ public class RimplexWindow extends JFrame
     // row 6
     addButton("\u221A", 5, 4, 1, 1); // unicode for square root is \u221A
     addButton("LOG", 5, 3, 1, 1);
+   
 
     // resizing the words so they fit better
-    addButton("Fraction Decimal", 5, 6, 1, 1).setFont(new Font("", Font.PLAIN, 10));
+    addButton("Fraction Decimal", 5, 7, 1, 1).setFont(new Font("", Font.PLAIN, 10));
     addButton("Conjugate", 5, 5, 1, 1).setFont(new Font("", Font.PLAIN, 12));
+    addButton("Exponential", 5, 6, 1, 1).setFont(new Font("", Font.PLAIN, 12));;
 
     this.add(buttonPanel, BorderLayout.CENTER);
     JMenuBar menu = new JMenuBar();
     JMenu item = new JMenu(">");
-//    item.add(display);
+    // item.add(display);
     menu.add(item);
     this.add(menu, BorderLayout.EAST);
     this.pack();
