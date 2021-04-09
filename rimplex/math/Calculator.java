@@ -39,6 +39,8 @@ public class Calculator
     if (isOperation(input.get(0)))
     {
       input.add(0, recentResult);
+    } else if (input.size() < 3) {
+      
     }
 
     ComplexNumber total = ComplexNumber.parse(input.get(0));

@@ -159,6 +159,13 @@ public class ComplexNumber
     }
     return result;
   }
+  
+  public ComplexNumber log() 
+  {
+    double r = Math.sqrt(Math.pow(real, 2) + Math.pow(img, 2));
+    double theta = Math.atan(real/img); 
+    return new ComplexNumber(Math.log(r), theta);
+  }
 
   /**
    * To subtract numbers.
@@ -228,14 +235,7 @@ public class ComplexNumber
     String i = "";
     if (getRealPart() != 0)
     {
-      if (getRealPart() % 1 == 0)
-      {
-        r = r + (int) getRealPart();
-      }
-      else
-      {
-        r = "" + getRealPart();
-      }
+      r += (getRealPart() % 1 == 0) ? (int) getRealPart() : getRealPart();
     }
 
     String tempI = "" + getImaginaryPart();
