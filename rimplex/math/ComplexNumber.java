@@ -225,6 +225,76 @@ public class ComplexNumber
   }
 
   /**
+   * Change the Sign
+   * 
+   * @return complex number
+   */
+  public ComplexNumber changeSign()
+  {
+    return new ComplexNumber(getRealPart() * -1, getImaginaryPart());
+    
+  }
+  
+  /**
+   * Calculate the inverse
+   * 
+   * @return the inverse of complex number
+   */
+  public ComplexNumber inverse()
+  {
+    if(this.getImaginaryPart() == 0) {
+      return  new ComplexNumber(1 / getRealPart(), getImaginaryPart());
+    }
+    ComplexNumber one = new ComplexNumber(1 / getRealPart() , 1 / getImaginaryPart());
+    ComplexNumber inv = one.multiply(one.conjugate());
+    
+    return inv;
+  }
+
+  /**
+   * Modulus of this Complex number.
+   * 
+   * @return |z| where z is this Complex number.
+   */
+  public double mod()
+  {
+    if ( this.getRealPart() != 0 || this.getImaginaryPart() != 0)
+    {
+      return Math.sqrt(this.getRealPart() * this.getRealPart() + this.getImaginaryPart() * this.getImaginaryPart());
+    }
+    else
+    {
+      return 0d;
+    }
+  }
+
+  /**
+   * Argument of this Complex number.
+   * 
+   * @return arg(z) where z is this Complex number.
+   */
+  public double arg()
+  {
+    return Math.atan2(this.getImaginaryPart(), this.getRealPart());
+  }
+
+  /**
+   * Calculates the square root of a complex number.
+   * 
+   * @return arg(z) where z is this Complex number.
+   */
+  public ComplexNumber sqrt()
+  {
+    if (this.getImaginaryPart() == 0)
+    {
+      return new ComplexNumber(Math.sqrt(this.getRealPart()), 0);
+    }
+    double r = Math.sqrt(this.mod());
+    double theta = this.arg() / 2;
+    return new ComplexNumber(r * Math.cos(theta), r * Math.sin(theta));
+  }
+
+  /**
    * The to string to be shown. If the solution is an integer, it will return it as so.
    *
    * @return the string for the result
