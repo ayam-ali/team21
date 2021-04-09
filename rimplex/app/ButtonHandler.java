@@ -2,10 +2,11 @@ package app;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.ArrayList;
 
 import math.Calculator;
-import math.ComplexNumber;
 
 /**
  * ButtonHandler - responds to button presses and inputs.
@@ -16,17 +17,29 @@ import math.ComplexNumber;
  * @author Eric Anderson, Eric Hernandez-Diaz
  * @version 3/25/2021
  */
-public class ButtonHandler implements ActionListener
+public class ButtonHandler implements ActionListener, KeyListener
 {
   Calculator calc = new Calculator();
   String currentOperand = "";
   boolean missingParam = false;
   String rPar = "(";
   String lPar = ") ";
+  
+  private String zero = "0";
+  private String one = "1";
+  private String two = "2";
+  private String three = "3";
+  private String four = "4";
+  private String five = "5";
+  private String six = "6";
+  private String seven = "7";
+  private String eight = "8";
+  private String nine = "9";
 
   @Override
   public void actionPerformed(final ActionEvent e)
   {
+
     String buttonPressed = e.getActionCommand();
 
     if (buttonPressed.equals("R"))
@@ -64,16 +77,74 @@ public class ButtonHandler implements ActionListener
       missingParam = true;
       appendToDisplay(buttonPressed);
       currentOperand = currentOperand + buttonPressed;
-    } 
-    else if (buttonPressed.equals(rPar)) {
+    }
+    else if (buttonPressed.equals(rPar))
+    {
       // right paren
       missingParam = false;
       appendToDisplay(buttonPressed);
       currentOperand = currentOperand + buttonPressed;
-    } else 
+    }
+    else
     {
       appendToDisplay(buttonPressed);
       currentOperand = currentOperand + buttonPressed;
+    }
+  }
+
+  @Override
+  public void keyPressed(final KeyEvent e)
+  {
+    int keyCode = e.getKeyCode();
+    if (keyCode == KeyEvent.VK_0)
+    {
+      currentOperand = currentOperand + zero;
+      appendToDisplay(zero);
+    }
+    else if (keyCode == KeyEvent.VK_1)
+    {
+      currentOperand = currentOperand + one;
+      appendToDisplay(one);
+    }
+    else if (keyCode == KeyEvent.VK_2)
+    {
+      currentOperand = currentOperand + two;
+      appendToDisplay(two);
+    }
+    else if (keyCode == KeyEvent.VK_3)
+    {
+      currentOperand = currentOperand + three;
+      appendToDisplay(three);
+    }
+    else if (keyCode == KeyEvent.VK_4)
+    {
+      currentOperand = currentOperand + four;
+      appendToDisplay(four);
+    }
+    else if (keyCode == KeyEvent.VK_5)
+    {
+      currentOperand = currentOperand + five;
+      appendToDisplay(five);
+    }
+    else if (keyCode == KeyEvent.VK_6)
+    {
+      currentOperand = currentOperand + six;
+      appendToDisplay(six);
+    }
+    else if (keyCode == KeyEvent.VK_7)
+    {
+      currentOperand = currentOperand + seven;
+      appendToDisplay(seven);
+    }
+    else if (keyCode == KeyEvent.VK_8)
+    {
+      currentOperand = currentOperand + eight;
+      appendToDisplay(eight);
+    }
+    else if (keyCode == KeyEvent.VK_9)
+    {
+      currentOperand = currentOperand + nine;
+      appendToDisplay(nine);
     }
   }
 
@@ -129,7 +200,7 @@ public class ButtonHandler implements ActionListener
     return RimplexWindow.display.getText();
   }
 
-  private static void appendToDisplay(String str)
+  static void appendToDisplay(String str)
   {
     RimplexWindow.display.setText(RimplexWindow.display.getText() + italicize(str));
   }
@@ -138,4 +209,19 @@ public class ButtonHandler implements ActionListener
   {
     RimplexWindow.expression.add(str);
   }
+
+  @Override
+  public void keyTyped(KeyEvent e)
+  {
+    // TODO Auto-generated method stub
+
+  }
+
+  @Override
+  public void keyReleased(KeyEvent e)
+  {
+    // TODO Auto-generated method stub
+
+  }
+
 }
