@@ -225,6 +225,23 @@ public class ComplexNumber
   public ComplexNumber changeSign()
   {
     return new ComplexNumber(getRealPart() * -1, getImaginaryPart());
+    
+  }
+  
+  /**
+   * Calculate the inverse
+   * 
+   * @return the inverse of complex number
+   */
+  public ComplexNumber inverse()
+  {
+    if(this.getImaginaryPart() == 0) {
+      return  new ComplexNumber(1 / getRealPart(), getImaginaryPart());
+    }
+    ComplexNumber one = new ComplexNumber(1 / getRealPart() , 1 / getImaginaryPart());
+    ComplexNumber inv = one.multiply(one.conjugate());
+    
+    return inv;
   }
 
   /**
