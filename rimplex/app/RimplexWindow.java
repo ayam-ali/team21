@@ -33,7 +33,7 @@ public class RimplexWindow extends JFrame
   static ArrayList<String> expression;
 
   private static final long serialVersionUID = 1L;
-  private ButtonHandler buttonHandler;
+  private EventHandler eventHandler;
   private JPanel buttonPanel;
 
   /**
@@ -42,10 +42,10 @@ public class RimplexWindow extends JFrame
    * @param buttonHandler
    *          to deal with the buttons
    */
-  public RimplexWindow(final ButtonHandler buttonHandler)
+  public RimplexWindow(final EventHandler eventHandler)
   {
     super("Rimplex");
-    this.buttonHandler = buttonHandler;
+    this.eventHandler = eventHandler;
     this.buttonPanel = createButtonPanel();
     createDisplay();
     createExpression();
@@ -74,7 +74,7 @@ public class RimplexWindow extends JFrame
     JButton button = new JButton(name);
     button.setSize(width, height);
     button.setFocusable(false);
-    button.addActionListener(buttonHandler);
+    button.addActionListener(eventHandler);
     buttonPanel.add(button, gbc);
 
     // changes the color of the button
@@ -106,7 +106,7 @@ public class RimplexWindow extends JFrame
     display.setText("<html>");
     display.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
     display.setFocusable(true);
-    display.addKeyListener(new ButtonHandler());
+    display.addKeyListener(new EventHandler());
   }
 
   /**
@@ -152,7 +152,7 @@ public class RimplexWindow extends JFrame
 
     // create buttons and adds color
     // row 1
-    addButton("+-", 0, 3, 1, 1);
+    addButton("\u00B1", 0, 3, 1, 1); // plus minus sign
     addButton("C", 1, 3, 1, 1);
     addButton("\u2190", 2, 3, 1, 1); // if "" does not work use "<-" instead
     addButton("+", 3, 3, 1, 1);
@@ -170,17 +170,17 @@ public class RimplexWindow extends JFrame
     addButton("5", 1, 5, 1, 1);
     addButton("6", 2, 5, 1, 1);
     addButton("\u00D7", 3, 5, 1, 1); // unicode for multiplication \u00D7
-    addButton("(", 4, 5, 1, 1); // unicode for division \u00F7
+    addButton("(", 4, 5, 1, 1); 
     // row 4
     addButton("7", 0, 6, 1, 1);
     addButton("8", 1, 6, 1, 1);
     addButton("9", 2, 6, 1, 1);
-    addButton("\u00F7", 3, 6, 1, 1);
+    addButton("\u00F7", 3, 6, 1, 1); // division sign
     addButton(")", 4, 6, 1, 1);
 
     // row 5
     addButton("0", 0, 7, 2, 1);
-    addButton("i", 2, 7, 1, 1);
+    addButton("\uD835\uDC8A", 2, 7, 1, 1); // math i sign
     addButton("=", 3, 7, 1, 1);
     addButton(".", 4, 7, 1, 1);
 
@@ -190,9 +190,9 @@ public class RimplexWindow extends JFrame
    
 
     // resizing the words so they fit better
-    addButton("Fraction Decimal", 5, 7, 1, 1).setFont(new Font("", Font.PLAIN, 10));
-    addButton("Conjugate", 5, 5, 1, 1).setFont(new Font("", Font.PLAIN, 12));
-    addButton("Exponential", 5, 6, 1, 1).setFont(new Font("", Font.PLAIN, 12));;
+    addButton("Frac/Dec", 5, 7, 1, 1);
+    addButton("Con", 5, 5, 1, 1);
+    addButton("Exp", 5, 6, 1, 1);
 
     this.add(buttonPanel, BorderLayout.CENTER);
     JMenuBar menu = new JMenuBar();

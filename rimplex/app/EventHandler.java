@@ -2,11 +2,15 @@ package app;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
 
+import javax.swing.KeyStroke;
+
 import math.Calculator;
+import math.ComplexNumber;
 
 /**
  * ButtonHandler - responds to button presses and inputs.
@@ -17,14 +21,15 @@ import math.Calculator;
  * @author Eric Anderson, Eric Hernandez-Diaz
  * @version 3/25/2021
  */
-public class ButtonHandler implements ActionListener, KeyListener
+public class EventHandler extends KeyAdapter implements ActionListener
 {
   Calculator calc = new Calculator();
-  String currentOperand = "";
+  static String currentOperand = "";
+  boolean exponential = false;
   boolean missingParam = false;
   String rPar = "(";
   String lPar = ") ";
-  
+
   private String zero = "0";
   private String one = "1";
   private String two = "2";
@@ -52,15 +57,30 @@ public class ButtonHandler implements ActionListener, KeyListener
     }
     else if (buttonPressed.equals("\u2190")) // backspace
     {
-      String displayText = getDisplayText();
-      updateDisplay(displayText.substring(0, displayText.length() - 1));
+      if (!currentOperand.isEmpty())
+      {
+        String displayText = getDisplayText();
 
+        if (currentOperand.endsWith("i"))
+        {
+          updateDisplay(displayText.substring(0, displayText.length() - 8));
+        }
+        else
+        {
+          updateDisplay(displayText.substring(0, displayText.length() - 1));
+        }
+        currentOperand = currentOperand.substring(0, currentOperand.length() - 1);
+
+      }
     }
     else if (calc.isOperation(buttonPressed))
     { // operation symbol
       if (!missingParam)
       { // if there is a left paren but no right paren
-        RimplexWindow.expression.add(currentOperand);
+        if (!currentOperand.isEmpty())
+        {
+          RimplexWindow.expression.add(currentOperand);
+        }
         RimplexWindow.expression.add(buttonPressed);
         appendToDisplay(buttonPressed);
         currentOperand = "";
@@ -71,6 +91,11 @@ public class ButtonHandler implements ActionListener, KeyListener
         appendToDisplay(buttonPressed);
       }
 
+    }
+    else if (buttonPressed.equals("\uD835\uDC8A"))
+    {
+      currentOperand = currentOperand + "i";
+      appendToDisplay("i");
     }
     else if (buttonPressed.equals(lPar))
     { // left paren
@@ -85,6 +110,16 @@ public class ButtonHandler implements ActionListener, KeyListener
       appendToDisplay(buttonPressed);
       currentOperand = currentOperand + buttonPressed;
     }
+    else if (buttonPressed.equals("="))
+    {
+
+      RimplexWindow.expression.add(currentOperand);
+      ComplexNumber solved = calc.calculate(RimplexWindow.expression);
+      RimplexWindow.expression.clear();
+      RimplexWindow.expression.add(solved.toString());
+      currentOperand = "";
+      updateDisplay(getDisplayText() + buttonPressed + italicize(solved.toString()));
+    }
     else
     {
       appendToDisplay(buttonPressed);
@@ -96,6 +131,7 @@ public class ButtonHandler implements ActionListener, KeyListener
   public void keyPressed(final KeyEvent e)
   {
     int keyCode = e.getKeyCode();
+    KeyStroke eKeyStroke = KeyStroke.getKeyStroke(e.getKeyChar());
     if (keyCode == KeyEvent.VK_0)
     {
       currentOperand = currentOperand + zero;
@@ -136,6 +172,15 @@ public class ButtonHandler implements ActionListener, KeyListener
       currentOperand = currentOperand + seven;
       appendToDisplay(seven);
     }
+    else if (eKeyStroke.equals(KeyStroke.getKeyStroke('*'))) {
+      if (!currentOperand.isEmpty())
+      {
+        RimplexWindow.expression.add(currentOperand);
+      }
+      RimplexWindow.expression.add("\u00D7");
+      appendToDisplay("\u00D7");
+      currentOperand = "";
+    }
     else if (keyCode == KeyEvent.VK_8)
     {
       currentOperand = currentOperand + eight;
@@ -146,14 +191,57 @@ public class ButtonHandler implements ActionListener, KeyListener
       currentOperand = currentOperand + nine;
       appendToDisplay(nine);
     }
+    else if (keyCode == KeyEvent.VK_ENTER)
+    {
+      RimplexWindow.expression.add(currentOperand);
+      ComplexNumber solved = calc.calculate(RimplexWindow.expression);
+      RimplexWindow.expression.clear();
+      RimplexWindow.expression.add(solved.toString());
+      currentOperand = "";
+      updateDisplay(getDisplayText() + "=" + solved.toString());
+    }
+    else if (keyCode == KeyEvent.VK_MINUS) // subtract on keys
+    {
+      if (!currentOperand.isEmpty())
+      {
+        RimplexWindow.expression.add(currentOperand);
+      }
+      RimplexWindow.expression.add("-");
+      appendToDisplay("-");
+      currentOperand = "";
+    } else if (keyCode == KeyEvent.VK_SLASH) { // division on key
+      if (!currentOperand.isEmpty())
+      {
+        RimplexWindow.expression.add(currentOperand);
+      }
+      RimplexWindow.expression.add("\u00F7");
+      appendToDisplay("\u00F7");
+      currentOperand = "";
+    }
   }
 
+  @Override
+  public void keyReleased(KeyEvent e) {
+    int keyCode = e.getKeyCode();
+    KeyStroke eKeyStroke = KeyStroke.getKeyStroke(e.getKeyChar());
+    
+    if (eKeyStroke.equals(KeyStroke.getKeyStroke('+'))) {
+      if (!currentOperand.isEmpty())
+      {
+        RimplexWindow.expression.add(currentOperand);
+      }
+      RimplexWindow.expression.add("+");
+      appendToDisplay("+");
+      currentOperand = "";
+    } 
+  }
   /**
    * Clears the input field.
    */
   private static void clear()
   {
     RimplexWindow.display.setText("<html>");
+    RimplexWindow.expression = new ArrayList<>();
   }
 
   /**
@@ -161,7 +249,6 @@ public class ButtonHandler implements ActionListener, KeyListener
    */
   private static void reset()
   {
-    RimplexWindow.display.setText("<html>");
     RimplexWindow.expression = new ArrayList<>();
     clear();
   }
@@ -174,7 +261,7 @@ public class ButtonHandler implements ActionListener, KeyListener
    */
   private static void updateDisplay(final String newDisplay)
   {
-    RimplexWindow.display.setText(italicize(newDisplay));
+    RimplexWindow.display.setText(newDisplay);
   }
 
   /**
@@ -208,20 +295,6 @@ public class ButtonHandler implements ActionListener, KeyListener
   private static void addToExpression(String str)
   {
     RimplexWindow.expression.add(str);
-  }
-
-  @Override
-  public void keyTyped(KeyEvent e)
-  {
-    // TODO Auto-generated method stub
-
-  }
-
-  @Override
-  public void keyReleased(KeyEvent e)
-  {
-    // TODO Auto-generated method stub
-
   }
 
 }
