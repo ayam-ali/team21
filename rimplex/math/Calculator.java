@@ -16,7 +16,7 @@ public class Calculator
   private String divide = "\u00F7";
   private String sqrt = "\u221A";
   private String inv = "Inv";
-  private String sign = "+-";
+  private String sign = "\u00B1";
   private String log = "LOG";
   
   
@@ -108,7 +108,7 @@ public class Calculator
       case "Inv":
         result = first.inverse();
         break;
-      case "+-":
+      case "\u00B1":
         result = first.changeSign();
         break;
       case "LOG":
