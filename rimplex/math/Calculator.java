@@ -69,7 +69,8 @@ public class Calculator
    */
   public boolean isOperation(final String string)
   {
-    return string == plus || string == minus || string == multiply || string == divide || string == inv || string == sqrt || string == sign;
+    return string == plus || string == minus || string == multiply || string == divide
+        || string == inv || string == sqrt || string == sign || string == log;
   }
 
   /**
@@ -110,7 +111,9 @@ public class Calculator
       case "+-":
         result = first.changeSign();
         break;
-       
+      case "LOG":
+        result = first.log();
+        break;
       default:
         // do nothing
     }

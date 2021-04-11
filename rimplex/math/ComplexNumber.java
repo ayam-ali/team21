@@ -312,9 +312,8 @@ public class ComplexNumber
    */
   public String makeFraction(double num) {
     String numString = "" + num;
-    String fracString;
     if (Double.isInfinite(num)) return numString;
-    if (num % 1 == 0) fracString = "" + (int) num;
+    if (num % 1 == 0) return "" + (int) num;
     
     int afterDec = numString.length() - numString.indexOf('.') - 1;
     int denominator = (int) Math.pow(10, afterDec);
@@ -322,8 +321,7 @@ public class ComplexNumber
     int gcd = gcd(numerator, denominator);
     numerator = numerator / gcd;
     denominator = denominator / gcd;
-    if (numerator == denominator) fracString = "1";
-    return numerator + "/" + denominator;
+    return (numerator == denominator) ? "1" : numerator + "/" + denominator;
   }
   
   /**
@@ -366,25 +364,24 @@ public class ComplexNumber
     String i = "";
     if (getRealPart() != 0)
     {
-      r += (getRealPart() % 1 == 0) ? (int) getRealPart() : getRealPart();
-    }
+      if (!isFraction)
+      {
+        r += (getRealPart() % 1 == 0) ? (int) getRealPart() : getRealPart();
+      } else {
+        r += makeFraction(getRealPart());
+      }
+    }  
 
-    String tempI = "" + getImaginaryPart();
+    String tempI = (isFraction) ? makeFraction(getImaginaryPart()) : "" + getImaginaryPart();
     if (getImaginaryPart() % 1 == 0)
     {
       tempI = "" + (int) getImaginaryPart();
     }
-
-    if (getImaginaryPart() != 0)
-    {
-
-      i = "" + tempI + iString;
-
-    }
+    i = tempI + iString;
 
     // change
     String result = "";
-    if (real == 0 && getImaginaryPart() != 0)
+    if (real == 0 && img != 0)
     {
       result = "" + i;
     }
@@ -404,6 +401,9 @@ public class ComplexNumber
     {
       result = "" + r + "+" + i;
     }
+    
     return result;
-  }
+    
+  }  
 }
+  
