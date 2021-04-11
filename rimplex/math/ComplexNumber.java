@@ -142,9 +142,9 @@ public class ComplexNumber
    *          the power that the base will be raised to.
    * @return new complex number raised to the power.
    */
-  public ComplexNumber exponent(final ComplexNumber base, final int power)
+  public ComplexNumber exponent(final int power)
   {
-    ComplexNumber result = base;
+    ComplexNumber result = this;
     int pow = power;
     if (power == 1)
     {
@@ -157,7 +157,7 @@ public class ComplexNumber
 
     while (pow > 1)
     {
-      result = result.multiply(base);
+      result = result.multiply(this);
       pow--;
     }
     return result;
