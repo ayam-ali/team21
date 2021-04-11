@@ -218,7 +218,7 @@ public class ComplexNumber
    * Helper method to assist divide, gets the conjugate.
    * 
    * @return complex number
-   */
+   */ 
   public ComplexNumber conjugate()
   {
     return new ComplexNumber(getRealPart(), getImaginaryPart() * -1);
