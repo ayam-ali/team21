@@ -27,8 +27,8 @@ public class EventHandler extends KeyAdapter implements ActionListener
   static String currentOperand = "";
   boolean exponential = false;
   boolean missingParam = false;
-  String rPar = "(";
-  String lPar = ") ";
+  String rPar = ")";
+  String lPar = "( ";
 
   private String zero = "0";
   private String one = "1";
@@ -75,22 +75,16 @@ public class EventHandler extends KeyAdapter implements ActionListener
     }
     else if (calc.isOperation(buttonPressed))
     { // operation symbol
-      if (!missingParam)
+      if (missingParam)
       { // if there is a left paren but no right paren
-        if (!currentOperand.isEmpty())
-        {
-          RimplexWindow.expression.add(currentOperand);
-        }
-        RimplexWindow.expression.add(buttonPressed);
+        currentOperand = currentOperand + buttonPressed;
         appendToDisplay(buttonPressed);
-        currentOperand = "";
+
       }
       else
       { // if there are no paren missing
-        currentOperand = currentOperand + buttonPressed;
-        appendToDisplay(buttonPressed);
+        addOperator(buttonPressed);
       }
-
     }
     else if (buttonPressed.equals("\uD835\uDC8A"))
     {
@@ -101,24 +95,15 @@ public class EventHandler extends KeyAdapter implements ActionListener
     { // left paren
       missingParam = true;
       appendToDisplay(buttonPressed);
-      currentOperand = currentOperand + buttonPressed;
     }
     else if (buttonPressed.equals(rPar))
     {
-      // right paren
       missingParam = false;
       appendToDisplay(buttonPressed);
-      currentOperand = currentOperand + buttonPressed;
     }
     else if (buttonPressed.equals("="))
     {
-
-      RimplexWindow.expression.add(currentOperand);
-      ComplexNumber solved = calc.calculate(RimplexWindow.expression);
-      RimplexWindow.expression.clear();
-      RimplexWindow.expression.add(solved.toString());
-      currentOperand = "";
-      updateDisplay(getDisplayText() + buttonPressed + italicize(solved.toString()));
+      findSolution();
     }
     else
     {
@@ -132,7 +117,17 @@ public class EventHandler extends KeyAdapter implements ActionListener
   {
     int keyCode = e.getKeyCode();
     KeyStroke eKeyStroke = KeyStroke.getKeyStroke(e.getKeyChar());
-    if (keyCode == KeyEvent.VK_0)
+    if (eKeyStroke == KeyStroke.getKeyStroke('('))
+    {
+      missingParam = true;
+      appendToDisplay("(");
+    }
+    else if (eKeyStroke == KeyStroke.getKeyStroke(')'))
+    {
+      missingParam = false;
+      appendToDisplay(")");
+    }
+    else if (keyCode == KeyEvent.VK_0)
     {
       currentOperand = currentOperand + zero;
       appendToDisplay(zero);
@@ -172,14 +167,18 @@ public class EventHandler extends KeyAdapter implements ActionListener
       currentOperand = currentOperand + seven;
       appendToDisplay(seven);
     }
-    else if (eKeyStroke.equals(KeyStroke.getKeyStroke('*'))) {
-      if (!currentOperand.isEmpty())
-      {
-        RimplexWindow.expression.add(currentOperand);
+    else if (eKeyStroke.equals(KeyStroke.getKeyStroke('*')))
+    {
+      if (missingParam)
+      { // if there is a left paren but no right paren
+        currentOperand = currentOperand + "\u00D7";
+        appendToDisplay("\u00D7");
+
       }
-      RimplexWindow.expression.add("\u00D7");
-      appendToDisplay("\u00D7");
-      currentOperand = "";
+      else
+      { // if there are no paren missing
+        addOperator("*");
+      }
     }
     else if (keyCode == KeyEvent.VK_8)
     {
@@ -193,48 +192,62 @@ public class EventHandler extends KeyAdapter implements ActionListener
     }
     else if (keyCode == KeyEvent.VK_ENTER)
     {
-      RimplexWindow.expression.add(currentOperand);
-      ComplexNumber solved = calc.calculate(RimplexWindow.expression);
-      RimplexWindow.expression.clear();
-      RimplexWindow.expression.add(solved.toString());
-      currentOperand = "";
-      updateDisplay(getDisplayText() + "=" + solved.toString());
+      findSolution();
     }
     else if (keyCode == KeyEvent.VK_MINUS) // subtract on keys
     {
-      if (!currentOperand.isEmpty())
-      {
-        RimplexWindow.expression.add(currentOperand);
+      if (missingParam)
+      { // if there is a left paren but no right paren
+        currentOperand = currentOperand + "-";
+        appendToDisplay("-");
+
       }
-      RimplexWindow.expression.add("-");
-      appendToDisplay("-");
-      currentOperand = "";
-    } else if (keyCode == KeyEvent.VK_SLASH) { // division on key
-      if (!currentOperand.isEmpty())
-      {
-        RimplexWindow.expression.add(currentOperand);
+      else
+      { // if there are no paren missing
+        addOperator("-");
       }
-      RimplexWindow.expression.add("\u00F7");
-      appendToDisplay("\u00F7");
-      currentOperand = "";
+    }
+    else if (keyCode == KeyEvent.VK_SLASH)
+    { // division on key
+      if (missingParam)
+      { // if there is a left paren but no right paren
+        currentOperand = currentOperand + "\u00F7";
+        appendToDisplay("\u00F7");
+
+      }
+      else
+      { // if there are no paren missing
+        addOperator("/");
+      }
+    }
+    else if (keyCode == KeyEvent.VK_PERIOD)
+    {
+      currentOperand = currentOperand + ".";
+      appendToDisplay(".");
     }
   }
 
   @Override
-  public void keyReleased(KeyEvent e) {
+  public void keyReleased(final KeyEvent e)
+  {
     int keyCode = e.getKeyCode();
     KeyStroke eKeyStroke = KeyStroke.getKeyStroke(e.getKeyChar());
-    
-    if (eKeyStroke.equals(KeyStroke.getKeyStroke('+'))) {
-      if (!currentOperand.isEmpty())
-      {
-        RimplexWindow.expression.add(currentOperand);
+
+    if (eKeyStroke.equals(KeyStroke.getKeyStroke('+')))
+    {
+      if (missingParam)
+      { // if there is a left paren but no right paren
+        currentOperand = currentOperand + "+";
+        appendToDisplay("+");
+
       }
-      RimplexWindow.expression.add("+");
-      appendToDisplay("+");
-      currentOperand = "";
-    } 
+      else
+      { // if there are no paren missing
+        addOperator("+");
+      }
+    }
   }
+
   /**
    * Clears the input field.
    */
@@ -287,14 +300,52 @@ public class EventHandler extends KeyAdapter implements ActionListener
     return RimplexWindow.display.getText();
   }
 
-  static void appendToDisplay(String str)
+  static void appendToDisplay(final String str)
   {
-    RimplexWindow.display.setText(RimplexWindow.display.getText() + italicize(str));
+    RimplexWindow.display.setText(getDisplayText() + italicize(str));
   }
 
-  private static void addToExpression(String str)
+  private static void addToExpression(final String str)
   {
     RimplexWindow.expression.add(str);
   }
 
+  /**
+   * Helper method for requesting operators.
+   * @param operator current operator being inputted.
+   */
+  private void addOperator(final String operator)
+  {
+    String op = operator;
+    if (op.equals("*"))
+    {
+      op = "\u00D7";
+    }
+    else if (op.equals("/"))
+    {
+      op = "\u00F7";
+    }
+
+    if (!currentOperand.isEmpty())
+    {
+      RimplexWindow.expression.add(currentOperand);
+    }
+    addToExpression(op);
+    appendToDisplay(op);
+    currentOperand = "";
+
+  }
+
+  /**
+   * Helper method used to find calculations.
+   */
+  private void findSolution()
+  {
+    RimplexWindow.expression.add(currentOperand);
+    ComplexNumber solved = calc.calculate(RimplexWindow.expression);
+    RimplexWindow.expression.clear();
+    RimplexWindow.expression.add(solved.toString());
+    currentOperand = "";
+    updateDisplay(getDisplayText() + "=" + italicize(solved.toString()));
+  }
 }
