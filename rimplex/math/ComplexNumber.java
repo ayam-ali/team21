@@ -16,6 +16,8 @@ public class ComplexNumber
 
   private double real;
   private double img;
+  
+  private boolean isFraction;
 
   /**
    * The constructor for Complex number.
@@ -29,6 +31,7 @@ public class ComplexNumber
   {
     this.real = real;
     this.img = img;
+    this.isFraction = false; 
   }
 
   /**
@@ -292,6 +295,64 @@ public class ComplexNumber
     double r = Math.sqrt(this.mod());
     double theta = this.arg() / 2;
     return new ComplexNumber(r * Math.cos(theta), r * Math.sin(theta));
+  }
+  
+  /**
+   * 
+   */
+  public void toggleForm() {
+    this.isFraction = (this.isFraction == true) ? false : true;
+  }
+  
+  /**
+   * 
+   * 
+   * @param num
+   * @return
+   */
+  public String makeFraction(double num) {
+    String numString = "" + num;
+    String fracString;
+    if (Double.isInfinite(num)) return numString;
+    if (num % 1 == 0) fracString = "" + (int) num;
+    
+    int afterDec = numString.length() - numString.indexOf('.') - 1;
+    int denominator = (int) Math.pow(10, afterDec);
+    int numerator = (int) (num * denominator);
+    int gcd = gcd(numerator, denominator);
+    numerator = numerator / gcd;
+    denominator = denominator / gcd;
+    if (numerator == denominator) fracString = "1";
+    return numerator + "/" + denominator;
+  }
+  
+  /**
+   * 
+   * @param a
+   * @param b
+   * @return
+   */
+  public int gcd(int a, int b) {
+    int dividend;
+    int divisor;
+    int remainder;
+    
+    if (a > b) {
+      dividend = a;
+      divisor = b;
+    } else {
+      dividend = b;
+      divisor = a;
+    }
+    remainder = dividend % divisor;
+    
+    while (remainder != 0) {
+      dividend = divisor;
+      divisor = remainder;
+      remainder = dividend % divisor;
+    }
+    
+    return divisor;
   }
 
   /**
