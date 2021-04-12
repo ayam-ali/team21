@@ -20,8 +20,6 @@ public class Calculator
   private String log = "LOG";
   private String con = "Con";
   private String exp = "Exp";
-  
-  
 
   private String recentResult;
 
@@ -48,8 +46,10 @@ public class Calculator
     if (isOperation(input.get(0)))
     {
       input.add(0, recentResult);
-    } else if(input.size() < 3) {
-      total = performOperation(total, total, input.get(1) );
+    }
+    else if (input.size() < 3)
+    {
+      total = performOperation(total, total, input.get(1));
     }
 
     for (int i = 2; i < input.size(); i += 2)
@@ -90,7 +90,7 @@ public class Calculator
   private ComplexNumber performOperation(final ComplexNumber first, final ComplexNumber second,
       final String operand)
   {
-    ComplexNumber result = null; 
+    ComplexNumber result = null;
     switch (operand)
     {
       case "+":
@@ -106,7 +106,7 @@ public class Calculator
         result = first.divide(second);
         break;
       case "\u221A":
-        result = first.sqrt();
+        result = second.sqrt();
         break;
       case "Inv":
         result = first.inverse();
@@ -118,7 +118,7 @@ public class Calculator
         result = first.log();
         break;
       case "Con":
-        result = first.conjugate();
+        result = second.conjugate();
         break;
       case "Exp":
         result = first.exponent((int) second.getRealPart());

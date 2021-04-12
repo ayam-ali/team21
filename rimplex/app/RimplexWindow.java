@@ -19,10 +19,6 @@ import javax.swing.border.EtchedBorder;
 /**
  * GUI - Creates objects for displays and input fields.
  * 
- * Modifications: - Anderson (3/25) - changed input field to JTextField to prevent \n chars. Added
- * string formatter to remove \n for redundancy. Ali (3/28) - Changed symbols, changed window size,
- * cleared up, and added javadoc comments. Ali (3/30) color change, and clarifications
- * 
  * @author Eric Anderson, Eric Hernandez-Diaz, Ayam Ali
  * @version 3/25/2021
  */
@@ -138,8 +134,7 @@ public class RimplexWindow extends JFrame
   private void makeLayout()
   {
     this.setLayout(new BorderLayout());
-    // this.add(display);
-    // this.add(inputField);
+
     GridBagConstraints gbc = new GridBagConstraints();
     gbc.gridx = 0;
     gbc.gridy = 0;
@@ -170,7 +165,7 @@ public class RimplexWindow extends JFrame
     addButton("5", 1, 5, 1, 1);
     addButton("6", 2, 5, 1, 1);
     addButton("\u00D7", 3, 5, 1, 1); // unicode for multiplication \u00D7
-    addButton("(", 4, 5, 1, 1); 
+    addButton("(", 4, 5, 1, 1);
     // row 4
     addButton("7", 0, 6, 1, 1);
     addButton("8", 1, 6, 1, 1);
@@ -187,9 +182,6 @@ public class RimplexWindow extends JFrame
     // row 6
     addButton("\u221A", 5, 4, 1, 1); // unicode for square root is \u221A
     addButton("LOG", 5, 3, 1, 1);
-   
-
-    // resizing the words so they fit better
     addButton("Frac/Dec", 5, 7, 1, 1);
     addButton("Con", 5, 5, 1, 1);
     addButton("Exp", 5, 6, 1, 1);
@@ -197,7 +189,6 @@ public class RimplexWindow extends JFrame
     this.add(buttonPanel, BorderLayout.CENTER);
     JMenuBar menu = new JMenuBar();
     JMenu item = new JMenu(">");
-    // item.add(display);
     menu.add(item);
     this.add(menu, BorderLayout.EAST);
     this.pack();

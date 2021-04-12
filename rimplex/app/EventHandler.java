@@ -4,7 +4,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.util.ArrayList;
 
 import javax.swing.KeyStroke;
@@ -13,12 +12,9 @@ import math.Calculator;
 import math.ComplexNumber;
 
 /**
- * ButtonHandler - responds to button presses and inputs.
+ * EventHandler Class - responds to button presses and inputs.
  * 
- * Modifications: - Anderson (3/25) - added .strip before displaying input string. Ali (3/28) -
- * clear up and javadoc comments. Ali (3/30) Editing, clarifications, and comments. 
- * 
- * @author Eric Anderson, Eric Hernandez-Diaz, Ayam Ali 
+ * @author Eric Anderson, Eric Hernandez-Diaz, Ayam Ali
  * @version 3/25/2021
  */
 public class EventHandler extends KeyAdapter implements ActionListener
@@ -172,7 +168,8 @@ public class EventHandler extends KeyAdapter implements ActionListener
       currentOperand = currentOperand + seven;
       appendToDisplay(seven);
     }
-    else if (eKeyStroke.equals(KeyStroke.getKeyStroke('*'))) {
+    else if (eKeyStroke.equals(KeyStroke.getKeyStroke('*')))
+    {
       if (!currentOperand.isEmpty())
       {
         RimplexWindow.expression.add(currentOperand);
@@ -209,7 +206,9 @@ public class EventHandler extends KeyAdapter implements ActionListener
       RimplexWindow.expression.add("-");
       appendToDisplay("-");
       currentOperand = "";
-    } else if (keyCode == KeyEvent.VK_SLASH) { // division on key
+    }
+    else if (keyCode == KeyEvent.VK_SLASH)
+    { // division on key
       if (!currentOperand.isEmpty())
       {
         RimplexWindow.expression.add(currentOperand);
@@ -221,11 +220,13 @@ public class EventHandler extends KeyAdapter implements ActionListener
   }
 
   @Override
-  public void keyReleased(KeyEvent e) {
+  public void keyReleased(KeyEvent e)
+  {
     int keyCode = e.getKeyCode();
     KeyStroke eKeyStroke = KeyStroke.getKeyStroke(e.getKeyChar());
-    
-    if (eKeyStroke.equals(KeyStroke.getKeyStroke('+'))) {
+
+    if (eKeyStroke.equals(KeyStroke.getKeyStroke('+')))
+    {
       if (!currentOperand.isEmpty())
       {
         RimplexWindow.expression.add(currentOperand);
@@ -233,8 +234,9 @@ public class EventHandler extends KeyAdapter implements ActionListener
       RimplexWindow.expression.add("+");
       appendToDisplay("+");
       currentOperand = "";
-    } 
+    }
   }
+
   /**
    * Clears the input field.
    */
@@ -287,14 +289,15 @@ public class EventHandler extends KeyAdapter implements ActionListener
     return RimplexWindow.display.getText();
   }
 
+  /**
+   * Appends the str to the display.
+   * 
+   * @param str
+   *          to be appended
+   */
   static void appendToDisplay(String str)
   {
     RimplexWindow.display.setText(RimplexWindow.display.getText() + italicize(str));
-  }
-
-  private static void addToExpression(String str)
-  {
-    RimplexWindow.expression.add(str);
   }
 
 }
