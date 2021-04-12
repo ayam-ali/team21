@@ -165,9 +165,7 @@ public class ComplexNumber
   
   public ComplexNumber log() 
   {
-    double r = Math.sqrt(Math.pow(real, 2) + Math.pow(img, 2));
-    double theta = Math.atan(real/img); 
-    return new ComplexNumber(Math.log(r), theta);
+    return new ComplexNumber(Math.log(mod()), arg());
   }
 
   /**
