@@ -278,14 +278,8 @@ public class ComplexNumber
    */
   public ComplexNumber inverse()
   {
-    if (this.getImaginaryPart() == 0)
-    {
-      return new ComplexNumber(1 / getRealPart(), getImaginaryPart());
-    }
-    ComplexNumber one = new ComplexNumber(1 / getRealPart(), 1 / getImaginaryPart());
-    ComplexNumber inv = one.multiply(one.conjugate());
-
-    return inv;
+    double length = real * real + img * img;
+    return new ComplexNumber(real/length, -img/length);
   }
 
   /**
