@@ -187,10 +187,11 @@ public class RimplexWindow extends JFrame
     addButton("Exp", 5, 6, 1, 1);
 
     this.add(buttonPanel, BorderLayout.CENTER);
-    JMenuBar menu = new JMenuBar();
-    JMenu item = new JMenu(">");
-    menu.add(item);
-    this.add(menu, BorderLayout.EAST);
+    
+    // History window items ---- 
+    JButton expand = new JButton(">");
+    expand.addActionListener(new HistoryHandler());
+    this.add(expand, BorderLayout.EAST);
     this.pack();
   }
 
