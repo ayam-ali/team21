@@ -392,7 +392,7 @@ public class ComplexNumber
     i = tempI + iString;
 
     // change
-    String result = "";
+    String result = ""; 
     if (real == 0 && img != 0)
     {
       result = "" + i;
