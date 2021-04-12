@@ -115,7 +115,7 @@ public class Calculator
         result = first.changeSign();
         break;
       case "LOG":
-        result = first.log();
+        result = second.log();
         break;
       case "Con":
         result = second.conjugate();
