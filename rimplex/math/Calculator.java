@@ -90,7 +90,7 @@ public class Calculator
   private ComplexNumber performOperation(final ComplexNumber first, final ComplexNumber second,
       final String operand)
   {
-    ComplexNumber result = null;
+    ComplexNumber result = null; 
     switch (operand)
     {
       case "+":
@@ -106,7 +106,7 @@ public class Calculator
         result = first.divide(second);
         break;
       case "\u221A":
-        result = second.sqrt();
+        result = first.sqrt();
         break;
       case "Inv":
         result = first.inverse();
@@ -115,10 +115,10 @@ public class Calculator
         result = first.changeSign();
         break;
       case "LOG":
-        result = second.log();
+        result = first.log();
         break;
       case "Con":
-        result = second.conjugate();
+        result = first.conjugate();
         break;
       case "Exp":
         result = first.exponent((int) second.getRealPart());
