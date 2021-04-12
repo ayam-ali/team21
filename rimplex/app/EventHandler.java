@@ -4,7 +4,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.util.ArrayList;
 
 import javax.swing.KeyStroke;
@@ -16,19 +15,20 @@ import math.ComplexNumber;
  * ButtonHandler - responds to button presses and inputs.
  * 
  * Modifications: - Anderson (3/25) - added .strip before displaying input string. Ali (3/28) -
- * clear up and javadoc comments. Ali (3/30) Editing, clarifications, and comments. 
+ * clear up and javadoc comments. Ali (3/30) Editing, clarifications, and comments.
  * 
- * @author Eric Anderson, Eric Hernandez-Diaz, Ayam Ali 
+ * @author Eric Anderson, Eric Hernandez-Diaz, Ayam Ali
  * @version 3/25/2021
  */
 public class EventHandler extends KeyAdapter implements ActionListener
 {
-  Calculator calc = new Calculator();
-  static String currentOperand = "";
+
+  private Calculator calc = new Calculator();
+  private static String currentOperand = "";
   boolean exponential = false;
   boolean missingParam = false;
   String rPar = ")";
-  String lPar = "( ";
+  String lPar = "(";
 
   private String zero = "0";
   private String one = "1";
@@ -55,6 +55,30 @@ public class EventHandler extends KeyAdapter implements ActionListener
     {
       clear();
     }
+    else if (buttonPressed.equals("\u221A"))
+    {
+      currentOperand = currentOperand + "\u221A";
+      appendToDisplay("\u221A");
+    }
+    else if (buttonPressed.equals("\u00B1"))
+    {
+
+      ComplexNumber num = ComplexNumber.parse(currentOperand);
+      num = num.multiply(ComplexNumber.parse("-1"));
+      clear();
+      currentOperand = num.toString();
+
+      if (!currentOperand.startsWith("("))
+      {
+        currentOperand = "(" + currentOperand;
+      }
+      if (!currentOperand.endsWith(")"))
+      {
+        currentOperand = currentOperand + ")";
+      }
+
+      appendToDisplay(currentOperand);
+    }
     else if (buttonPressed.equals("\u2190")) // backspace
     {
       if (!currentOperand.isEmpty())
@@ -65,12 +89,21 @@ public class EventHandler extends KeyAdapter implements ActionListener
         {
           updateDisplay(displayText.substring(0, displayText.length() - 8));
         }
+        else if (currentOperand.endsWith(lPar))
+        {
+          updateDisplay(displayText.substring(0, displayText.length() - 1));
+          missingParam = false;
+        }
+        else if (currentOperand.endsWith(rPar))
+        {
+          updateDisplay(displayText.substring(0, displayText.length() - 1));
+          missingParam = true;
+        }
         else
         {
           updateDisplay(displayText.substring(0, displayText.length() - 1));
         }
         currentOperand = currentOperand.substring(0, currentOperand.length() - 1);
-
       }
     }
     else if (calc.isOperation(buttonPressed))
@@ -95,15 +128,28 @@ public class EventHandler extends KeyAdapter implements ActionListener
     { // left paren
       missingParam = true;
       appendToDisplay(buttonPressed);
+      currentOperand = currentOperand + lPar;
     }
     else if (buttonPressed.equals(rPar))
     {
       missingParam = false;
       appendToDisplay(buttonPressed);
+      currentOperand = currentOperand + rPar;
+
     }
     else if (buttonPressed.equals("="))
     {
       findSolution();
+    }
+    else if (buttonPressed.equals("x^y"))
+    {
+      currentOperand = currentOperand + "^";
+      appendToDisplay("^");
+    }
+    else if (buttonPressed.equals("\u221A"))
+    {
+      currentOperand = currentOperand + "\u221A";
+      appendToDisplay("\u221A");
     }
     else
     {
@@ -253,8 +299,10 @@ public class EventHandler extends KeyAdapter implements ActionListener
    */
   private static void clear()
   {
-    RimplexWindow.display.setText("<html>");
-    RimplexWindow.expression = new ArrayList<>();
+    currentOperand = currentOperand.replaceAll("i", "<i>i</i>");
+    RimplexWindow.display.setText(
+        getDisplayText().substring(0, getDisplayText().length() - currentOperand.length()));
+    currentOperand = "";
   }
 
   /**
@@ -263,7 +311,8 @@ public class EventHandler extends KeyAdapter implements ActionListener
   private static void reset()
   {
     RimplexWindow.expression = new ArrayList<>();
-    clear();
+    RimplexWindow.display.setText("<html>");
+    currentOperand = "";
   }
 
   /**
@@ -312,7 +361,9 @@ public class EventHandler extends KeyAdapter implements ActionListener
 
   /**
    * Helper method for requesting operators.
-   * @param operator current operator being inputted.
+   * 
+   * @param operator
+   *          current operator being inputted.
    */
   private void addOperator(final String operator)
   {

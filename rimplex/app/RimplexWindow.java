@@ -39,7 +39,7 @@ public class RimplexWindow extends JFrame
   /**
    * The constructor for the rimplex window.
    * 
-   * @param buttonHandler
+   * @param eventHandler
    *          to deal with the buttons
    */
   public RimplexWindow(final EventHandler eventHandler)
@@ -52,7 +52,6 @@ public class RimplexWindow extends JFrame
 
     makeLayout();
     setSize(400, 250);
-
   }
 
   /**
@@ -61,7 +60,7 @@ public class RimplexWindow extends JFrame
    * @param name
    *          for what is going to be on the button
    */
-  private JButton addButton(final String name, int x, int y, int width, int height)
+  private JButton addButton(final String name, final int x, final int y, final int width, final int height)
   {
     GridBagConstraints gbc = new GridBagConstraints();
     gbc.gridx = x;
@@ -192,7 +191,7 @@ public class RimplexWindow extends JFrame
     // resizing the words so they fit better
     addButton("Frac/Dec", 5, 7, 1, 1);
     addButton("Con", 5, 5, 1, 1);
-    addButton("Exp", 5, 6, 1, 1);
+    addButton("x^y", 5, 6, 1, 1);
 
     this.add(buttonPanel, BorderLayout.CENTER);
     JMenuBar menu = new JMenuBar();

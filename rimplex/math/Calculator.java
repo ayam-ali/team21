@@ -42,6 +42,10 @@ public class Calculator
    */
   public ComplexNumber calculate(final List<String> input)
   {
+    if (input.size() == 1) {
+      return ComplexNumber.parse(input.get(0));
+    }
+    
     // example input: {"7i", "+", "4-2i"}
     // this part handles running calculations
     ComplexNumber total = ComplexNumber.parse(input.get(0));
@@ -106,7 +110,7 @@ public class Calculator
         result = first.divide(second);
         break;
       case "\u221A":
-        result = first.sqrt();
+        result = second.sqrt();
         break;
       case "Inv":
         result = first.inverse();

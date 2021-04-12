@@ -16,7 +16,7 @@ public class ComplexNumber
 
   private double real;
   private double img;
-  
+
   private boolean isFraction;
 
   /**
@@ -31,7 +31,7 @@ public class ComplexNumber
   {
     this.real = real;
     this.img = img;
-    this.isFraction = false; 
+    this.isFraction = false;
   }
 
   /**
@@ -64,15 +64,38 @@ public class ComplexNumber
    */
   public static ComplexNumber parse(final String string)
   {
-    String str = string;
-    String real = "";
-    String img = "";
+    ComplexNumber result;
+    String str;
+    String real;
+    String img;
+    String power;
+    boolean squareRoot = false;
+
+    if (string.contains("\u221A"))
+    {
+      str = string.substring(string.indexOf("\u221A") + 1);
+      squareRoot = true;
+    }
+
+    if (string.contains("^"))
+    {
+      str = string.substring(0, string.indexOf('^'));
+      power = string.substring(string.indexOf('^') + 1);
+    }
+    else
+    {
+      str = string;
+      power = "";
+    }
+
+    real = "";
+    img = "";
 
     int i = 0;
     String num = "";
     while (i < str.length())
     {
-      if (Character.isDigit(str.charAt(i)))
+      if (Character.isDigit(str.charAt(i)) || str.charAt(i) == '.')
       {
         int j = i;
         while (j < str.length() && (Character.isDigit(str.charAt(j)) || str.charAt(j) == '.'))
@@ -113,7 +136,19 @@ public class ComplexNumber
       img = zero;
     }
 
-    return new ComplexNumber(Double.parseDouble(real), Double.parseDouble(img));
+    result = new ComplexNumber(Double.parseDouble(real), Double.parseDouble(img));
+    
+    if (!power.isEmpty())
+    {
+      result = result.exponent(Integer.parseInt(power));
+    }
+
+    if (squareRoot)
+    {
+      result = result.sqrt();
+    }
+
+    return result;
   }
 
   /**
@@ -162,8 +197,8 @@ public class ComplexNumber
     }
     return result;
   }
-  
-  public ComplexNumber log() 
+
+  public ComplexNumber log()
   {
     return new ComplexNumber(Math.log(mod()), arg());
   }
@@ -219,7 +254,7 @@ public class ComplexNumber
    * Helper method to assist divide, gets the conjugate.
    * 
    * @return complex number
-   */ 
+   */
   public ComplexNumber conjugate()
   {
     return new ComplexNumber(getRealPart(), getImaginaryPart() * -1);
@@ -233,9 +268,9 @@ public class ComplexNumber
   public ComplexNumber changeSign()
   {
     return new ComplexNumber(getRealPart() * -1, getImaginaryPart());
-    
+
   }
-  
+
   /**
    * Calculate the inverse
    * 
@@ -243,12 +278,13 @@ public class ComplexNumber
    */
   public ComplexNumber inverse()
   {
-    if(this.getImaginaryPart() == 0) {
-      return  new ComplexNumber(1 / getRealPart(), getImaginaryPart());
+    if (this.getImaginaryPart() == 0)
+    {
+      return new ComplexNumber(1 / getRealPart(), getImaginaryPart());
     }
-    ComplexNumber one = new ComplexNumber(1 / getRealPart() , 1 / getImaginaryPart());
+    ComplexNumber one = new ComplexNumber(1 / getRealPart(), 1 / getImaginaryPart());
     ComplexNumber inv = one.multiply(one.conjugate());
-    
+
     return inv;
   }
 
@@ -259,9 +295,10 @@ public class ComplexNumber
    */
   public double mod()
   {
-    if ( this.getRealPart() != 0 || this.getImaginaryPart() != 0)
+    if (this.getRealPart() != 0 || this.getImaginaryPart() != 0)
     {
-      return Math.sqrt(this.getRealPart() * this.getRealPart() + this.getImaginaryPart() * this.getImaginaryPart());
+      return Math.sqrt(this.getRealPart() * this.getRealPart()
+          + this.getImaginaryPart() * this.getImaginaryPart());
     }
     else
     {
@@ -294,25 +331,29 @@ public class ComplexNumber
     double theta = this.arg() / 2;
     return new ComplexNumber(r * Math.cos(theta), r * Math.sin(theta));
   }
-  
+
   /**
    * 
    */
-  public void toggleForm() {
+  public void toggleForm()
+  {
     this.isFraction = (this.isFraction == true) ? false : true;
   }
-  
+
   /**
    * 
    * 
    * @param num
    * @return
    */
-  public String makeFraction(double num) {
+  public String makeFraction(double num)
+  {
     String numString = "" + num;
-    if (Double.isInfinite(num)) return numString;
-    if (num % 1 == 0) return "" + (int) num;
-    
+    if (Double.isInfinite(num))
+      return numString;
+    if (num % 1 == 0)
+      return "" + (int) num;
+
     int afterDec = numString.length() - numString.indexOf('.') - 1;
     int denominator = (int) Math.pow(10, afterDec);
     int numerator = (int) (num * denominator);
@@ -321,33 +362,38 @@ public class ComplexNumber
     denominator = denominator / gcd;
     return (numerator == denominator) ? "1" : numerator + "/" + denominator;
   }
-  
+
   /**
    * 
    * @param a
    * @param b
    * @return
    */
-  public int gcd(int a, int b) {
+  public int gcd(final int a, final int b)
+  {
     int dividend;
     int divisor;
     int remainder;
-    
-    if (a > b) {
+
+    if (a > b)
+    {
       dividend = a;
       divisor = b;
-    } else {
+    }
+    else
+    {
       dividend = b;
       divisor = a;
     }
     remainder = dividend % divisor;
-    
-    while (remainder != 0) {
+
+    while (remainder != 0)
+    {
       dividend = divisor;
       divisor = remainder;
       remainder = dividend % divisor;
     }
-    
+
     return divisor;
   }
 
@@ -365,10 +411,12 @@ public class ComplexNumber
       if (!isFraction)
       {
         r += (getRealPart() % 1 == 0) ? (int) getRealPart() : getRealPart();
-      } else {
+      }
+      else
+      {
         r += makeFraction(getRealPart());
       }
-    }  
+    }
 
     String tempI = (isFraction) ? makeFraction(getImaginaryPart()) : "" + getImaginaryPart();
     if (getImaginaryPart() % 1 == 0)
@@ -399,9 +447,8 @@ public class ComplexNumber
     {
       result = "" + r + "+" + i;
     }
-    
+
     return result;
-    
-  }  
+
+  }
 }
-  
