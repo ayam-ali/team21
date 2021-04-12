@@ -16,8 +16,10 @@ public class Calculator
   private String divide = "\u00F7";
   private String sqrt = "\u221A";
   private String inv = "Inv";
-  private String sign = "+-";
+  private String sign = "\u00B1";
   private String log = "LOG";
+  private String con = "Con";
+  private String exp = "Exp";
   
   
 
@@ -46,7 +48,6 @@ public class Calculator
     if (isOperation(input.get(0)))
     {
       input.add(0, recentResult);
-      
     } else if(input.size() < 3) {
       total = performOperation(total, total, input.get(1) );
     }
@@ -70,7 +71,9 @@ public class Calculator
    */
   public boolean isOperation(final String string)
   {
-    return string == plus || string == minus || string == multiply || string == divide || string == inv || string == sqrt || string == sign;
+    return string == plus || string == minus || string == multiply || string == divide
+        || string == inv || string == sqrt || string == sign || string == log || string == con
+        || string == exp;
   }
 
   /**
@@ -108,10 +111,17 @@ public class Calculator
       case "Inv":
         result = first.inverse();
         break;
-      case "+-":
+      case "\u00B1":
         result = first.changeSign();
         break;
-       
+      case "LOG":
+        result = first.log();
+        break;
+      case "Con":
+        result = first.conjugate();
+        break;
+      case "Exp":
+        result = first.exponent((int) second.getRealPart());
       default:
         // do nothing
     }

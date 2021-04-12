@@ -16,9 +16,9 @@ import math.ComplexNumber;
  * ButtonHandler - responds to button presses and inputs.
  * 
  * Modifications: - Anderson (3/25) - added .strip before displaying input string. Ali (3/28) -
- * clear up and javadoc comments. Ali (3/30) Editing, clarifications, and comments.
+ * clear up and javadoc comments. Ali (3/30) Editing, clarifications, and comments. 
  * 
- * @author Eric Anderson, Eric Hernandez-Diaz
+ * @author Eric Anderson, Eric Hernandez-Diaz, Ayam Ali 
  * @version 3/25/2021
  */
 public class EventHandler extends KeyAdapter implements ActionListener

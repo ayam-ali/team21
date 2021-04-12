@@ -16,6 +16,8 @@ public class ComplexNumber
 
   private double real;
   private double img;
+  
+  private boolean isFraction;
 
   /**
    * The constructor for Complex number.
@@ -29,6 +31,7 @@ public class ComplexNumber
   {
     this.real = real;
     this.img = img;
+    this.isFraction = false; 
   }
 
   /**
@@ -139,9 +142,9 @@ public class ComplexNumber
    *          the power that the base will be raised to.
    * @return new complex number raised to the power.
    */
-  public ComplexNumber exponent(final ComplexNumber base, final int power)
+  public ComplexNumber exponent(final int power)
   {
-    ComplexNumber result = base;
+    ComplexNumber result = this;
     int pow = power;
     if (power == 1)
     {
@@ -154,10 +157,15 @@ public class ComplexNumber
 
     while (pow > 1)
     {
-      result = result.multiply(base);
+      result = result.multiply(this);
       pow--;
     }
     return result;
+  }
+  
+  public ComplexNumber log() 
+  {
+    return new ComplexNumber(Math.log(mod()), arg());
   }
 
   /**
@@ -211,7 +219,7 @@ public class ComplexNumber
    * Helper method to assist divide, gets the conjugate.
    * 
    * @return complex number
-   */
+   */ 
   public ComplexNumber conjugate()
   {
     return new ComplexNumber(getRealPart(), getImaginaryPart() * -1);
@@ -286,6 +294,62 @@ public class ComplexNumber
     double theta = this.arg() / 2;
     return new ComplexNumber(r * Math.cos(theta), r * Math.sin(theta));
   }
+  
+  /**
+   * 
+   */
+  public void toggleForm() {
+    this.isFraction = (this.isFraction == true) ? false : true;
+  }
+  
+  /**
+   * 
+   * 
+   * @param num
+   * @return
+   */
+  public String makeFraction(double num) {
+    String numString = "" + num;
+    if (Double.isInfinite(num)) return numString;
+    if (num % 1 == 0) return "" + (int) num;
+    
+    int afterDec = numString.length() - numString.indexOf('.') - 1;
+    int denominator = (int) Math.pow(10, afterDec);
+    int numerator = (int) (num * denominator);
+    int gcd = gcd(numerator, denominator);
+    numerator = numerator / gcd;
+    denominator = denominator / gcd;
+    return (numerator == denominator) ? "1" : numerator + "/" + denominator;
+  }
+  
+  /**
+   * 
+   * @param a
+   * @param b
+   * @return
+   */
+  public int gcd(int a, int b) {
+    int dividend;
+    int divisor;
+    int remainder;
+    
+    if (a > b) {
+      dividend = a;
+      divisor = b;
+    } else {
+      dividend = b;
+      divisor = a;
+    }
+    remainder = dividend % divisor;
+    
+    while (remainder != 0) {
+      dividend = divisor;
+      divisor = remainder;
+      remainder = dividend % divisor;
+    }
+    
+    return divisor;
+  }
 
   /**
    * The to string to be shown. If the solution is an integer, it will return it as so.
@@ -298,32 +362,24 @@ public class ComplexNumber
     String i = "";
     if (getRealPart() != 0)
     {
-      if (getRealPart() % 1 == 0)
+      if (!isFraction)
       {
-        r = r + (int) getRealPart();
+        r += (getRealPart() % 1 == 0) ? (int) getRealPart() : getRealPart();
+      } else {
+        r += makeFraction(getRealPart());
       }
-      else
-      {
-        r = "" + getRealPart();
-      }
-    }
+    }  
 
-    String tempI = "" + getImaginaryPart();
+    String tempI = (isFraction) ? makeFraction(getImaginaryPart()) : "" + getImaginaryPart();
     if (getImaginaryPart() % 1 == 0)
     {
       tempI = "" + (int) getImaginaryPart();
     }
-
-    if (getImaginaryPart() != 0)
-    {
-
-      i = "" + tempI + iString;
-
-    }
+    i = tempI + iString;
 
     // change
     String result = "";
-    if (real == 0 && getImaginaryPart() != 0)
+    if (real == 0 && img != 0)
     {
       result = "" + i;
     }
@@ -343,6 +399,9 @@ public class ComplexNumber
     {
       result = "" + r + "+" + i;
     }
+    
     return result;
-  }
+    
+  }  
 }
+  
