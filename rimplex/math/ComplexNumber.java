@@ -3,10 +3,7 @@ package math;
 /**
  * An object class to represent a complex number.
  * 
- * Modifcations: Ali (3/28) clear up and javadoc comments for clarifaction. Ali (3/30) Editing &
- * clean up
- * 
- * @author Ava Momberger, Rhea Morris, Eric Hernandez
+ * @author Ava Momberger, Rhea Morris, Eric Hernandez, Ayam Ali
  * @version 3/24/2021
  */
 public class ComplexNumber
@@ -61,17 +58,40 @@ public class ComplexNumber
    */
   public static ComplexNumber parse(final String string)
   {
+
     ComplexNumber result;
     String str;
     String real;
     String img;
     String power;
     boolean squareRoot = false;
-
+    boolean inverse = false;
+    boolean con = false;
+    boolean log = false;
     if (string.contains("\u221A"))
     {
+      // squareRoot
       str = string.substring(string.indexOf("\u221A") + 1);
       squareRoot = true;
+    }
+
+    if (string.contains("Inv"))
+    {
+      // inverse
+      str = string.substring(string.indexOf("Inv") + 1);
+      inverse = true;
+    }
+
+    if (string.contains("Con"))
+    {
+      str = string.substring(string.indexOf("Con") + 1);
+      con = true;
+    }
+
+    if (string.contains("LOG"))
+    {
+      str = string.substring(string.indexOf("LOG") + 1);
+      log = true;
     }
 
     if (string.contains("^"))
@@ -134,7 +154,7 @@ public class ComplexNumber
     }
 
     result = new ComplexNumber(Double.parseDouble(real), Double.parseDouble(img));
-    
+
     if (!power.isEmpty())
     {
       result = result.exponent(Integer.parseInt(power));
@@ -144,8 +164,22 @@ public class ComplexNumber
     {
       result = result.sqrt();
     }
+    if (inverse)
+    {
+      result = result.inverse();
+    }
 
+    if (con)
+    {
+      result = result.conjugate();
+    }
+
+    if (log)
+    {
+      result = result.log();
+    }
     return result;
+
   }
 
   /**
@@ -275,14 +309,8 @@ public class ComplexNumber
    */
   public ComplexNumber inverse()
   {
-    if (this.getImaginaryPart() == 0)
-    {
-      return new ComplexNumber(1 / getRealPart(), getImaginaryPart());
-    }
-    ComplexNumber one = new ComplexNumber(1 / getRealPart(), 1 / getImaginaryPart());
-    ComplexNumber inv = one.multiply(one.conjugate());
-
-    return inv;
+    double length = real * real + img * img;
+    return new ComplexNumber(real / length, -img / length);
   }
 
   /**

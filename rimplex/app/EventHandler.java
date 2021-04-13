@@ -60,10 +60,27 @@ public class EventHandler extends KeyAdapter implements ActionListener
     {
       isFraction = !isFraction;
     }
+    // Square root
     else if (buttonPressed.equals("\u221A"))
     {
       currentOperand = currentOperand + "\u221A";
       appendToDisplay("\u221A");
+    }
+    // inverse
+    else if (buttonPressed.equals("Inv"))
+    {
+      currentOperand = currentOperand + "Inv";
+      appendToDisplay("Inv");
+    }
+    else if (buttonPressed.equals("Con"))
+    {
+      currentOperand = currentOperand + "Con";
+      appendToDisplay("Con");
+    }
+    else if (buttonPressed.equals("LOG"))
+    {
+      currentOperand = currentOperand + "LOG";
+      appendToDisplay("Log");
     }
     else if (buttonPressed.equals("\u00B1"))
     {
@@ -403,5 +420,6 @@ public class EventHandler extends KeyAdapter implements ActionListener
     RimplexWindow.expression.add(solved.toString());
     currentOperand = "";
     updateDisplay(getDisplayText() + "=" + italicize(solved.toString(isFraction)));
+
   }
 }
