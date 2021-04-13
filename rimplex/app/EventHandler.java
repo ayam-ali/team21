@@ -27,8 +27,6 @@ public class EventHandler extends KeyAdapter implements ActionListener
   String rPar = ")";
   String lPar = "(";
 
-  boolean log = false;
-
   private String zero = "0";
   private String one = "1";
   private String two = "2";
@@ -74,8 +72,7 @@ public class EventHandler extends KeyAdapter implements ActionListener
     else if (buttonPressed.equals("LOG"))
     {
       currentOperand = currentOperand + "LOG";
-      appendToDisplay("Log(");
-      log = true;
+      appendToDisplay("Log");
     }
     else if (buttonPressed.equals("\u00B1"))
     {
@@ -414,14 +411,8 @@ public class EventHandler extends KeyAdapter implements ActionListener
     RimplexWindow.expression.clear();
     RimplexWindow.expression.add(solved.toString());
     currentOperand = "";
-    if (log)
-    {
-      updateDisplay(getDisplayText() + ")=" + italicize(solved.toString()));
-      log = false;
-    }
-    else
-    {
-      updateDisplay(getDisplayText() + "=" + italicize(solved.toString()));
-    }
+
+    updateDisplay(getDisplayText() + "=" + italicize(solved.toString()));
+
   }
 }
