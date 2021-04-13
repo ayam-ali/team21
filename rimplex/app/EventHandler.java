@@ -27,6 +27,7 @@ public class EventHandler extends KeyAdapter implements ActionListener
   private static String currentOperand = "";
   boolean exponential = false;
   boolean missingParam = false;
+  static boolean isFraction = false;
   String rPar = ")";
   String lPar = "(";
 
@@ -54,6 +55,10 @@ public class EventHandler extends KeyAdapter implements ActionListener
     else if (buttonPressed.equals("C"))
     {
       clear();
+    } 
+    else if (buttonPressed.equals("Frac/Dec")) 
+    {
+      isFraction = !isFraction;
     }
     else if (buttonPressed.equals("\u221A"))
     {
@@ -397,6 +402,6 @@ public class EventHandler extends KeyAdapter implements ActionListener
     RimplexWindow.expression.clear();
     RimplexWindow.expression.add(solved.toString());
     currentOperand = "";
-    updateDisplay(getDisplayText() + "=" + italicize(solved.toString()));
+    updateDisplay(getDisplayText() + "=" + italicize(solved.toString(isFraction)));
   }
 }

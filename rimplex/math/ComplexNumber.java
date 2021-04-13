@@ -17,8 +17,6 @@ public class ComplexNumber
   private double real;
   private double img;
 
-  private boolean isFraction;
-
   /**
    * The constructor for Complex number.
    * 
@@ -31,7 +29,6 @@ public class ComplexNumber
   {
     this.real = real;
     this.img = img;
-    this.isFraction = false;
   }
 
   /**
@@ -334,14 +331,6 @@ public class ComplexNumber
 
   /**
    * 
-   */
-  public void toggleForm()
-  {
-    this.isFraction = (this.isFraction == true) ? false : true;
-  }
-
-  /**
-   * 
    * 
    * @param num
    * @return
@@ -397,12 +386,16 @@ public class ComplexNumber
     return divisor;
   }
 
+  public String toString() {
+    return this.toString(false);
+  }
+  
   /**
    * The to string to be shown. If the solution is an integer, it will return it as so.
    *
    * @return the string for the result
    */
-  public String toString()
+  public String toString(final boolean isFraction)
   {
     String r = "";
     String i = "";
