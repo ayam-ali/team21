@@ -12,10 +12,7 @@ import math.Calculator;
 import math.ComplexNumber;
 
 /**
- * ButtonHandler - responds to button presses and inputs.
- * 
- * Modifications: - Anderson (3/25) - added .strip before displaying input string. Ali (3/28) -
- * clear up and javadoc comments. Ali (3/30) Editing, clarifications, and comments.
+ * EventHandler - responds to button presses and inputs.
  * 
  * @author Eric Anderson, Eric Hernandez-Diaz, Ayam Ali
  * @version 3/25/2021
@@ -29,6 +26,8 @@ public class EventHandler extends KeyAdapter implements ActionListener
   boolean missingParam = false;
   String rPar = ")";
   String lPar = "(";
+
+  boolean log = false;
 
   private String zero = "0";
   private String one = "1";
@@ -55,10 +54,28 @@ public class EventHandler extends KeyAdapter implements ActionListener
     {
       clear();
     }
+    // Square root
     else if (buttonPressed.equals("\u221A"))
     {
       currentOperand = currentOperand + "\u221A";
       appendToDisplay("\u221A");
+    }
+    // inverse
+    else if (buttonPressed.equals("Inv"))
+    {
+      currentOperand = currentOperand + "Inv";
+      appendToDisplay("Inv");
+    }
+    else if (buttonPressed.equals("Con"))
+    {
+      currentOperand = currentOperand + "Con";
+      appendToDisplay("Con");
+    }
+    else if (buttonPressed.equals("LOG"))
+    {
+      currentOperand = currentOperand + "LOG";
+      appendToDisplay("Log(");
+      log = true;
     }
     else if (buttonPressed.equals("\u00B1"))
     {
@@ -397,6 +414,14 @@ public class EventHandler extends KeyAdapter implements ActionListener
     RimplexWindow.expression.clear();
     RimplexWindow.expression.add(solved.toString());
     currentOperand = "";
-    updateDisplay(getDisplayText() + "=" + italicize(solved.toString()));
+    if (log)
+    {
+      updateDisplay(getDisplayText() + ")=" + italicize(solved.toString()));
+      log = false;
+    }
+    else
+    {
+      updateDisplay(getDisplayText() + "=" + italicize(solved.toString()));
+    }
   }
 }
