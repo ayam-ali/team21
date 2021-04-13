@@ -5,9 +5,11 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Image;
 import java.awt.Insets;
 import java.util.ArrayList;
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -130,7 +132,7 @@ public class RimplexWindow extends JFrame
     button.setOpaque(true);
     button.setBorderPainted(false);
   }
-
+  
   /**
    * Creates the layout and sets the buttons.
    */
@@ -145,53 +147,58 @@ public class RimplexWindow extends JFrame
     gbc.gridheight = 2;
     gbc.gridwidth = 6;
     gbc.weightx = 1 / 12;
-    gbc.weighty = 1;
+    gbc.weighty = 0;
     gbc.fill = GridBagConstraints.BOTH;
+    
+    JLabel logo = new JLabel();
+    Image image = new ImageIcon(this.getClass().getResource("/icons/logoRimplex.png")).getImage();
+    logo.setIcon(new ImageIcon(image));
+    buttonPanel.add(logo, gbc);
+    
+    gbc.gridy = 0;
+    gbc.gridy = 3;
+    gbc.weighty = 1;
     buttonPanel.add(display, gbc);
-
     // create buttons and adds color
     // row 1
-    addButton("\u00B1", 0, 3, 1, 1); // plus minus sign
-    addButton("C", 1, 3, 1, 1);
-    addButton("\u2190", 2, 3, 1, 1); // if "" does not work use "<-" instead
-    addButton("+", 3, 3, 1, 1);
-    addButton("R", 4, 3, 1, 1);
+    addButton("\u00B1", 0, 6, 1, 1); // plus minus sign
+    addButton("C", 1, 6, 1, 1);
+    addButton("\u2190", 2, 6, 1, 1); // if "" does not work use "<-" instead
+    addButton("+", 3, 6, 1, 1);
+    addButton("R", 4, 6, 1, 1);
 
     // row 2
-    addButton("1", 0, 4, 1, 1);
-    addButton("2", 1, 4, 1, 1);
-    addButton("3", 2, 4, 1, 1);
-    addButton("-", 3, 4, 1, 1);
-    addButton("Inv", 4, 4, 1, 1);
+    addButton("1", 0, 7, 1, 1);
+    addButton("2", 1, 7, 1, 1);
+    addButton("3", 2, 7, 1, 1);
+    addButton("-", 3, 7, 1, 1);
+    addButton("Inv", 4, 7, 1, 1);
 
     // row 3
-    addButton("4", 0, 5, 1, 1);
-    addButton("5", 1, 5, 1, 1);
-    addButton("6", 2, 5, 1, 1);
-    addButton("\u00D7", 3, 5, 1, 1); // unicode for multiplication \u00D7
-    addButton("(", 4, 5, 1, 1); 
+    addButton("4", 0, 8, 1, 1);
+    addButton("5", 1, 8, 1, 1);
+    addButton("6", 2, 8, 1, 1);
+    addButton("\u00D7", 3, 8, 1, 1); // unicode for multiplication \u00D7
+    addButton("(", 4, 8, 1, 1); 
     // row 4
-    addButton("7", 0, 6, 1, 1);
-    addButton("8", 1, 6, 1, 1);
-    addButton("9", 2, 6, 1, 1);
-    addButton("\u00F7", 3, 6, 1, 1); // division sign
-    addButton(")", 4, 6, 1, 1);
+    addButton("7", 0, 9, 1, 1);
+    addButton("8", 1, 9, 1, 1);
+    addButton("9", 2, 9, 1, 1);
+    addButton("\u00F7", 3, 9, 1, 1); // division sign
+    addButton(")", 4, 9, 1, 1);
 
     // row 5
-    addButton("0", 0, 7, 2, 1);
-    addButton("\uD835\uDC8A", 2, 7, 1, 1); // math i sign
-    addButton("=", 3, 7, 1, 1);
-    addButton(".", 4, 7, 1, 1);
+    addButton("0", 0, 10, 2, 1);
+    addButton("\uD835\uDC8A", 2, 10, 1, 1); // math i sign
+    addButton("=", 3, 10, 1, 1);
+    addButton(".", 4, 10, 1, 1);
 
     // row 6
-    addButton("\u221A", 5, 4, 1, 1); // unicode for square root is \u221A
-    addButton("LOG", 5, 3, 1, 1);
-   
-
-    // resizing the words so they fit better
-    addButton("Frac/Dec", 5, 7, 1, 1);
-    addButton("Con", 5, 5, 1, 1);
-    addButton("x^y", 5, 6, 1, 1);
+    addButton("\u221A", 5, 6, 1, 1); // unicode for square root is \u221A
+    addButton("LOG", 5, 7, 1, 1);
+    addButton("Frac/Dec", 5, 10, 1, 1);
+    addButton("Con", 5, 8, 1, 1);
+    addButton("x^y", 5, 9, 1, 1);
 
     this.add(buttonPanel, BorderLayout.CENTER);
     
