@@ -8,6 +8,8 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Image;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -18,6 +20,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JWindow;
+import javax.swing.Timer;
 import javax.swing.border.EtchedBorder;
 
 /**
@@ -36,6 +39,7 @@ public class RimplexWindow extends JFrame
   private JPanel buttonPanel;
   private JButton contract;
   private JPanel historyPanel;
+  private static Timer timer;
   private static ArrayList<String> history;
   private static JScrollPane scrollList;
   private static JButton expand;
@@ -88,7 +92,7 @@ public class RimplexWindow extends JFrame
 
     // Default size: (294, ---)
   }
-  
+
   /**
    * updateHistory - updates the history display with current expression list.
    */
@@ -110,7 +114,8 @@ public class RimplexWindow extends JFrame
    * addToHistory - adds the given string to the history list.
    * 
    * 
-   * @param result - the given expression. 
+   * @param result
+   *          - the given expression.
    */
   public static void addToHistory(String result)
   {
@@ -118,7 +123,7 @@ public class RimplexWindow extends JFrame
     result = result.replaceAll("<i>i</i>", "i");
     history.add(result);
   }
-  
+
   /**
    * Adds the buttons to the panel and provides the action listener.
    * 
@@ -275,66 +280,56 @@ public class RimplexWindow extends JFrame
   /**
    * animateHistory - smoothly animates history.
    * 
-   * TODO fix bug with open not being smooth
-   * 
    * @param isOpening
    *          - true if the window is opening.
    */
   public static void animateHistory(boolean isOpening)
   {
-    
+
+    int delay = 1; // milliseconds
     // Dynamic location setting ---
     historyWindow.setLocation((int) expand.getLocationOnScreen().getX() + 40,
         (int) expand.getLocationOnScreen().getY() + 1); // Set location right on screen
-
-    double increment = 0;
-    if (isOpening)
+    if (isOpening) // OPENING
     {
       expand.setEnabled(false);
       historyWindow.setSize(0, HISTORY_HEIGHT);
-      increment = 29.4;
+      ActionListener taskPerformer = new ActionListener()
+      {
+        public void actionPerformed(ActionEvent evt)
+        {
+          if (historyWindow.getWidth() >= 294)
+          {
+            timer.stop();
+            historyWindow.setSize(294, HISTORY_HEIGHT);
+          }
+          historyWindow.setSize((int) (historyWindow.getWidth() + 12), HISTORY_HEIGHT);
+        }
+      };
+      timer = new Timer(delay, taskPerformer);
+      timer.start();
     }
-    else
+    else // CLOSING
     {
       expand.setEnabled(true);
       historyWindow.setSize(294, HISTORY_HEIGHT);
-      increment = -29.4;
+
+      ActionListener taskPerformer = new ActionListener()
+      {
+        public void actionPerformed(ActionEvent evt)
+        {
+          if (historyWindow.getWidth() <= 0)
+          {
+            timer.stop();
+            historyWindow.setSize(0, HISTORY_HEIGHT);
+          }
+          historyWindow.setSize((int) (historyWindow.getWidth() - 12), HISTORY_HEIGHT);
+        }
+      };
+      timer = new Timer(delay, taskPerformer);
+      timer.start();
+
     }
 
-    sleep();
-    historyWindow.setSize((int) (historyWindow.getWidth() + increment), HISTORY_HEIGHT);
-    sleep();
-    historyWindow.setSize((int) (historyWindow.getWidth() + increment), HISTORY_HEIGHT);
-    sleep();
-    historyWindow.setSize((int) (historyWindow.getWidth() + increment), HISTORY_HEIGHT);
-    sleep();
-    historyWindow.setSize((int) (historyWindow.getWidth() + increment), HISTORY_HEIGHT);
-    sleep();
-    historyWindow.setSize((int) (historyWindow.getWidth() + increment), HISTORY_HEIGHT);
-    sleep();
-    historyWindow.setSize((int) (historyWindow.getWidth() + increment), HISTORY_HEIGHT);
-    sleep();
-    historyWindow.setSize((int) (historyWindow.getWidth() + increment), HISTORY_HEIGHT);
-    sleep();
-    historyWindow.setSize((int) (historyWindow.getWidth() + increment), HISTORY_HEIGHT);
-    sleep();
-    historyWindow.setSize((int) (historyWindow.getWidth() + increment), HISTORY_HEIGHT);
-    sleep();
-    historyWindow.setSize((int) (historyWindow.getWidth() + increment), HISTORY_HEIGHT);
-  }
-  
-  /**
-   * sleep - helper method to help with sleep during animation.
-   */
-  private static void sleep()
-  {
-    try
-    {
-      Thread.sleep(30);
-    }
-    catch (InterruptedException e)
-    {
-      e.printStackTrace();
-    }
   }
 }
