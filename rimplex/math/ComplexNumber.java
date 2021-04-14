@@ -379,6 +379,7 @@ public class ComplexNumber
       if ((n/d) < num) n ++;
     }
     
+    if (isNegative) n = n * -1;
     return (n == d) ? "1" : (int) n + "/" + (int) d;
   }
 

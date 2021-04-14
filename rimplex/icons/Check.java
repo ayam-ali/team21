@@ -1,4 +1,4 @@
-package util;
+package icons;
 
 /**
  * A utility class that performs checks of various kinds.
