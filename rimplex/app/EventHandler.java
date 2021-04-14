@@ -418,5 +418,7 @@ public class EventHandler extends KeyAdapter implements ActionListener
     currentOperand = "";
     updateDisplay(getDisplayText() + "=" + italicize(solved.toString(isFraction)));
 
+    RimplexWindow.addToHistory(getDisplayText());
+    RimplexWindow.updateHistory();
   }
 }

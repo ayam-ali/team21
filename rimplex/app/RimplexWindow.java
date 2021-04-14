@@ -1,6 +1,7 @@
 package app;
 
 import java.awt.BorderLayout;
+
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
@@ -14,6 +15,9 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.JWindow;
 import javax.swing.border.EtchedBorder;
 
 /**
@@ -27,10 +31,17 @@ public class RimplexWindow extends JFrame
 
   static JLabel display;
   static ArrayList<String> expression;
-
   private static final long serialVersionUID = 1L;
   private EventHandler eventHandler;
   private JPanel buttonPanel;
+  private JButton contract;
+  private JPanel historyPanel;
+  private static ArrayList<String> history;
+  private static JScrollPane scrollList;
+  private static JButton expand;
+  private static JWindow historyWindow;
+  private static JTextArea historyOutputArea;
+  private static final int HISTORY_HEIGHT = 263;
 
   /**
    * The constructor for the rimplex window.
@@ -47,9 +58,67 @@ public class RimplexWindow extends JFrame
     createExpression();
 
     makeLayout();
+    createHistory();
     setSize(400, 250);
   }
 
+  /**
+   * createHistory - creates the history jwindow.
+   * 
+   */
+  private void createHistory()
+  {
+
+    // Windows and buttons ---
+    historyWindow = new JWindow();
+    historyWindow.setVisible(true);
+    historyPanel = new JPanel();
+    historyPanel.setLayout(new BorderLayout());
+    contract = new JButton("<");
+    contract.addActionListener(new HistoryHandler());
+
+    // Text area and scroll
+    history = new ArrayList<>();
+    historyOutputArea = new JTextArea();
+    scrollList = new JScrollPane(historyOutputArea);
+
+    scrollList.setVisible(true);
+    historyWindow.add(scrollList, BorderLayout.CENTER);
+    historyWindow.add(contract, BorderLayout.EAST);
+
+    // Default size: (294, ---)
+  }
+  
+  /**
+   * updateHistory - updates the history display with current expression list.
+   */
+  public static void updateHistory()
+  {
+    historyOutputArea.setText(null);
+    if (history.size() != 0)
+    {
+
+      for (int i = 0; i < history.size(); i++)
+      {
+        String output = history.get(i);
+        historyOutputArea.append(output + "\n");
+      }
+    }
+  }
+
+  /**
+   * addToHistory - adds the given string to the history list.
+   * 
+   * 
+   * @param result - the given expression. 
+   */
+  public static void addToHistory(String result)
+  {
+    result = result.replaceAll("<html>", "");
+    result = result.replaceAll("<i>i</i>", "i");
+    history.add(result);
+  }
+  
   /**
    * Adds the buttons to the panel and provides the action listener.
    * 
@@ -198,22 +267,74 @@ public class RimplexWindow extends JFrame
     this.add(buttonPanel, BorderLayout.CENTER);
 
     // History button ------
-    JButton expand = new JButton(">");
+    expand = new JButton(">");
     expand.addActionListener(new HistoryHandler());
     this.add(expand, BorderLayout.EAST);
-    this.pack();
   }
 
   /**
-   * Private method to make the words underneath each other
+   * animateHistory - smoothly animates history.
+   * 
+   * TODO fix bug with open not being smooth
+   * 
+   * @param isOpening
+   *          - true if the window is opening.
    */
-  // private JButton overUnder(JButton button, String str1, String str2)
-  // {
-  // button.setLayout(new BorderLayout());
-  // JLabel label1 = new JLabel(str1);
-  // JLabel label2 = new JLabel(str2);
-  // button.add(BorderLayout.NORTH, label1).setFont(new Font("", Font.PLAIN, 6));
-  // button.add(BorderLayout.SOUTH, label2).setFont(new Font("", Font.PLAIN, 6));
-  // return button;
-  // }
+  public static void animateHistory(boolean isOpening)
+  {
+    
+    // Dynamic location setting ---
+    historyWindow.setLocation((int) expand.getLocationOnScreen().getX() + 40,
+        (int) expand.getLocationOnScreen().getY() + 1); // Set location right on screen
+
+    double increment = 0;
+    if (isOpening)
+    {
+      expand.setEnabled(false);
+      historyWindow.setSize(0, HISTORY_HEIGHT);
+      increment = 29.4;
+    }
+    else
+    {
+      expand.setEnabled(true);
+      historyWindow.setSize(294, HISTORY_HEIGHT);
+      increment = -29.4;
+    }
+
+    sleep();
+    historyWindow.setSize((int) (historyWindow.getWidth() + increment), HISTORY_HEIGHT);
+    sleep();
+    historyWindow.setSize((int) (historyWindow.getWidth() + increment), HISTORY_HEIGHT);
+    sleep();
+    historyWindow.setSize((int) (historyWindow.getWidth() + increment), HISTORY_HEIGHT);
+    sleep();
+    historyWindow.setSize((int) (historyWindow.getWidth() + increment), HISTORY_HEIGHT);
+    sleep();
+    historyWindow.setSize((int) (historyWindow.getWidth() + increment), HISTORY_HEIGHT);
+    sleep();
+    historyWindow.setSize((int) (historyWindow.getWidth() + increment), HISTORY_HEIGHT);
+    sleep();
+    historyWindow.setSize((int) (historyWindow.getWidth() + increment), HISTORY_HEIGHT);
+    sleep();
+    historyWindow.setSize((int) (historyWindow.getWidth() + increment), HISTORY_HEIGHT);
+    sleep();
+    historyWindow.setSize((int) (historyWindow.getWidth() + increment), HISTORY_HEIGHT);
+    sleep();
+    historyWindow.setSize((int) (historyWindow.getWidth() + increment), HISTORY_HEIGHT);
+  }
+  
+  /**
+   * sleep - helper method to help with sleep during animation.
+   */
+  private static void sleep()
+  {
+    try
+    {
+      Thread.sleep(30);
+    }
+    catch (InterruptedException e)
+    {
+      e.printStackTrace();
+    }
+  }
 }
