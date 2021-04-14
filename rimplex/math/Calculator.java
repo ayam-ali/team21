@@ -21,7 +21,6 @@ public class Calculator
   private String con = "Con";
   private String exp = "Exp";
   
-  
 
   private String recentResult;
 
@@ -42,6 +41,7 @@ public class Calculator
    */
   public ComplexNumber calculate(final List<String> input)
   {
+    if (input.size() == 0) return ComplexNumber.parse(recentResult);
     if (input.size() == 1)
     {
       return ComplexNumber.parse(input.get(0));
@@ -49,20 +49,20 @@ public class Calculator
     
     // example input: {"7i", "+", "4-2i"}
     // this part handles running calculations
-    ComplexNumber total = ComplexNumber.parse(input.get(0));
     if (isOperation(input.get(0)))
     {
       input.add(0, recentResult);
     }
-    else if (input.size() < 3)
+    ComplexNumber total = ComplexNumber.parse(input.get(0));
+    if (input.size() < 3)
     {
       total = performOperation(total, total, input.get(1));
-    }
-
-    for (int i = 2; i < input.size(); i += 2)
-    {
-      ComplexNumber num = ComplexNumber.parse(input.get(i));
-      total = performOperation(total, num, input.get(i - 1));
+    } else {
+      for (int i = 2; i < input.size(); i += 2)
+      {
+        ComplexNumber num = ComplexNumber.parse(input.get(i));
+        total = performOperation(total, num, input.get(i - 1));
+      }
     }
 
     recentResult = total.toString();

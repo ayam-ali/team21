@@ -365,19 +365,21 @@ public class ComplexNumber
    */
   public String makeFraction(double num)
   {
-    String numString = "" + num;
-    if (Double.isInfinite(num))
-      return numString;
+    double n = 1;
+    double d = 1;
+    double error = 0.01;
+    boolean isNegative = num < 0;
+    
     if (num % 1 == 0)
       return "" + (int) num;
-
-    int afterDec = numString.length() - numString.indexOf('.') - 1;
-    int denominator = (int) Math.pow(10, afterDec);
-    int numerator = (int) (num * denominator);
-    int gcd = gcd(numerator, denominator);
-    numerator = numerator / gcd;
-    denominator = denominator / gcd;
-    return (numerator == denominator) ? "1" : numerator + "/" + denominator;
+    if (isNegative) num = Math.abs(num);
+    
+    while(Math.abs((n/d) - num) >= error) {
+      if ((n/d) > num) d ++;
+      if ((n/d) < num) n ++;
+    }
+    
+    return (n == d) ? "1" : (int) n + "/" + (int) d;
   }
 
   /**
