@@ -60,7 +60,7 @@ public class ComplexNumber
   {
 
     ComplexNumber result;
-    String str;
+    String str = "";
     String real;
     String img;
     String power;
@@ -229,6 +229,11 @@ public class ComplexNumber
     return result;
   }
 
+  /**
+   * The log calculations.
+   * 
+   * @return complex number for the solution
+   */
   public ComplexNumber log()
   {
     return new ComplexNumber(Math.log(mod()), arg());
@@ -358,10 +363,11 @@ public class ComplexNumber
   }
 
   /**
-   * 
+   * Turns the decimal into a fraction.
    * 
    * @param num
-   * @return
+   *          the decimal
+   * @return the fraction form F
    */
   public String makeFraction(double num)
   {
@@ -369,25 +375,33 @@ public class ComplexNumber
     double d = 1;
     double error = 0.01;
     boolean isNegative = num < 0;
-    
+
     if (num % 1 == 0)
       return "" + (int) num;
-    if (isNegative) num = Math.abs(num);
-    
-    while(Math.abs((n/d) - num) >= error) {
-      if ((n/d) > num) d ++;
-      if ((n/d) < num) n ++;
+    if (isNegative)
+      num = Math.abs(num);
+
+    while (Math.abs((n / d) - num) >= error)
+    {
+      if ((n / d) > num)
+        d++;
+      if ((n / d) < num)
+        n++;
     }
-    
-    if (isNegative) n = n * -1;
+
+    if (isNegative)
+      n = n * -1;
     return (n == d) ? "1" : (int) n + "/" + (int) d;
   }
 
   /**
+   * The greatest common divisor.
    * 
    * @param a
+   *          the first input
    * @param b
-   * @return
+   *          the second input
+   * @return the divisor
    */
   public int gcd(final int a, final int b)
   {
@@ -417,12 +431,16 @@ public class ComplexNumber
     return divisor;
   }
 
-  public String toString() {
+  /**
+   * The string to be shown.
+   */
+  public String toString()
+  {
     return this.toString(false);
   }
-  
+
   /**
-   * The to string to be shown. If the solution is an integer, it will return it as so.
+   * The toString with a boolean, correct output for fraction.
    *
    * @return the string for the result
    */

@@ -20,7 +20,6 @@ public class Calculator
   private String log = "LOG";
   private String con = "Con";
   private String exp = "Exp";
-  
 
   private String recentResult;
 
@@ -41,12 +40,19 @@ public class Calculator
    */
   public ComplexNumber calculate(final List<String> input)
   {
-    if (input.size() == 0) return ComplexNumber.parse(recentResult);
+    if (input.size() == 0)
+    {
+      return ComplexNumber.parse(recentResult);
+    }
     if (input.size() == 1)
     {
       return ComplexNumber.parse(input.get(0));
     }
-    
+    else if (input.size() == 2)
+    {
+      return ComplexNumber.parse(input.get(0) + input.get(1));
+    }
+
     // example input: {"7i", "+", "4-2i"}
     // this part handles running calculations
     if (isOperation(input.get(0)))
@@ -57,7 +63,9 @@ public class Calculator
     if (input.size() < 3)
     {
       total = performOperation(total, total, input.get(1));
-    } else {
+    }
+    else
+    {
       for (int i = 2; i < input.size(); i += 2)
       {
         ComplexNumber num = ComplexNumber.parse(input.get(i));

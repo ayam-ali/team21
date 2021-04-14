@@ -13,17 +13,11 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 import javax.swing.border.EtchedBorder;
 
 /**
  * GUI - Creates objects for displays and input fields.
- * 
- * Modifications: - Anderson (3/25) - changed input field to JTextField to prevent \n chars. Added
- * string formatter to remove \n for redundancy. Ali (3/28) - Changed symbols, changed window size,
- * cleared up, and added javadoc comments. Ali (3/30) color change, and clarifications
  * 
  * @author Eric Anderson, Eric Hernandez-Diaz, Ayam Ali
  * @version 3/25/2021
@@ -62,7 +56,8 @@ public class RimplexWindow extends JFrame
    * @param name
    *          for what is going to be on the button
    */
-  private JButton addButton(final String name, final int x, final int y, final int width, final int height)
+  private JButton addButton(final String name, final int x, final int y, final int width,
+      final int height)
   {
     GridBagConstraints gbc = new GridBagConstraints();
     gbc.gridx = x;
@@ -132,15 +127,14 @@ public class RimplexWindow extends JFrame
     button.setOpaque(true);
     button.setBorderPainted(false);
   }
-  
+
   /**
    * Creates the layout and sets the buttons.
    */
   private void makeLayout()
   {
     this.setLayout(new BorderLayout());
-    // this.add(display);
-    // this.add(inputField);
+
     GridBagConstraints gbc = new GridBagConstraints();
     gbc.gridx = 0;
     gbc.gridy = 0;
@@ -149,21 +143,22 @@ public class RimplexWindow extends JFrame
     gbc.weightx = 1 / 12;
     gbc.weighty = 0;
     gbc.fill = GridBagConstraints.BOTH;
-    
+
     JLabel logo = new JLabel();
     Image image = new ImageIcon(this.getClass().getResource("/icons/logoRimplex.png")).getImage();
     logo.setIcon(new ImageIcon(image));
     buttonPanel.add(logo, gbc);
-    
+
     gbc.gridy = 0;
     gbc.gridy = 3;
     gbc.weighty = 1;
     buttonPanel.add(display, gbc);
+
     // create buttons and adds color
     // row 1
     addButton("\u00B1", 0, 6, 1, 1); // plus minus sign
     addButton("C", 1, 6, 1, 1);
-    addButton("\u2190", 2, 6, 1, 1); // if "" does not work use "<-" instead
+    addButton("\u2190", 2, 6, 1, 1); // unicode for arrow
     addButton("+", 3, 6, 1, 1);
     addButton("R", 4, 6, 1, 1);
 
@@ -179,7 +174,7 @@ public class RimplexWindow extends JFrame
     addButton("5", 1, 8, 1, 1);
     addButton("6", 2, 8, 1, 1);
     addButton("\u00D7", 3, 8, 1, 1); // unicode for multiplication \u00D7
-    addButton("(", 4, 8, 1, 1); 
+    addButton("(", 4, 8, 1, 1);
     // row 4
     addButton("7", 0, 9, 1, 1);
     addButton("8", 1, 9, 1, 1);
@@ -201,7 +196,7 @@ public class RimplexWindow extends JFrame
     addButton("x^y", 5, 9, 1, 1);
 
     this.add(buttonPanel, BorderLayout.CENTER);
-    
+
     // History button ------
     JButton expand = new JButton(">");
     expand.addActionListener(new HistoryHandler());
