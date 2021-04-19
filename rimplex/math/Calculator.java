@@ -20,6 +20,8 @@ public class Calculator
   private String log = "LOG";
   private String con = "Con";
   private String exp = "Exp";
+  private String re = "Re"; // real and img operator 
+  private String im = "Im";
 
   private String recentResult;
 
@@ -88,7 +90,7 @@ public class Calculator
   {
     return string == plus || string == minus || string == multiply || string == divide
         || string == inv || string == sqrt || string == sign || string == log || string == con
-        || string == exp;
+        || string == exp || string == re || string == im; // real and img operator 
   }
 
   /**
@@ -137,6 +139,10 @@ public class Calculator
         break;
       case "Exp":
         result = first.exponent((int) second.getRealPart());
+      case "Re":
+        result =  new ComplexNumber(result.getRealPart(), 0);  /// real and img operator 
+      case "Im":
+        result =  new ComplexNumber(result.getImaginaryPart(), 0);
       default:
         // do nothing
     }

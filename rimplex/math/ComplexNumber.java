@@ -63,11 +63,16 @@ public class ComplexNumber
     String str = "";
     String real;
     String img;
-    String power;
+    String power = "";
     boolean squareRoot = false;
     boolean inverse = false;
     boolean con = false;
     boolean log = false;
+    boolean re = false; // real and img operator 
+    boolean im = false;
+    
+    
+    
     if (string.contains("\u221A"))
     {
       // squareRoot
@@ -98,6 +103,16 @@ public class ComplexNumber
     {
       str = string.substring(0, string.indexOf('^'));
       power = string.substring(string.indexOf('^') + 1);
+    }
+    if (string.contains("Re"))  // real operator 
+    {
+      str = string.substring(0, string.indexOf("Re"));
+      re = true;
+    }
+    if (string.contains("Im"))  // real operator 
+    {
+      str = string.substring(0, string.indexOf("Im"));
+      im = true;
     }
     else
     {
@@ -177,6 +192,14 @@ public class ComplexNumber
     if (log)
     {
       result = result.log();
+    }
+    if (re)
+    {
+      result = new ComplexNumber(result.getRealPart(), 0);
+    }
+    if (im)
+    {
+      result = new ComplexNumber(result.getImaginaryPart(), 0);
     }
     return result;
 

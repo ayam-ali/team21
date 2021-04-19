@@ -93,7 +93,7 @@ public class EventHandler extends KeyAdapter implements ActionListener
       }
       if (!currentOperand.endsWith(")"))
       {
-        currentOperand = currentOperand + ")";
+        currentOperand = currentOperand + ")"; 
       }
 
       appendToDisplay(currentOperand);

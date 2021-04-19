@@ -275,6 +275,7 @@ public class RimplexWindow extends JFrame
     expand = new JButton(">");
     expand.addActionListener(new HistoryHandler());
     this.add(expand, BorderLayout.EAST);
+    this.pack();
   }
 
   /**
@@ -288,7 +289,7 @@ public class RimplexWindow extends JFrame
 
     int delay = 1; // milliseconds
     // Dynamic location setting ---
-    historyWindow.setLocation((int) expand.getLocationOnScreen().getX() + 40,
+    historyWindow.setLocation((int) expand.getLocationOnScreen().getX() + 75,
         (int) expand.getLocationOnScreen().getY() + 1); // Set location right on screen
     if (isOpening) // OPENING
     {
