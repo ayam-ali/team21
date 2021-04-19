@@ -69,10 +69,20 @@ public class EventHandler extends KeyAdapter implements ActionListener
       currentOperand = currentOperand + "Inv";
       appendToDisplay("Inv");
     }
-    else if (buttonPressed.equals("Con"))
+    else if (buttonPressed.equals("Con"))               // con 
     {
       currentOperand = currentOperand + "Con";
       appendToDisplay("Con");
+    }
+    else if (buttonPressed.equals("Re"))            // real and img part 
+    {
+      currentOperand = currentOperand + "Re";
+      appendToDisplay("Re");
+    }
+    else if (buttonPressed.equals("Im"))
+    {
+      currentOperand = currentOperand + "Im";
+      appendToDisplay("Im");
     }
     else if (buttonPressed.equals("LOG"))
     {

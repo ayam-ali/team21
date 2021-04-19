@@ -193,7 +193,7 @@ public class ComplexNumber
     {
       result = result.log();
     }
-    if (re)
+    if (re)                                                     // real and img operator 
     {
       result = new ComplexNumber(result.getRealPart(), 0);
     }
