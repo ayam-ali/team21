@@ -11,11 +11,17 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Locale;
+import java.util.ResourceBundle;
+
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -31,14 +37,6 @@ import javax.swing.border.EtchedBorder;
  */
 public class RimplexWindow extends JFrame
 {
-
-  static JLabel display;
-  static ArrayList<String> expression;
-  private static final long serialVersionUID = 1L;
-  private EventHandler eventHandler;
-  private JPanel buttonPanel;
-  private JButton contract;
-  private JPanel historyPanel;
   private static Timer timer;
   private static ArrayList<String> history;
   private static JScrollPane scrollList;
@@ -47,6 +45,17 @@ public class RimplexWindow extends JFrame
   private static JTextArea historyOutputArea;
   private static final int HISTORY_HEIGHT = 263;
 
+  static JLabel display;
+  static ArrayList<String> expression;
+  private static final long serialVersionUID = 1L;
+  private EventHandler eventHandler;
+  private JPanel buttonPanel;
+  private JButton contract;
+  private JPanel historyPanel;
+
+  private JButton inv;
+  private JButton con; 
+  private JButton fD;
   /**
    * The constructor for the rimplex window.
    * 
@@ -208,7 +217,8 @@ public class RimplexWindow extends JFrame
   private void makeLayout()
   {
     this.setLayout(new BorderLayout());
-
+    ResourceBundle strings = ResourceBundle.getBundle("languages/Strings_en_US", Locale.US);
+    
     GridBagConstraints gbc = new GridBagConstraints();
     gbc.gridx = 0;
     gbc.gridy = 0;
@@ -264,7 +274,7 @@ public class RimplexWindow extends JFrame
 
     // row 6
     addButton("\u221A", 5, 6, 1, 1); // unicode for square root is \u221A
-    addButton("LOG", 5, 7, 1, 1);
+    addButton(strings.getString("logarithm"), 5, 7, 1, 1);
     addButton("Frac/Dec", 5, 10, 1, 1);
     addButton("Con", 5, 8, 1, 1);
     addButton("x^y", 5, 9, 1, 1);
@@ -275,7 +285,10 @@ public class RimplexWindow extends JFrame
     expand = new JButton(">");
     expand.addActionListener(new HistoryHandler());
     this.add(expand, BorderLayout.EAST);
-    this.pack();
+    this.createJMenuBar(ResourceBundle.getBundle("languages/Strings_en_US", Locale.US));
+    
+    
+//    this.pack();
   }
 
   /**
@@ -284,7 +297,7 @@ public class RimplexWindow extends JFrame
    * @param isOpening
    *          - true if the window is opening.
    */
-  public static void animateHistory(boolean isOpening)
+  public static void animateHistory(final boolean isOpening)
   {
 
     int delay = 1; // milliseconds
@@ -297,7 +310,7 @@ public class RimplexWindow extends JFrame
       historyWindow.setSize(0, HISTORY_HEIGHT);
       ActionListener taskPerformer = new ActionListener()
       {
-        public void actionPerformed(ActionEvent evt)
+        public void actionPerformed(final ActionEvent evt)
         {
           if (historyWindow.getWidth() >= 294)
           {
@@ -332,5 +345,42 @@ public class RimplexWindow extends JFrame
 
     }
 
+  }
+  
+  /**
+   * 
+   */
+  private void createJMenuBar(ResourceBundle strings) {
+    JMenuBar menu;
+    JMenu file, settings, languages, help;
+    JMenuItem download, print, english, spanish;
+    
+    menu = new JMenuBar();
+    
+    // file menu
+    file = new JMenu(strings.getString("file"));
+    download = new JMenuItem(strings.getString("download"));
+    print = new JMenuItem(strings.getString("print"));
+    
+    file.add(download);
+    file.add(print);
+    
+    // setting menu
+    settings = new JMenu(strings.getString("setting"));
+    languages = new JMenu(strings.getString("languages"));
+    english = new JMenuItem(strings.getString("english"));
+    spanish = new JMenuItem(strings.getString("spanish"));
+    
+    languages.add(english);
+    languages.add(spanish);
+    settings.add(languages);
+    
+    // help menu
+    help = new JMenu(strings.getString("help"));
+
+    menu.add(file);
+    menu.add(settings);
+    menu.add(help);
+    this.setJMenuBar(menu);
   }
 }
