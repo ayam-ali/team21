@@ -54,8 +54,9 @@ public class RimplexWindow extends JFrame
   private JPanel historyPanel;
 
   private JButton inv;
-  private JButton con; 
+  private JButton con;
   private JButton fD;
+
   /**
    * The constructor for the rimplex window.
    * 
@@ -218,7 +219,7 @@ public class RimplexWindow extends JFrame
   {
     this.setLayout(new BorderLayout());
     ResourceBundle strings = ResourceBundle.getBundle("languages/Strings_en_US", Locale.US);
-    
+
     GridBagConstraints gbc = new GridBagConstraints();
     gbc.gridx = 0;
     gbc.gridy = 0;
@@ -279,6 +280,9 @@ public class RimplexWindow extends JFrame
     addButton("Con", 5, 8, 1, 1);
     addButton("x^y", 5, 9, 1, 1);
 
+    addButton("Re", 6, 8, 1, 1);
+    addButton("Im", 6, 9, 1, 1);
+
     this.add(buttonPanel, BorderLayout.CENTER);
 
     // History button ------
@@ -286,9 +290,8 @@ public class RimplexWindow extends JFrame
     expand.addActionListener(new HistoryHandler());
     this.add(expand, BorderLayout.EAST);
     this.createJMenuBar(ResourceBundle.getBundle("languages/Strings_en_US", Locale.US));
-    
-    
-//    this.pack();
+
+    // this.pack();
   }
 
   /**
@@ -346,35 +349,36 @@ public class RimplexWindow extends JFrame
     }
 
   }
-  
+
   /**
    * 
    */
-  private void createJMenuBar(ResourceBundle strings) {
+  private void createJMenuBar(ResourceBundle strings)
+  {
     JMenuBar menu;
     JMenu file, settings, languages, help;
     JMenuItem download, print, english, spanish;
-    
+
     menu = new JMenuBar();
-    
+
     // file menu
     file = new JMenu(strings.getString("file"));
     download = new JMenuItem(strings.getString("download"));
     print = new JMenuItem(strings.getString("print"));
-    
+
     file.add(download);
     file.add(print);
-    
+
     // setting menu
     settings = new JMenu(strings.getString("setting"));
     languages = new JMenu(strings.getString("languages"));
     english = new JMenuItem(strings.getString("english"));
     spanish = new JMenuItem(strings.getString("spanish"));
-    
+
     languages.add(english);
     languages.add(spanish);
     settings.add(languages);
-    
+
     // help menu
     help = new JMenu(strings.getString("help"));
 
