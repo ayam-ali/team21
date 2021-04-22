@@ -55,7 +55,7 @@ public class RimplexWindow extends JFrame
   private JPanel buttonPanel;
   private JButton contract;
   private JPanel historyPanel;
-  private JPanel aboutPanel; //about panel
+  private JPanel aboutPanel; // about panel
 
   private JButton inv;
   private JButton con;
@@ -293,7 +293,8 @@ public class RimplexWindow extends JFrame
     expand = new JButton(">");
     expand.addActionListener(new HistoryHandler());
     this.add(expand, BorderLayout.EAST);
-    this.createJMenuBar(ResourceBundle.getBundle("languages/Strings_en_US", Locale.US));
+    this.setJMenuBar(
+        new RimplexJMenuBar(ResourceBundle.getBundle("languages/Strings_en_US", Locale.US)));
 
     // this.pack();
   }
@@ -352,47 +353,5 @@ public class RimplexWindow extends JFrame
 
     }
 
-  }
-
-  /**
-   * 
-   */
-  private void createJMenuBar(ResourceBundle strings)
-  {
-    JMenuBar menu;
-    JMenu file, settings, languages, help;
-    JMenuItem download, print, english, spanish, about;  // about stuff
-
-    menu = new JMenuBar();
-
-    // file menu
-    file = new JMenu(strings.getString("file"));
-    download = new JMenuItem(strings.getString("download"));
-    print = new JMenuItem(strings.getString("print"));
-
-    file.add(download);
-    file.add(print);
-
-    // setting menu
-    settings = new JMenu(strings.getString("setting"));
-    languages = new JMenu(strings.getString("languages"));
-    english = new JMenuItem(strings.getString("english"));
-    spanish = new JMenuItem(strings.getString("spanish"));
-
-    languages.add(english);
-    languages.add(spanish);
-    settings.add(languages);
-
-    // help menu
-    help = new JMenu(strings.getString("help"));
-    about = new JMenuItem(strings.getString("about"));  // about 
-    
-    help.add(about);
-    about.addActionListener(new HistoryHandler());
-    
-    menu.add(file);
-    menu.add(settings);
-    menu.add(help);
-    this.setJMenuBar(menu);
   }
 }

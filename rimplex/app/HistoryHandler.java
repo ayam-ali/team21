@@ -32,12 +32,6 @@ public class HistoryHandler implements ActionListener
     String buttonPressed = e.getActionCommand();
     switch (buttonPressed)
     {
-      case "About":   // about menu item 
-        JFrame a = new JFrame("About Rimplex");
-        a.setPreferredSize(new Dimension(400, 300));
-        a.pack();
-        a.setVisible(true);
-        break;
       case "<":
         RimplexWindow.animateHistory(false);
         break;
