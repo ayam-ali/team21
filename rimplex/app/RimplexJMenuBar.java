@@ -7,9 +7,11 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.SwingConstants;
 import javax.swing.event.MenuEvent;
 import javax.swing.event.MenuListener;
 
@@ -19,7 +21,15 @@ public class RimplexJMenuBar extends JMenuBar implements ActionListener
   // private JMenuBar menu;
   private JMenu file, settings, languages, help;
   private JMenuItem about, download, print, english, spanish;
-
+  
+  String aboutInfo = "<html><i>Rimplex calculator for educational organizations <br>"
+      + "<br>"
+      + "<html><i>Version: 2021(3.0)<br>"
+      + "<html><i>Build id: 56739734<br>"
+      + "<html><i>(c) Copyright Rimplex contributors and others 2021.  All rights reserved.<br>"
+      + "<html><i>This calculator allows the user to work with real numbers, imaginary numbers, and complex numbers."
+      + "This calculator can only be distributed among educational organizations."
+      + "The Rimplex logo cannot be altered without Rimplexs permission. <br>";
   RimplexJMenuBar(final ResourceBundle strings)
   {
     super();
@@ -29,7 +39,7 @@ public class RimplexJMenuBar extends JMenuBar implements ActionListener
   @Override
   public void actionPerformed(final ActionEvent e)
   {
-    if (e.getActionCommand().equals("Español"))
+    if (e.getActionCommand().equals("Espaï¿½ol"))
     {
       setMenuTexts(ResourceBundle.getBundle("languages/Strings_es_SP", new Locale("es")));
 
@@ -41,7 +51,9 @@ public class RimplexJMenuBar extends JMenuBar implements ActionListener
     else if (e.getActionCommand().equals("About"))
     {
       JFrame a = new JFrame("About Rimplex");
-      a.setPreferredSize(new Dimension(400, 300));
+      a.setPreferredSize(new Dimension(500, 300));
+      JLabel text = new JLabel(aboutInfo);
+      a.getContentPane().add(text);
       a.pack();
       a.setVisible(true);
     }
