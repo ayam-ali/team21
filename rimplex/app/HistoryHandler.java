@@ -1,5 +1,6 @@
 package app;
 
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -23,6 +24,7 @@ public class HistoryHandler implements ActionListener
 {
   
   JWindow history;
+  JWindow about;
 
   @Override
   public void actionPerformed(ActionEvent e)
@@ -30,6 +32,12 @@ public class HistoryHandler implements ActionListener
     String buttonPressed = e.getActionCommand();
     switch (buttonPressed)
     {
+      case "About":
+        JFrame a = new JFrame("About Rimplex");
+        a.setPreferredSize(new Dimension(400, 300));
+        a.pack();
+        a.setVisible(true);
+        break;
       case "<":
         RimplexWindow.animateHistory(false);
         break;

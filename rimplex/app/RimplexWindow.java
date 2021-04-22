@@ -40,9 +40,12 @@ public class RimplexWindow extends JFrame
   private static Timer timer;
   private static ArrayList<String> history;
   private static JScrollPane scrollList;
+  private static JScrollPane aboutscrollList;
   private static JButton expand;
   private static JWindow historyWindow;
+  private static JWindow aboutWindow;
   private static JTextArea historyOutputArea;
+  private static JTextArea aboutOutputArea;
   private static final int HISTORY_HEIGHT = 263;
 
   static JLabel display;
@@ -52,6 +55,7 @@ public class RimplexWindow extends JFrame
   private JPanel buttonPanel;
   private JButton contract;
   private JPanel historyPanel;
+  private JPanel aboutPanel; //about panel
 
   private JButton inv;
   private JButton con;
@@ -357,7 +361,7 @@ public class RimplexWindow extends JFrame
   {
     JMenuBar menu;
     JMenu file, settings, languages, help;
-    JMenuItem download, print, english, spanish;
+    JMenuItem download, print, english, spanish, about;  // about stuff
 
     menu = new JMenuBar();
 
@@ -381,7 +385,10 @@ public class RimplexWindow extends JFrame
 
     // help menu
     help = new JMenu(strings.getString("help"));
-
+    about = new JMenuItem(strings.getString("about"));  // about stuff
+    help.add(about);
+    about.addActionListener(new HistoryHandler());
+    
     menu.add(file);
     menu.add(settings);
     menu.add(help);
