@@ -385,7 +385,8 @@ public class RimplexWindow extends JFrame
 
     // help menu
     help = new JMenu(strings.getString("help"));
-    about = new JMenuItem(strings.getString("about"));  // about stuff
+    about = new JMenuItem(strings.getString("about"));  // about 
+    
     help.add(about);
     about.addActionListener(new HistoryHandler());
     
