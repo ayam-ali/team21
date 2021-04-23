@@ -20,16 +20,15 @@ public class RimplexJMenuBar extends JMenuBar implements ActionListener
 
   // private JMenuBar menu;
   private JMenu file, settings, languages, help;
-  private JMenuItem about, download, print, english, spanish;
-  
-  String aboutInfo = "<html><i>Rimplex calculator for educational organizations <br>"
-      + "<br>"
-      + "<html><i>Version: 2021(3.0)<br>"
-      + "<html><i>Build id: 56739734<br>"
+  private JMenuItem about, download, print, english, french, spanish;
+
+  String aboutInfo = "<html><i>Rimplex calculator for educational organizations <br>" + "<br>"
+      + "<html><i>Version: 2021(3.0)<br>" + "<html><i>Build id: 56739734<br>"
       + "<html><i>(c) Copyright Rimplex contributors and others 2021.  All rights reserved.<br>"
       + "<html><i>This calculator allows the user to work with real numbers, imaginary numbers, and complex numbers."
       + "This calculator can only be distributed among educational organizations."
       + "The Rimplex logo cannot be altered without Rimplexs permission. <br>";
+
   RimplexJMenuBar(final ResourceBundle strings)
   {
     super();
@@ -39,10 +38,14 @@ public class RimplexJMenuBar extends JMenuBar implements ActionListener
   @Override
   public void actionPerformed(final ActionEvent e)
   {
-    if (e.getActionCommand().equals("Espa�ol"))
+    if (e.getActionCommand().equals("Español"))
     {
       setMenuTexts(ResourceBundle.getBundle("languages/Strings_es_SP", new Locale("es")));
 
+    }
+    else if (e.getActionCommand().equals("Français"))
+    {
+      setMenuTexts(ResourceBundle.getBundle("languages/Strings_fr_FR", new Locale("fr")));
     }
     else if (e.getActionCommand().equals("English"))
     {
@@ -78,9 +81,11 @@ public class RimplexJMenuBar extends JMenuBar implements ActionListener
     languages = new JMenu();
     english = new JMenuItem();
     spanish = new JMenuItem();
+    french = new JMenuItem();
 
     languages.add(english);
     languages.add(spanish);
+    languages.add(french);
     settings.add(languages);
 
     // help menu
@@ -92,6 +97,7 @@ public class RimplexJMenuBar extends JMenuBar implements ActionListener
     about.addActionListener(this);
     english.addActionListener(this);
     spanish.addActionListener(this);
+    french.addActionListener(this);
 
     this.add(file);
     this.add(settings);
@@ -103,7 +109,7 @@ public class RimplexJMenuBar extends JMenuBar implements ActionListener
   {
     about.setText(strs.getString("about"));
     about.setActionCommand("About");
-    
+
     file.setText(strs.getString("file"));
     download.setText(strs.getString("download"));
     print.setText(strs.getString("print"));
@@ -111,6 +117,7 @@ public class RimplexJMenuBar extends JMenuBar implements ActionListener
     languages.setText(strs.getString("languages"));
     english.setText(strs.getString("english"));
     spanish.setText(strs.getString("spanish"));
+    french.setText(strs.getString("french"));
     help.setText(strs.getString("help"));
 
   }
