@@ -4,7 +4,6 @@ import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -43,7 +42,6 @@ public class RimplexJMenuBar extends JMenuBar implements ActionListener
     if (e.getActionCommand().equals("Español"))
     {
       setMenuTexts(ResourceBundle.getBundle("languages/Strings_es_SP", new Locale("es")));
-
     }
     else if (e.getActionCommand().equals("Français"))
     {
@@ -128,14 +126,13 @@ public class RimplexJMenuBar extends JMenuBar implements ActionListener
   {
     Desktop desktop = Desktop.getDesktop();
     URI uri = null;
-    uri = new URI("http://www.jmu.edu/");
+    uri = new URI("http://www.jmu.edu");
     desktop.browse(uri);
   }
 
   private void setMenuTexts(final ResourceBundle strs)
   {
     about.setText(strs.getString("about"));
-
     file.setText(strs.getString("file"));
     download.setText(strs.getString("download"));
     print.setText(strs.getString("print"));
@@ -146,6 +143,5 @@ public class RimplexJMenuBar extends JMenuBar implements ActionListener
     french.setText(strs.getString("french"));
     help.setText(strs.getString("help"));
     helpPage.setText(strs.getString("help_page"));
-
   }
 }
