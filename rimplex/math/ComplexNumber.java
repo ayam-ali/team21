@@ -225,8 +225,6 @@ public class ComplexNumber
   /**
    * Finds the new complex number when raised to a power.
    * 
-   * @param base
-   *          the base to be used for the exponential calculation.
    * @param power
    *          the power that the base will be raised to.
    * @return new complex number raised to the power.
@@ -376,9 +374,13 @@ public class ComplexNumber
    */
   public ComplexNumber sqrt()
   {
-    if (this.getImaginaryPart() == 0)
+    if (this.getImaginaryPart() == 0 && this.getRealPart() > 0)
     {
       return new ComplexNumber(Math.sqrt(this.getRealPart()), 0);
+    }
+    if (this.getRealPart() < 0)
+    {
+      return new ComplexNumber(0, Math.sqrt(Math.abs(getRealPart())));
     }
     double r = Math.sqrt(this.mod());
     double theta = this.arg() / 2;
@@ -475,7 +477,7 @@ public class ComplexNumber
     {
       if (!isFraction)
       {
-        r += (getRealPart() % 1 == 0) ? (int) getRealPart() : getRealPart();
+        r = (getRealPart() % 1 == 0) ? "" + (int) getRealPart() : "" + getRealPart();
       }
       else
       {
@@ -489,6 +491,7 @@ public class ComplexNumber
       tempI = "" + (int) getImaginaryPart();
     }
     i = tempI + iString;
+    if (i.equals("1i")) i = iString;
 
     // change
     String result = "";
