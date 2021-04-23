@@ -77,7 +77,7 @@ public class RimplexWindow extends JFrame
 
     makeLayout();
     createHistory();
-    setSize(400, 250);
+    this.setIconImage(new ImageIcon(this.getClass().getResource("/icons/iconRimplex.png")).getImage());
   }
 
   /**
@@ -279,7 +279,8 @@ public class RimplexWindow extends JFrame
 
     // row 6
     addButton("\u221A", 5, 6, 1, 1); // unicode for square root is \u221A
-    addButton(strings.getString("logarithm"), 5, 7, 1, 1);
+    JButton log = addButton(strings.getString("logarithm"), 5, 7, 1, 1);
+    log.setActionCommand("LOG");
     addButton("Frac/Dec", 5, 10, 1, 1);
     addButton("Con", 5, 8, 1, 1);
     addButton("x^y", 5, 9, 1, 1);

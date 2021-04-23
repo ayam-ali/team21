@@ -1,8 +1,13 @@
 package app;
 
+import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -11,16 +16,13 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.SwingConstants;
-import javax.swing.event.MenuEvent;
-import javax.swing.event.MenuListener;
 
 public class RimplexJMenuBar extends JMenuBar implements ActionListener
 {
 
   // private JMenuBar menu;
   private JMenu file, settings, languages, help;
-  private JMenuItem about, download, print, english, french, spanish;
+  private JMenuItem about, download, print, english, french, helpPage, spanish;
 
   String aboutInfo = "<html><i>Rimplex calculator for educational organizations <br>" + "<br>"
       + "<html><i>Version: 2021(3.0)<br>" + "<html><i>Build id: 56739734<br>"
@@ -38,18 +40,30 @@ public class RimplexJMenuBar extends JMenuBar implements ActionListener
   @Override
   public void actionPerformed(final ActionEvent e)
   {
-    if (e.getActionCommand().equals("EspaÃ±ol"))
+    if (e.getActionCommand().equals("Español"))
     {
       setMenuTexts(ResourceBundle.getBundle("languages/Strings_es_SP", new Locale("es")));
 
     }
-    else if (e.getActionCommand().equals("FranÃ§ais"))
+    else if (e.getActionCommand().equals("Français"))
     {
       setMenuTexts(ResourceBundle.getBundle("languages/Strings_fr_FR", new Locale("fr")));
     }
     else if (e.getActionCommand().equals("English"))
     {
       setMenuTexts(ResourceBundle.getBundle("languages/Strings_en_US", Locale.US));
+    }
+    else if (e.getActionCommand().equals("hp"))
+    {
+      try
+      {
+        loadHelpPage();
+      }
+      catch (URISyntaxException | IOException e1)
+      {
+        // TODO Auto-generated catch block
+        e1.printStackTrace();
+      }
     }
     else if (e.getActionCommand().equals("About"))
     {
@@ -91,11 +105,16 @@ public class RimplexJMenuBar extends JMenuBar implements ActionListener
     // help menu
     help = new JMenu();
     about = new JMenuItem(); // about
+    about.setActionCommand("About");
+    helpPage = new JMenuItem();
+    helpPage.setActionCommand("hp");
 
     help.add(about);
+    help.add(helpPage);
 
     about.addActionListener(this);
     english.addActionListener(this);
+    helpPage.addActionListener(this);
     spanish.addActionListener(this);
     french.addActionListener(this);
 
@@ -105,10 +124,17 @@ public class RimplexJMenuBar extends JMenuBar implements ActionListener
     setMenuTexts(strings);
   }
 
+  private void loadHelpPage() throws URISyntaxException, IOException
+  {
+    Desktop desktop = Desktop.getDesktop();
+    URI uri = null;
+    uri = new URI("http://www.jmu.edu/");
+    desktop.browse(uri);
+  }
+
   private void setMenuTexts(final ResourceBundle strs)
   {
     about.setText(strs.getString("about"));
-    about.setActionCommand("About");
 
     file.setText(strs.getString("file"));
     download.setText(strs.getString("download"));
@@ -119,6 +145,7 @@ public class RimplexJMenuBar extends JMenuBar implements ActionListener
     spanish.setText(strs.getString("spanish"));
     french.setText(strs.getString("french"));
     help.setText(strs.getString("help"));
+    helpPage.setText(strs.getString("help_page"));
 
   }
 }
