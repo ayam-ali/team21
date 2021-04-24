@@ -19,14 +19,14 @@ import math.ComplexNumber;
  */
 public class EventHandler extends KeyAdapter implements ActionListener
 {
+  private static String currentOperand = "";
+  private static boolean isFraction = false;
 
   private Calculator calc = new Calculator();
-  private static String currentOperand = "";
-  boolean exponential = false;
-  boolean missingParam = false;
-  static boolean isFraction = false;
-  String rPar = ")";
-  String lPar = "(";
+  private boolean exponential = false;
+  private boolean missingParam = false;
+  private String rPar = ")";
+  private String lPar = "(";
 
   private String zero = "0";
   private String one = "1";
@@ -39,6 +39,9 @@ public class EventHandler extends KeyAdapter implements ActionListener
   private String eight = "8";
   private String nine = "9";
 
+  /**
+   * Reactions for when a button is pressed.
+   */
   @Override
   public void actionPerformed(final ActionEvent e)
   {
@@ -69,12 +72,12 @@ public class EventHandler extends KeyAdapter implements ActionListener
       currentOperand = currentOperand + "Inv";
       appendToDisplay("Inv");
     }
-    else if (buttonPressed.equals("Con"))               // con 
+    else if (buttonPressed.equals("Con")) // con
     {
       currentOperand = currentOperand + "Con";
       appendToDisplay("Con");
     }
-    else if (buttonPressed.equals("Re"))            // real and img part 
+    else if (buttonPressed.equals("Re")) // real and img part
     {
       currentOperand = currentOperand + "Re";
       appendToDisplay("Re");
@@ -97,13 +100,13 @@ public class EventHandler extends KeyAdapter implements ActionListener
       clear();
       currentOperand = num.toString();
 
-      if (!currentOperand.startsWith("("))
+      if (!currentOperand.startsWith(lPar))
       {
-        currentOperand = "(" + currentOperand;
+        currentOperand = lPar + currentOperand;
       }
-      if (!currentOperand.endsWith(")"))
+      if (!currentOperand.endsWith(rPar))
       {
-        currentOperand = currentOperand + ")"; 
+        currentOperand = currentOperand + rPar;
       }
 
       appendToDisplay(currentOperand);
@@ -127,6 +130,13 @@ public class EventHandler extends KeyAdapter implements ActionListener
         {
           updateDisplay(displayText.substring(0, displayText.length() - 1));
           missingParam = true;
+        }
+        else if (currentOperand.endsWith("LOG") || currentOperand.endsWith("Inv")
+            || currentOperand.endsWith("Con"))
+        {
+          updateDisplay(displayText.substring(0, displayText.length() - 3));
+          currentOperand = currentOperand.substring(0, currentOperand.length() - 3);
+          return;
         }
         else
         {
@@ -187,6 +197,9 @@ public class EventHandler extends KeyAdapter implements ActionListener
     }
   }
 
+  /**
+   * Reactions for when a user presses a key on their device.
+   */
   @Override
   public void keyPressed(final KeyEvent e)
   {
@@ -195,12 +208,12 @@ public class EventHandler extends KeyAdapter implements ActionListener
     if (eKeyStroke == KeyStroke.getKeyStroke('('))
     {
       missingParam = true;
-      appendToDisplay("(");
+      appendToDisplay(lPar);
     }
     else if (eKeyStroke == KeyStroke.getKeyStroke(')'))
     {
       missingParam = false;
-      appendToDisplay(")");
+      appendToDisplay(rPar);
     }
     else if (keyCode == KeyEvent.VK_0)
     {
@@ -340,7 +353,7 @@ public class EventHandler extends KeyAdapter implements ActionListener
   private static void reset()
   {
     RimplexWindow.expression = new ArrayList<>();
-    RimplexWindow.display.setText("<html>");
+    RimplexWindow.display.setText("<html><br>");
     currentOperand = "";
   }
 
@@ -378,11 +391,23 @@ public class EventHandler extends KeyAdapter implements ActionListener
     return RimplexWindow.display.getText();
   }
 
+  /**
+   * Appends strings to the display.
+   * 
+   * @param str
+   *          the string that will be appended.
+   */
   static void appendToDisplay(final String str)
   {
     RimplexWindow.display.setText(getDisplayText() + italicize(str));
   }
 
+  /**
+   * Add an operand or operator to the expression.
+   * 
+   * @param str
+   *          the string that will be added to the expression.
+   */
   private static void addToExpression(final String str)
   {
     RimplexWindow.expression.add(str);
@@ -411,7 +436,11 @@ public class EventHandler extends KeyAdapter implements ActionListener
       RimplexWindow.expression.add(currentOperand);
     }
     addToExpression(op);
-    appendToDisplay(op);
+    // appendToDisplay(op);
+    String displayText = getDisplayText();
+    String upperLine = displayText.substring(displayText.indexOf("<html>"),
+        displayText.indexOf("<br>"));
+    updateDisplay(upperLine + currentOperand + op + "<br>");
     currentOperand = "";
 
   }
@@ -425,8 +454,14 @@ public class EventHandler extends KeyAdapter implements ActionListener
     ComplexNumber solved = calc.calculate(RimplexWindow.expression);
     RimplexWindow.expression.clear();
     RimplexWindow.expression.add(solved.toString());
+
+    String displayText = getDisplayText();
+    String upperLine = displayText.substring(displayText.indexOf("<html>"),
+        displayText.indexOf("<br>"));
+    updateDisplay(
+        upperLine + currentOperand + "=" + italicize(solved.toString(isFraction)) + "<br>");
+
     currentOperand = "";
-    updateDisplay(getDisplayText() + "=" + italicize(solved.toString(isFraction)));
 
     RimplexWindow.addToHistory(getDisplayText());
     RimplexWindow.updateHistory();

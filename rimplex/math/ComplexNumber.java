@@ -127,7 +127,7 @@ public class ComplexNumber
     String num = "";
     while (i < str.length())
     {
-      if (Character.isDigit(str.charAt(i)) || str.charAt(i) == '.')
+      if (Character.isDigit(str.charAt(i)) || str.charAt(i) == '.' || str.charAt(i) == '-')
       {
         int j = i;
         while (j < str.length() && (Character.isDigit(str.charAt(j)) || str.charAt(j) == '.'))
@@ -139,6 +139,9 @@ public class ComplexNumber
         if (i - num.length() >= 0 && str.charAt(i - num.length()) == '-')
         {
           num = "-" + num;
+        }
+        if (num.equals("-")) {
+          num = "-1";
         }
         if (i + 1 < str.length() && str.charAt(i + 1) == 'i')
         {

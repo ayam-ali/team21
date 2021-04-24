@@ -27,7 +27,7 @@ public class HistoryHandler implements ActionListener
   JWindow about;
 
   @Override
-  public void actionPerformed(ActionEvent e)
+  public void actionPerformed(final ActionEvent e)
   {
     String buttonPressed = e.getActionCommand();
     switch (buttonPressed)

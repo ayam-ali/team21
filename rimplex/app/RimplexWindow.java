@@ -37,6 +37,9 @@ import javax.swing.border.EtchedBorder;
  */
 public class RimplexWindow extends JFrame
 {
+  static JLabel display;
+  static ArrayList<String> expression;
+
   private static Timer timer;
   private static ArrayList<String> history;
   private static JScrollPane scrollList;
@@ -48,8 +51,6 @@ public class RimplexWindow extends JFrame
   private static JTextArea aboutOutputArea;
   private static final int HISTORY_HEIGHT = 263;
 
-  static JLabel display;
-  static ArrayList<String> expression;
   private static final long serialVersionUID = 1L;
   private EventHandler eventHandler;
   private JPanel buttonPanel;
@@ -143,6 +144,11 @@ public class RimplexWindow extends JFrame
    * 
    * @param name
    *          for what is going to be on the button
+   * @param x location on the x axis of the Rimplex frame
+   * @param y location on the y axis of the Rimplex frame
+   * @param width the width of the button
+   * @param height the height of the button
+   * @return the button created
    */
   private JButton addButton(final String name, final int x, final int y, final int width,
       final int height)
@@ -187,7 +193,7 @@ public class RimplexWindow extends JFrame
     display = new JLabel();
     Font font = display.getFont();
     display.setFont(font.deriveFont(Font.PLAIN));
-    display.setText("<html>");
+    display.setText("<html><br>");
     display.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
     display.setFocusable(true);
     display.addKeyListener(new EventHandler());
@@ -297,7 +303,7 @@ public class RimplexWindow extends JFrame
     this.setJMenuBar(
         new RimplexJMenuBar(ResourceBundle.getBundle("languages/Strings_en_US", Locale.US)));
 
-    // this.pack();
+    this.pack();
   }
 
   /**
@@ -339,7 +345,7 @@ public class RimplexWindow extends JFrame
 
       ActionListener taskPerformer = new ActionListener()
       {
-        public void actionPerformed(ActionEvent evt)
+        public void actionPerformed(final ActionEvent evt)
         {
           if (historyWindow.getWidth() <= 0)
           {

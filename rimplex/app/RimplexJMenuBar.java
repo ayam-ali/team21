@@ -16,6 +16,11 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
+/**
+ * Creates the JMenuBar for the Rimplex application.
+ * @author Eric Hernandez-Diaz
+ * @version 04/28/2021
+ */
 public class RimplexJMenuBar extends JMenuBar implements ActionListener
 {
 
@@ -30,12 +35,21 @@ public class RimplexJMenuBar extends JMenuBar implements ActionListener
       + "This calculator can only be distributed among educational organizations."
       + "The Rimplex logo cannot be altered without Rimplexs permission. <br>";
 
+  /**
+   * Constructor for this RimplexJMenuBar.
+   * 
+   * @param strings
+   *          bundle that will be used for translations
+   */
   RimplexJMenuBar(final ResourceBundle strings)
   {
     super();
     createJMenuBar(strings);
   }
 
+  /**
+   * Reactions for menu action events.
+   */
   @Override
   public void actionPerformed(final ActionEvent e)
   {
@@ -75,7 +89,11 @@ public class RimplexJMenuBar extends JMenuBar implements ActionListener
   }
 
   /**
+   * Creates the layout for the RimplexJMenuBar and its menus/menuitems.
    * 
+   * @param strings
+   *          the bundle of strings that will be used to set the text of all menus and menu items
+   *          and translate them to other languages when appropriate.
    */
   void createJMenuBar(final ResourceBundle strings)
   {
@@ -122,6 +140,12 @@ public class RimplexJMenuBar extends JMenuBar implements ActionListener
     setMenuTexts(strings);
   }
 
+  /**
+   * Loads the help page via a web browser on the user's device.
+   * 
+   * @throws URISyntaxException
+   * @throws IOException
+   */
   private void loadHelpPage() throws URISyntaxException, IOException
   {
     Desktop desktop = Desktop.getDesktop();
@@ -130,6 +154,10 @@ public class RimplexJMenuBar extends JMenuBar implements ActionListener
     desktop.browse(uri);
   }
 
+  /**
+   * Sets the appropriate text for all menu's.
+   * @param strs the bundle that will be used to find the texts for all menu's.
+   */
   private void setMenuTexts(final ResourceBundle strs)
   {
     about.setText(strs.getString("about"));
