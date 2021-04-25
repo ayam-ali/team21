@@ -1,6 +1,7 @@
 package app;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 
 import javax.swing.JFrame;
 
@@ -16,9 +17,9 @@ public class Driver
    * The main method to run rimplex.
    * 
    * @param args
-   * @throws FileNotFoundException 
+   * @throws IOException 
    */
-  public static void main(final String[] args) throws FileNotFoundException
+  public static void main(final String[] args) throws IOException
   {
     RimplexWindow gui = new RimplexWindow(new EventHandler());
     gui.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

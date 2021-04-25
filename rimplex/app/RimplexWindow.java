@@ -10,9 +10,17 @@ import java.awt.Image;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.ResourceBundle;
+import java.util.Scanner;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -67,8 +75,9 @@ public class RimplexWindow extends JFrame
    * 
    * @param eventHandler
    *          to deal with the buttons
+   * @throws IOException
    */
-  public RimplexWindow(final EventHandler eventHandler)
+  public RimplexWindow(final EventHandler eventHandler) throws IOException
   {
     super("Rimplex");
     this.eventHandler = eventHandler;
@@ -78,7 +87,8 @@ public class RimplexWindow extends JFrame
 
     makeLayout();
     createHistory();
-    this.setIconImage(new ImageIcon(this.getClass().getResource("/icons/iconRimplex.png")).getImage());
+    this.setIconImage(
+        new ImageIcon(this.getClass().getResource("/icons/iconRimplex.png")).getImage());
   }
 
   /**
@@ -144,14 +154,19 @@ public class RimplexWindow extends JFrame
    * 
    * @param name
    *          for what is going to be on the button
-   * @param x location on the x axis of the Rimplex frame
-   * @param y location on the y axis of the Rimplex frame
-   * @param width the width of the button
-   * @param height the height of the button
+   * @param x
+   *          location on the x axis of the Rimplex frame
+   * @param y
+   *          location on the y axis of the Rimplex frame
+   * @param width
+   *          the width of the button
+   * @param height
+   *          the height of the button
    * @return the button created
+   * @throws IOException
    */
   private JButton addButton(final String name, final int x, final int y, final int width,
-      final int height)
+      final int height) throws IOException
   {
     GridBagConstraints gbc = new GridBagConstraints();
     gbc.gridx = x;
@@ -168,8 +183,8 @@ public class RimplexWindow extends JFrame
     buttonPanel.add(button, gbc);
 
     // changes the color of the button
-    Color purple = new Color(175, 175, 225);
-    changeColor(button, purple);
+    // Color purple = new Color(175, 175, 225);
+    changeColor(button);
     return button;
   }
 
@@ -207,6 +222,15 @@ public class RimplexWindow extends JFrame
     expression = new ArrayList<>();
   }
 
+  private BufferedReader createBufferedReader(String name)
+  {
+    InputStream is = getClass().getResourceAsStream(name);
+    BufferedReader br = new BufferedReader(new InputStreamReader(is));
+
+    return br;
+
+  }
+
   /**
    * To change the color of a button.
    * 
@@ -214,18 +238,100 @@ public class RimplexWindow extends JFrame
    *          to change color of
    * @param color
    *          to change to
+   * @throws IOException
    */
-  private void changeColor(final JButton button, final Color color)
+  private void changeColor(final JButton button) throws IOException
   {
+    // BufferedReader in = createBufferedReader("ColorScheme.div");
+
+    Color color;
+    int[] colors = getColors2(this.getClass().getResource("/icons/ColorScheme.txt"));
+
+    // int[] colors = getColors(createBufferedReader("/icons/ColorScheme.txt"));
+    color = new Color(colors[0], colors[1], colors[2]);
     button.setBackground(color);
     button.setOpaque(true);
     button.setBorderPainted(false);
   }
 
   /**
-   * Creates the layout and sets the buttons.
+   * To read a file and get the colors.
+   * 
+   * @param url
+   *          for the file in any location
+   * @return int[] of the colors at each index
+   * @throws IOException
+   *           if the file does not exist
    */
-  private void makeLayout()
+  private int[] getColors2(URL url) throws IOException
+  {
+
+    int[] colors = new int[3];
+    if (url == null)
+    {
+      // Default is purple
+      colors[0] = 175;
+      colors[1] = 175;
+      colors[2] = 225;
+    }
+
+    else
+    {
+
+      File file = new File(url.getFile());
+      Scanner s = new Scanner(file);
+      if (!s.hasNext())
+      {
+        // Default is purple
+        colors[0] = 175;
+        colors[1] = 175;
+        colors[2] = 225;
+      }
+      while (s.hasNextLine())
+      {
+        String col = s.nextLine();
+        if (col.contains(","))
+        {
+          String[] strColors = new String[3];
+          strColors = col.split(",");
+          colors[0] = Integer.parseInt(strColors[0].trim());
+          colors[1] = Integer.parseInt(strColors[1].trim());
+          colors[2] = Integer.parseInt(strColors[2].trim());
+        }
+      }
+    }
+    return colors;
+  }
+
+  private int[] getColors(BufferedReader in) throws IOException
+  {
+
+    int[] colors = new int[3];
+    if (in == null)
+    {
+      // Default is purple
+      colors[0] = 175;
+      colors[1] = 175;
+      colors[2] = 225;
+    }
+    else
+    {
+      // first line is the name
+      String[] strColors = in.readLine().split(",");
+
+      colors[0] = Integer.parseInt(strColors[0].trim());
+      colors[1] = Integer.parseInt(strColors[1].trim());
+      colors[2] = Integer.parseInt(strColors[2].trim());
+    }
+    return colors;
+  }
+
+  /**
+   * Creates the layout and sets the buttons.
+   * 
+   * @throws IOException
+   */
+  private void makeLayout() throws IOException
   {
     this.setLayout(new BorderLayout());
     ResourceBundle strings = ResourceBundle.getBundle("languages/Strings_en_US", Locale.US);
@@ -345,6 +451,7 @@ public class RimplexWindow extends JFrame
 
       ActionListener taskPerformer = new ActionListener()
       {
+
         public void actionPerformed(final ActionEvent evt)
         {
           if (historyWindow.getWidth() <= 0)
