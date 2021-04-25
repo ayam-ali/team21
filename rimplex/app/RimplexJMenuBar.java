@@ -19,7 +19,7 @@ import javax.swing.JMenuItem;
 /**
  * Creates the JMenuBar for the Rimplex application.
  * 
- * @author Eric Hernandez-Diaz, Ayam Ali 
+ * @author Eric Hernandez-Diaz, Ayam Ali
  * @version 04/28/2021
  */
 public class RimplexJMenuBar extends JMenuBar implements ActionListener
@@ -42,6 +42,13 @@ public class RimplexJMenuBar extends JMenuBar implements ActionListener
       + "<html><i>Cette calculatrice permet à l'utilisateur de travailler avec des nombres réels, des nombres imaginaires et des nombres complexes."
       + "Cette calculatrice ne peut être distribuée que parmi les organisations éducatives."
       + "Le logo Rimplex ne peut pas être modifié sans l'autorisation de Rimplexs. <br>";
+
+  String aboutInfoSpa = "<html><i>Calculadora Rimplex para organizaciones educativas <br>" + "<br>"
+      + "<html><i>Versión:2021(3.0)<br>" + "<html><i>ID de compilación: 56739734<br>"
+      + "<html><i>(c) Copyright de los colaboradores de Rimplex y otros 2021. Todos los derechos reservados.<br>"
+      + "<html><i>Esta calculadora permite al usuario trabajar con números reales, números imaginarios y números complejos."
+      + "Esta calculadora solo se puede distribuir entre organizaciones educativas."
+      + "El logotipo de Rimplex no se puede modificar sin el permiso de Rimplex.<br>";
 
   /**
    * Constructor for this RimplexJMenuBar.
@@ -92,6 +99,11 @@ public class RimplexJMenuBar extends JMenuBar implements ActionListener
     else if (e.getActionCommand().equals("About"))
     {
       aboutPage("About Rimplex", aboutInfoEng);
+
+    }
+    else if (e.getActionCommand().equals("Acerca De"))
+    {
+      aboutPage("Sobre Rimplex", aboutInfoSpa);
 
     }
 
