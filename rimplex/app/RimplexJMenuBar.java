@@ -53,11 +53,11 @@ public class RimplexJMenuBar extends JMenuBar implements ActionListener
   @Override
   public void actionPerformed(final ActionEvent e)
   {
-    if (e.getActionCommand().equals("Español"))
+    if (e.getActionCommand().equals("EspaÃ±ol"))
     {
       setMenuTexts(ResourceBundle.getBundle("languages/Strings_es_SP", new Locale("es")));
     }
-    else if (e.getActionCommand().equals("Français"))
+    else if (e.getActionCommand().equals("FranÃ§ais"))
     {
       setMenuTexts(ResourceBundle.getBundle("languages/Strings_fr_FR", new Locale("fr")));
     }
