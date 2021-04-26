@@ -385,20 +385,20 @@ public class RimplexWindow extends JFrame
 
     // row 5
     addButton("0", 0, 10, 2, 1);
-    addButton("\uD835\uDC8A", 2, 10, 1, 1); // math i sign
+    addButton("\uD835\uDC8A", 4, 10, 1, 1); // math i sign
     addButton("=", 3, 10, 1, 1);
-    addButton(".", 4, 10, 1, 1);
+    addButton(".", 2, 10, 1, 1);
 
     // row 6
     addButton("\u221A", 5, 6, 1, 1); // unicode for square root is \u221A
     JButton log = addButton(strings.getString("logarithm"), 5, 7, 1, 1);
     log.setActionCommand("LOG");
-    addButton("Frac/Dec", 5, 10, 1, 1);
-    addButton("Con", 5, 8, 1, 1);
-    addButton("x^y", 5, 9, 1, 1);
+    addButton("Frac/Dec", 5, 10, 2, 1);
+    addButton("Con", 5, 8, 2, 1);
+    addButton("x^y", 5, 9, 2, 1);
 
-    addButton("Re", 6, 8, 1, 1);
-    addButton("Im", 6, 9, 1, 1);
+    addButton("Re", 6, 6, 1, 1);
+    addButton("Im", 6, 7, 1, 1);
 
     this.add(buttonPanel, BorderLayout.CENTER);
 

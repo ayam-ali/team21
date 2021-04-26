@@ -176,6 +176,7 @@ public class RimplexJMenuBar extends JMenuBar implements ActionListener
     this.add(settings);
     this.add(help);
     setMenuTexts(strings);
+   
   }
 
   /**
