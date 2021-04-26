@@ -3,7 +3,7 @@ package math;
 /**
  * An object class to represent a complex number.
  * 
- * @author Ava Momberger, Rhea Morris, Eric Hernandez, Ayam Ali
+ * @author Ava Momberger, Rhea Morris, Eric Hernandez
  * @version 3/24/2021
  */
 public class ComplexNumber

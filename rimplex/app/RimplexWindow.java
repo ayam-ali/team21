@@ -35,7 +35,7 @@ import javax.swing.border.EtchedBorder;
 /**
  * GUI - Creates objects for displays and input fields.
  * 
- * @author Eric Anderson, Eric Hernandez-Diaz, Ayam Ali
+ * @author Eric Anderson, Eric Hernandez-Diaz, Ayam Ali, Rhea Morris 
  * @version 3/25/2021
  */
 public class RimplexWindow extends JFrame
