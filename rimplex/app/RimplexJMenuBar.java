@@ -19,7 +19,7 @@ import javax.swing.JMenuItem;
 /**
  * Creates the JMenuBar for the Rimplex application.
  * 
- * @author Eric Hernandez-Diaz, Ayam Ali
+ * @author Eric Hernandez-Diaz, Ayam Ali, Rhea Morris
  * @version 04/28/2021
  */
 public class RimplexJMenuBar extends JMenuBar implements ActionListener

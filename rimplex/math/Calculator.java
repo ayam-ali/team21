@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * Calculator class.
  * 
- * @author The Team
+ * @author Eric Hernandez, Rhea Morris, Ava Momberger
  * @version 3/24/2021
  */
 public class Calculator
