@@ -6,13 +6,10 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.Image;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -20,21 +17,19 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.ResourceBundle;
-import java.util.Scanner;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JWindow;
 import javax.swing.Timer;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.EtchedBorder;
 
 /**
@@ -51,12 +46,9 @@ public class RimplexWindow extends JFrame
   private static Timer timer;
   private static ArrayList<String> history;
   private static JScrollPane scrollList;
-  private static JScrollPane aboutscrollList;
   private static JButton expand;
   private static JWindow historyWindow;
-  private static JWindow aboutWindow;
   private static JTextArea historyOutputArea;
-  private static JTextArea aboutOutputArea;
   private static final int HISTORY_HEIGHT = 263;
 
   private static final long serialVersionUID = 1L;
@@ -64,11 +56,6 @@ public class RimplexWindow extends JFrame
   private JPanel buttonPanel;
   private JButton contract;
   private JPanel historyPanel;
-  private JPanel aboutPanel; // about panel
-
-  private JButton inv;
-  private JButton con;
-  private JButton fD;
 
   /**
    * The constructor for the rimplex window.
@@ -77,18 +64,50 @@ public class RimplexWindow extends JFrame
    *          to deal with the buttons
    * @throws IOException
    */
-  public RimplexWindow(final EventHandler eventHandler) throws IOException
+  private RimplexWindow(final EventHandler eventHandler) throws IOException
   {
     super("Rimplex");
     this.eventHandler = eventHandler;
+
+    try
+    {
+      UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+    }
+    catch (ClassNotFoundException e)
+    {
+      // use default
+    }
+    catch (InstantiationException e)
+    {
+      // use default
+
+    }
+    catch (IllegalAccessException e)
+    {
+      // use default
+    }
+    catch (UnsupportedLookAndFeelException e)
+    {
+      // use default
+    }
+
     this.buttonPanel = createButtonPanel();
     createDisplay();
     createExpression();
 
     makeLayout();
     createHistory();
-    this.setIconImage(
-        new ImageIcon(this.getClass().getResource("/icons/iconRimplex.png")).getImage());
+    this.setIconImage(loadImageIcon("iconRimplex.png").getImage());
+  }
+
+  /**
+   * @throws IOException
+   * @return A RimplexWindow object
+   */
+  static RimplexWindow createRimplexWindow() throws IOException
+  {
+    RimplexWindow rW = new RimplexWindow(new EventHandler());
+    return rW;
   }
 
   /**
@@ -229,7 +248,7 @@ public class RimplexWindow extends JFrame
    *          of the file
    * @return the buffered reader
    */
-  private BufferedReader createBufferedReader(String name)
+  private BufferedReader createBufferedReader(final String name)
   {
     InputStream is = getClass().getResourceAsStream(name);
     BufferedReader br = new BufferedReader(new InputStreamReader(is));
@@ -242,9 +261,9 @@ public class RimplexWindow extends JFrame
    * To change the color of a button.
    * 
    * @param button
-   *          to change color of
+   *          the button that will change in color.
    * @param color
-   *          to change to
+   *          The color to change to.
    * @throws IOException
    */
   private void changeColor(final JButton button) throws IOException
@@ -266,7 +285,7 @@ public class RimplexWindow extends JFrame
    * @throws IOException
    *           if nothing found
    */
-  private int[] getColors(BufferedReader in) throws IOException
+  private int[] getColors(final BufferedReader in) throws IOException
   {
     String str = in.readLine();
     int[] colors = new int[3];
@@ -313,6 +332,20 @@ public class RimplexWindow extends JFrame
   }
 
   /**
+   * Class loader method for logos and icons.
+   * 
+   * @param name
+   *          The name of the file containing the image.
+   * @return The image icon.
+   */
+  private ImageIcon loadImageIcon(final String name)
+  {
+    URL url = this.getClass().getResource("/icons/" + name);
+    ImageIcon image = new ImageIcon(url);
+    return image;
+  }
+
+  /**
    * Creates the layout and sets the buttons.
    * 
    * @throws IOException
@@ -332,8 +365,7 @@ public class RimplexWindow extends JFrame
     gbc.fill = GridBagConstraints.BOTH;
 
     JLabel logo = new JLabel();
-    Image image = new ImageIcon(this.getClass().getResource("/icons/logoRimplex.png")).getImage();
-    logo.setIcon(new ImageIcon(image));
+    logo.setIcon(loadImageIcon("logoRimplex.png"));
     buttonPanel.add(logo, gbc);
 
     gbc.gridy = 0;

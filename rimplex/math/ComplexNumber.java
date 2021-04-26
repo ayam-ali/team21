@@ -45,7 +45,6 @@ public class ComplexNumber
    */
   public double getImaginaryPart()
   {
-
     return img;
   }
 
@@ -68,11 +67,9 @@ public class ComplexNumber
     boolean inverse = false;
     boolean con = false;
     boolean log = false;
-    boolean re = false; // real and img operator 
+    boolean re = false; // real and img operator
     boolean im = false;
-    
-    
-    
+
     if (string.contains("\u221A"))
     {
       // squareRoot
@@ -104,12 +101,12 @@ public class ComplexNumber
       str = string.substring(0, string.indexOf('^'));
       power = string.substring(string.indexOf('^') + 1);
     }
-    if (string.contains("Re"))  // real operator 
+    if (string.contains("Re")) // real operator
     {
       str = string.substring(0, string.indexOf("Re"));
       re = true;
     }
-    if (string.contains("Im"))  // real operator 
+    if (string.contains("Im")) // real operator
     {
       str = string.substring(0, string.indexOf("Im"));
       im = true;
@@ -140,7 +137,8 @@ public class ComplexNumber
         {
           num = "-" + num;
         }
-        if (num.equals("-")) {
+        if (num.equals("-"))
+        {
           num = "-1";
         }
         if (i + 1 < str.length() && str.charAt(i + 1) == 'i')
@@ -196,7 +194,7 @@ public class ComplexNumber
     {
       result = result.log();
     }
-    if (re)                                                     // real and img operator 
+    if (re) // real and img operator
     {
       result = new ComplexNumber(result.getRealPart(), 0);
     }
@@ -494,7 +492,8 @@ public class ComplexNumber
       tempI = "" + (int) getImaginaryPart();
     }
     i = tempI + iString;
-    if (i.equals("1i")) i = iString;
+    if (i.equals("1i"))
+      i = iString;
 
     // change
     String result = "";

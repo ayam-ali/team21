@@ -5,8 +5,8 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -189,7 +189,8 @@ public class RimplexJMenuBar extends JMenuBar implements ActionListener
   private void loadHelpPage() throws URISyntaxException, IOException
   {
     Desktop desktop = Desktop.getDesktop();
-    desktop.browse(this.getClass().getResource("/helpPage/helpPage.html").toURI());
+    URL url = this.getClass().getResource("/helpPage/helpPage.html");
+    desktop.browse(url.toURI());
   }
 
   /**
