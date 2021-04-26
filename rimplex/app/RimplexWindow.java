@@ -222,6 +222,13 @@ public class RimplexWindow extends JFrame
     expression = new ArrayList<>();
   }
 
+  /**
+   * Helper method to locate the correct spot for color scheme.
+   * 
+   * @param name
+   *          of the file
+   * @return the buffered reader
+   */
   private BufferedReader createBufferedReader(String name)
   {
     InputStream is = getClass().getResourceAsStream(name);
@@ -242,12 +249,8 @@ public class RimplexWindow extends JFrame
    */
   private void changeColor(final JButton button) throws IOException
   {
-    // BufferedReader in = createBufferedReader("ColorScheme.div");
-
     Color color;
-    int[] colors = getColors2(this.getClass().getResource("/icons/ColorScheme.txt"));
-
-    // int[] colors = getColors(createBufferedReader("/icons/ColorScheme.txt"));
+    int[] colors = getColors(createBufferedReader("/icons/ColorScheme.txt"));
     color = new Color(colors[0], colors[1], colors[2]);
     button.setBackground(color);
     button.setOpaque(true);
@@ -255,59 +258,20 @@ public class RimplexWindow extends JFrame
   }
 
   /**
-   * To read a file and get the colors.
+   * Gets the colors from a file.
    * 
-   * @param url
-   *          for the file in any location
-   * @return int[] of the colors at each index
+   * @param in
+   *          the buffered reader.
+   * @return the colors in an int array
    * @throws IOException
-   *           if the file does not exist
+   *           if nothing found
    */
-  private int[] getColors2(URL url) throws IOException
-  {
-
-    int[] colors = new int[3];
-    if (url == null)
-    {
-      // Default is purple
-      colors[0] = 175;
-      colors[1] = 175;
-      colors[2] = 225;
-    }
-
-    else
-    {
-
-      File file = new File(url.getFile());
-      Scanner s = new Scanner(file);
-      if (!s.hasNext())
-      {
-        // Default is purple
-        colors[0] = 175;
-        colors[1] = 175;
-        colors[2] = 225;
-      }
-      while (s.hasNextLine())
-      {
-        String col = s.nextLine();
-        if (col.contains(","))
-        {
-          String[] strColors = new String[3];
-          strColors = col.split(",");
-          colors[0] = Integer.parseInt(strColors[0].trim());
-          colors[1] = Integer.parseInt(strColors[1].trim());
-          colors[2] = Integer.parseInt(strColors[2].trim());
-        }
-      }
-    }
-    return colors;
-  }
-
   private int[] getColors(BufferedReader in) throws IOException
   {
-
+    String str = in.readLine();
     int[] colors = new int[3];
-    if (in == null)
+
+    if (in == null || str == null)
     {
       // Default is purple
       colors[0] = 175;
@@ -316,14 +280,36 @@ public class RimplexWindow extends JFrame
     }
     else
     {
-      // first line is the name
-      String[] strColors = in.readLine().split(",");
+      // if the numbers are written with commas and spaces
+      if (str.contains(","))
+      {
+        String[] strColors = str.split(",");
 
-      colors[0] = Integer.parseInt(strColors[0].trim());
-      colors[1] = Integer.parseInt(strColors[1].trim());
-      colors[2] = Integer.parseInt(strColors[2].trim());
+        colors[0] = Integer.parseInt(strColors[0].trim());
+        colors[1] = Integer.parseInt(strColors[1].trim());
+        colors[2] = Integer.parseInt(strColors[2].trim());
+      }
+      else
+      {
+        // if commas are left out and numbers are separated by spaces
+        if (str.contains(" "))
+        {
+          colors[0] = Integer.parseInt(str.substring(0, 3));
+          colors[1] = Integer.parseInt(str.substring(4, 7));
+          colors[2] = Integer.parseInt(str.substring(8, 11));
+        }
+        else
+        {
+          // if all of the numbers are typed together
+          colors[0] = Integer.parseInt(str.substring(0, 3).trim());
+          colors[1] = Integer.parseInt(str.substring(3, 6).trim());
+          colors[2] = Integer.parseInt(str.substring(6, 9).trim());
+        }
+      }
+
     }
     return colors;
+
   }
 
   /**
