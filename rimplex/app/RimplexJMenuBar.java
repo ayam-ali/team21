@@ -25,6 +25,8 @@ import javax.swing.JMenuItem;
 public class RimplexJMenuBar extends JMenuBar implements ActionListener
 {
 
+
+  private static final long serialVersionUID = 1L;
   // private JMenuBar menu;
   private JMenu file, settings, languages, help;
   private JMenuItem about, download, print, english, french, helpPage, spanish;
@@ -68,11 +70,11 @@ public class RimplexJMenuBar extends JMenuBar implements ActionListener
   @Override
   public void actionPerformed(final ActionEvent e)
   {
-    if (e.getActionCommand().equals("EspaÃ±ol"))
+    if (e.getActionCommand().equals("Español"))
     {
       setMenuTexts(ResourceBundle.getBundle("languages/Strings_es_SP", new Locale("es")));
     }
-    else if (e.getActionCommand().equals("FranÃ§ais"))
+    else if (e.getActionCommand().equals("Français"))
     {
       setMenuTexts(ResourceBundle.getBundle("languages/Strings_fr_FR", new Locale("fr")));
     }
@@ -88,7 +90,6 @@ public class RimplexJMenuBar extends JMenuBar implements ActionListener
       }
       catch (URISyntaxException | IOException e1)
       {
-        // TODO Auto-generated catch block
         e1.printStackTrace();
       }
     }
@@ -110,7 +111,7 @@ public class RimplexJMenuBar extends JMenuBar implements ActionListener
   }
 
   /**
-   * To add the info for the about page
+   * To add the info for the about page.
    * 
    * @param about
    *          for the title of the JFrame
@@ -188,9 +189,7 @@ public class RimplexJMenuBar extends JMenuBar implements ActionListener
   private void loadHelpPage() throws URISyntaxException, IOException
   {
     Desktop desktop = Desktop.getDesktop();
-    URI uri = null;
-    uri = new URI("http://www.jmu.edu");
-    desktop.browse(uri);
+    desktop.browse(this.getClass().getResource("/helpPage/helpPage.html").toURI());
   }
 
   /**
