@@ -59,15 +59,20 @@ public class ComplexNumber
   {
 
     ComplexNumber result;
-    String str = string;
+    String str = "";
     String real = "";
     String img = "";
+
+    String[] strs = findUniary(string);
+    
+    str = strs[0];
+    boolean hasUniary = (strs[1] != null);
 
     int i = 0;
     String num = "";
     while (i < str.length())
     {
-      if (Character.isDigit(str.charAt(i)) || str.charAt(i) == '.' || (str.charAt(i) == '-' && num.equals("")))
+      if (Character.isDigit(str.charAt(i)) || str.charAt(i) == '.' || str.charAt(i) == '-')
       {
         int j = i;
         while (j < str.length() && (Character.isDigit(str.charAt(j)) || str.charAt(j) == '.'))
@@ -80,19 +85,16 @@ public class ComplexNumber
         {
           num = "-" + num;
         }
-        if (num.equals("-") && (!(str.charAt(0) == '-') || i != 0)) {
-          num = "-1";
-        } 
-        else if (num.equals("-"))
+        if (num.equals("-"))
         {
-          num = "";
+          num = "-1";
         }
         if (i + 1 < str.length() && str.charAt(i + 1) == 'i')
         {
           i = i + 1;
           img = num;
         }
-        else if (real.equals(""))
+        else
         {
           real = num;
         }
@@ -117,8 +119,101 @@ public class ComplexNumber
 
     result = new ComplexNumber(Double.parseDouble(real), Double.parseDouble(img));
 
-    return result;
+    if (!hasUniary)
+    {
+      return result;
+    }
+    return executeUniary(result, strs[1]);
+  }
 
+  /**
+   * 
+   */
+  private static ComplexNumber executeUniary(ComplexNumber operand, String uniary)
+  {
+    if (uniary.equals("\u221A"))
+    {
+      return operand.sqrt();
+    }
+    else if (uniary.equals("Inv"))
+    {
+      return operand.inverse();
+    }
+    else if (uniary.equals("Con"))
+    {
+      return operand.conjugate();
+    }
+    else if (uniary.equals("LOG"))
+    {
+      return operand.log();
+    }
+    else if (uniary.equals("Re")) // real and img operator
+    {
+      return new ComplexNumber(operand.getRealPart(), 0);
+    }
+    else if (uniary.equals("Im"))
+    {
+      return new ComplexNumber(operand.getImaginaryPart(), 0);
+    }
+    else
+    {
+      return operand.exponent(Integer.parseInt(uniary));
+    }
+  }
+
+  /**
+   * Parse Helper Method.
+   * 
+   * @param str
+   * @return
+   */
+  private static String[] findUniary(final String str)
+  {
+    String[] temp = new String[2];
+    String string = str;
+    if (string.contains("\u221A"))
+    {
+      // squareRoot
+      temp[0] = string.substring(0, string.indexOf("\u221A"));
+      temp[1] = string.substring(string.indexOf("\u221A") + 1);
+    }
+    else if (string.contains("Inv"))
+    {
+      // inverse
+      temp[0] = str.substring(0, str.indexOf("Inv"));
+      temp[1] = "Inv";
+    }
+    else if (string.contains("Con"))
+    {
+      temp[0] = string.substring(0, string.indexOf("Con"));
+      temp[1] = "Con";
+    }
+    else if (string.contains("LOG"))
+    {
+      temp[0] = string.substring(0, string.indexOf("LOG"));
+      temp[1] = "LOG";
+    }
+    else if (string.contains("^"))
+    {
+      temp[0] = string.substring(0, string.indexOf('^'));
+      temp[1] = string.substring(string.indexOf('^') + 1);
+    }
+    else if (string.contains("Re")) // real operator
+    {
+      temp[0] = string.substring(0, string.indexOf("Re"));
+      temp[1] = "Re";
+    }
+    else if (string.contains("Im")) // real operator
+    {
+      temp[0] = string.substring(0, string.indexOf("Im"));
+      temp[1] = "Im";
+    }
+    else
+    {
+      temp[0] = string;
+      temp[1] = null;
+    }
+    return temp;
   }
 
   /**
@@ -396,8 +491,10 @@ public class ComplexNumber
       tempI = "" + (int) getImaginaryPart();
     }
     i = tempI + iString;
-    if (i.equals("1i")) i = iString;
-    if (i.equals("-1i")) i = "-" + iString;
+    if (i.equals("1i"))
+      i = iString;
+    if (i.equals("-1i"))
+      i = "-" + iString;
 
     // change
     String result = "";

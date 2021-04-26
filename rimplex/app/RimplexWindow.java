@@ -66,7 +66,7 @@ public class RimplexWindow extends JFrame
    * @param historyWindow
    *          - the historyWindow to set.
    */
-  public static void setHistoryWindow(JWindow historyWindow)
+  public static void setHistoryWindow(final JWindow historyWindow)
   {
     RimplexWindow.historyWindow = historyWindow;
   }
@@ -384,7 +384,7 @@ public class RimplexWindow extends JFrame
     gbc.gridx = 0;
     gbc.gridy = 0;
     gbc.gridheight = 2;
-    gbc.gridwidth = 6;
+    gbc.gridwidth = 7;
     gbc.weightx = 1 / 12;
     gbc.weighty = 0;
     gbc.fill = GridBagConstraints.BOTH;

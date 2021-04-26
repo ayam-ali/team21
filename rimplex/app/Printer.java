@@ -12,48 +12,55 @@ import java.awt.print.PrinterException;
  * Printer.java - Handles printing for the history.
  *
  * 
- * This work complies with the JMU Honor Code.                
+ * This work complies with the JMU Honor Code.
  *
  * Modifications: None
  *
  * @author Eric Anderson
  * @version Apr 26, 2021
  */
-public class Printer implements Printable {
+public class Printer implements Printable
+{
   final Component comp;
 
-  public Printer(Component comp){
-      this.comp = comp;
+  /**
+   * Printer Constructor.
+   * @param comp
+   */
+  public Printer(final Component comp)
+  {
+    this.comp = comp;
   }
 
   @Override
-  public int print(Graphics g, PageFormat format, int page_index) 
-          throws PrinterException {
-      if (page_index > 0) {
-          return Printable.NO_SUCH_PAGE;
-      }
+  public int print(final Graphics g, final PageFormat format, final int page_index)
+      throws PrinterException
+  {
+    if (page_index > 0)
+    {
+      return Printable.NO_SUCH_PAGE;
+    }
 
-      // get the bounds of the component
-      Dimension dim = comp.getSize();
-      double cHeight = dim.getHeight();
-      double cWidth = dim.getWidth();
+    // get the bounds of the component
+    Dimension dim = comp.getSize();
+    double cHeight = dim.getHeight();
+    double cWidth = dim.getWidth();
 
-      // get the bounds of the printable area
-      double pHeight = format.getImageableHeight();
-      double pWidth = format.getImageableWidth();
+    // get the bounds of the printable area
+    double pHeight = format.getImageableHeight();
+    double pWidth = format.getImageableWidth();
 
-      double pXStart = format.getImageableX();
-      double pYStart = format.getImageableY();
+    double pXStart = format.getImageableX();
+    double pYStart = format.getImageableY();
 
-      double xRatio = pWidth / cWidth;
-      double yRatio = pHeight / cHeight;
+    double xRatio = pWidth / cWidth;
+    double yRatio = pHeight / cHeight;
 
+    Graphics2D g2 = (Graphics2D) g;
+    g2.translate(pXStart, pYStart);
+    g2.scale(xRatio / 4, yRatio / 4);
+    comp.paint(g2);
 
-      Graphics2D g2 = (Graphics2D) g;
-      g2.translate(pXStart, pYStart);
-      g2.scale(xRatio / 4, yRatio / 4);
-      comp.paint(g2);
-
-      return Printable.PAGE_EXISTS;
+    return Printable.PAGE_EXISTS;
   }
 }

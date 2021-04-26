@@ -31,26 +31,36 @@ public class RimplexJMenuBar extends JMenuBar implements ActionListener
   private JMenu file, settings, languages, help;
   private JMenuItem about, download, print, english, french, helpPage, spanish;
 
-  String aboutInfoEng = "<html><i>Rimplex calculator for educational organizations <br>" + "<br>"
-      + "<html><i>Version: 2021(3.0)<br>" + "<html><i>Build id: 56739734<br>"
+  private String hp = "hp";
+  
+  private String aboutInfoEng = "<html><i>Rimplex calculator for educational organizations <br> "
+      + "<br><html><i>Version: 2021(3.0)<br>" + "<html><i>Build id: 56739734<br>"
       + "<html><i>(c) Copyright Rimplex contributors and others 2021.  All rights reserved.<br>"
-      + "<html><i>This calculator allows the user to work with real numbers, imaginary numbers, and complex numbers."
+      + "<html><i>This calculator allows the user to work with real numbers, imaginary numbers, "
+      + "and complex numbers."
       + "This calculator can only be distributed among educational organizations."
       + "The Rimplex logo cannot be altered without Rimplexs permission. <br>";
 
-  String aboutInfoFre = "<html><i>Calculateur Rimplex pour les organisations éducatives <br>"
-      + "<br>" + "<html><i>Version: 2021(3.0)<br>" + "<html><i>ID de construction: 56739734<br>"
-      + "<html><i>(c) Copyright contributeurs Rimplex et autres 2021. Tous droits réservés.<br>"
-      + "<html><i>Cette calculatrice permet à l'utilisateur de travailler avec des nombres réels, des nombres imaginaires et des nombres complexes."
-      + "Cette calculatrice ne peut être distribuée que parmi les organisations éducatives."
-      + "Le logo Rimplex ne peut pas être modifié sans l'autorisation de Rimplexs. <br>";
+  private String aboutInfoFre = "<html> <i> Calculateur Rimplex pour les "
+      + "\u00E9tablissements d'enseignement <br> "
+      + "<br> <html> <i> Version: 2021 (3.0) " + "<br> <html> ID de build: 56739734 "
+      + "<br> <html> <i> (c) Copyright contributeurs Rimplex et autres 2021. "
+      + "Tous droits r\u00E9serv\u00E9s. "
+      + "<br> <html> <i> Cette calculatrice permet \u00E0 l'utilisateur de travailler avec des "
+      + "nombres r\u00E9els, des nombres imaginaires et des nombres complexes."
+      + " Cette calculatrice ne peut \u00EAtre distribu\u00E9e que parmi organisations "
+      + "\u00E9ducatives. Le logo Rimplex ne peut pas \u00EAtre modifi\u00E9 "
+      + "sans l'autorisation de Rimplexs. <br> ";
 
-  String aboutInfoSpa = "<html><i>Calculadora Rimplex para organizaciones educativas <br>" + "<br>"
-      + "<html><i>Versión:2021(3.0)<br>" + "<html><i>ID de compilación: 56739734<br>"
-      + "<html><i>(c) Copyright de los colaboradores de Rimplex y otros 2021. Todos los derechos reservados.<br>"
-      + "<html><i>Esta calculadora permite al usuario trabajar con números reales, números imaginarios y números complejos."
-      + "Esta calculadora solo se puede distribuir entre organizaciones educativas."
-      + "El logotipo de Rimplex no se puede modificar sin el permiso de Rimplex.<br>";
+  private String aboutInfoSpa = "<html> <i> Calculadora Rimplex para organizaciones "
+      + "educativas <br> <br> <html> <i> Versi\u00F3n: 2021 (3.0) "
+      + "<br> <html> <i> Id. de compilaci\u00F3n: 56739734 "
+      + "<br> <html> <i> (c) Copyright Rimplex colaboradores y otros 2021. "
+      + "Todos los derechos reservados. <br> "
+      + "<html> <i> Esta calculadora permite al usuario trabajar con n\u00FAmeros reales,"
+      + " n\u00FAmeros imaginarios y n\u00FAmeros complejos. "
+      + "Esta calculadora solo se puede distribuir entre organizaciones educativas. "
+      + "El logotipo de Rimplex no se puede modificar sin el permiso de Rimplexs. <br> ";
 
   /**
    * Constructor for this RimplexJMenuBar.
@@ -70,11 +80,11 @@ public class RimplexJMenuBar extends JMenuBar implements ActionListener
   @Override
   public void actionPerformed(final ActionEvent e)
   {
-    if (e.getActionCommand().equals("Español"))
+    if (e.getActionCommand().equals("Espa\u00F1ol"))
     {
       setMenuTexts(ResourceBundle.getBundle("languages/Strings_es_SP", new Locale("es")));
     }
-    else if (e.getActionCommand().equals("Français"))
+    else if (e.getActionCommand().equals("Fran\u00E7ais"))
     {
       setMenuTexts(ResourceBundle.getBundle("languages/Strings_fr_FR", new Locale("fr")));
     }
@@ -82,7 +92,7 @@ public class RimplexJMenuBar extends JMenuBar implements ActionListener
     {
       setMenuTexts(ResourceBundle.getBundle("languages/Strings_en_US", Locale.US));
     }
-    else if (e.getActionCommand().equals("hp"))
+    else if (e.getActionCommand().equals(hp))
     {
       try
       {
@@ -93,9 +103,9 @@ public class RimplexJMenuBar extends JMenuBar implements ActionListener
         e1.printStackTrace();
       }
     }
-    else if (e.getActionCommand().equals("À Propos"))
+    else if (e.getActionCommand().equals("\u00C0 Propos"))
     {
-      aboutPage("À Propos De Rimplex", aboutInfoFre);
+      aboutPage("\u00C0 Propos De Rimplex", aboutInfoFre);
     }
     else if (e.getActionCommand().equals("About"))
     {
@@ -165,7 +175,7 @@ public class RimplexJMenuBar extends JMenuBar implements ActionListener
     help = new JMenu();
     about = new JMenuItem(); // about
     helpPage = new JMenuItem();
-    helpPage.setActionCommand("hp");
+    helpPage.setActionCommand(hp);
 
     help.add(about);
     help.add(helpPage);

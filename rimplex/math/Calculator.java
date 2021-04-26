@@ -10,17 +10,17 @@ import java.util.*;
  */
 public class Calculator
 {
-  private String plus = "+";
-  private String minus = "-";
-  private String multiply = "\u00D7";
-  private String divide = "\u00F7";
-  private String sqrt = "\u221A";
-  private String inv = "Inv";
-  private String log = "LOG";
-  private String con = "Con";
-  private String exp = "Exp";
-  private String re = "Re"; // real and img operator 
-  private String im = "Im";
+  private final String plus = "+";
+  private final String minus = "-";
+  private final String multiply = "\u00D7";
+  private final String divide = "\u00F7";
+  private final String sqrt = "\u221A";
+  private final String inv = "Inv";
+  private final String log = "LOG";
+  private final String con = "Con";
+  private final String exp = "Exp";
+  private final String re = "Re"; // real and img operator 
+  private final String im = "Im";
 
   private String recentResult;
 
@@ -102,37 +102,37 @@ public class Calculator
     ComplexNumber result = null;
     switch (operand)
     {
-      case "+":
+      case plus:
         result = first.add(second);
         break;
-      case "-":
+      case minus:
         result = first.subtract(second);
         break;
-      case "\u00D7":
+      case multiply:
         result = first.multiply(second);
         break;
-      case "\u00F7":
+      case divide:
         result = first.divide(second);
         break;
-      case "\u221A":
+      case sqrt:
         result = first.sqrt();
         break;
-      case "Inv":
+      case inv:
         result = first.inverse();
         break;
-      case "LOG":
+      case log:
         result = first.log();
         break;
-      case "Con":
+      case con:
         result = first.conjugate();
         break;
-      case "Exp":
+      case exp:
         result = first.exponent((int) second.getRealPart());
         break;
-      case "Re":
+      case re:
         result = new ComplexNumber(first.getRealPart(), 0);  /// real and img operator
         break;
-      case "Im":
+      case im:
         result = new ComplexNumber(first.getImaginaryPart(), 0);
         break;
       default:
