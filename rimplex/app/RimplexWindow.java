@@ -35,7 +35,7 @@ import javax.swing.border.EtchedBorder;
 /**
  * GUI - Creates objects for displays and input fields.
  * 
- * @author Eric Anderson, Eric Hernandez-Diaz, Ayam Ali, Rhea Morris 
+ * @author Eric Anderson, Eric Hernandez-Diaz, Ayam Ali, Rhea Morris
  * @version 3/25/2021
  */
 public class RimplexWindow extends JFrame
@@ -48,6 +48,7 @@ public class RimplexWindow extends JFrame
   private static JScrollPane scrollList;
   private static JButton expand;
   private static JWindow historyWindow;
+
   /**
    * getHistoryWindow - gets historyWindow.
    *
@@ -62,7 +63,8 @@ public class RimplexWindow extends JFrame
   /**
    * setHistoryWindow - sets historyWindow.
    *
-   * @param historyWindow - the historyWindow to set.  
+   * @param historyWindow
+   *          - the historyWindow to set.
    */
   public static void setHistoryWindow(JWindow historyWindow)
   {
@@ -312,12 +314,13 @@ public class RimplexWindow extends JFrame
     String str = in.readLine();
     int[] colors = new int[3];
 
-    if (in == null || str == null)
+    if (in == null || str == null || str.isBlank())
     {
       // Default is purple
-      colors[0] = 175;
-      colors[1] = 175;
-      colors[2] = 225;
+      colors[0] = 162;
+      colors[1] = 72;
+      colors[2] = 87;
+
     }
     else
     {
