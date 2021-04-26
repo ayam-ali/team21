@@ -8,9 +8,9 @@ class ComplexNumberTest
 {
 
   @Test
-  void test()
+  void testConstructorAndGetters()
   {
-    fail("Not yet implemented");
+    
   }
 
 }

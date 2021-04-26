@@ -16,7 +16,6 @@ public class Calculator
   private String divide = "\u00F7";
   private String sqrt = "\u221A";
   private String inv = "Inv";
-  private String sign = "\u00B1";
   private String log = "LOG";
   private String con = "Con";
   private String exp = "Exp";
@@ -43,31 +42,24 @@ public class Calculator
   public ComplexNumber calculate(final List<String> input)
   {
     if (input.size() == 0)
-    {
       return ComplexNumber.parse(recentResult);
-    }
-    if (input.size() == 1)
-    {
-      return ComplexNumber.parse(input.get(0));
-    }
-    else if (input.size() == 2)
-    {
-      return ComplexNumber.parse(input.get(0) + input.get(1));
-    }
-
-    // example input: {"7i", "+", "4-2i"}
+    ComplexNumber total;
     // this part handles running calculations
     if (isOperation(input.get(0)))
     {
       input.add(0, recentResult);
     }
-    ComplexNumber total = ComplexNumber.parse(input.get(0));
-    if (input.size() < 3)
+    if (input.size() == 1)
     {
-      total = performOperation(total, total, input.get(1));
+      total = ComplexNumber.parse(input.get(0));
     }
+    else if (input.size() == 2)
+    {
+      total = performOperation(ComplexNumber.parse(input.get(0)), null, input.get(1));
+    } 
     else
     {
+      total = ComplexNumber.parse(input.get(0));
       for (int i = 2; i < input.size(); i += 2)
       {
         ComplexNumber num = ComplexNumber.parse(input.get(i));
@@ -89,7 +81,7 @@ public class Calculator
   public boolean isOperation(final String string)
   {
     return string == plus || string == minus || string == multiply || string == divide
-        || string == inv || string == sqrt || string == sign || string == log || string == con
+        || string == inv || string == sqrt || string == log || string == con
         || string == exp || string == re || string == im; // real and img operator 
   }
 
@@ -123,26 +115,26 @@ public class Calculator
         result = first.divide(second);
         break;
       case "\u221A":
-        result = second.sqrt();
+        result = first.sqrt();
         break;
       case "Inv":
-        result = second.inverse();
-        break;
-      case "\u00B1":
-        result = first.changeSign();
+        result = first.inverse();
         break;
       case "LOG":
-        result = second.log();
+        result = first.log();
         break;
       case "Con":
-        result = second.conjugate();
+        result = first.conjugate();
         break;
       case "Exp":
         result = first.exponent((int) second.getRealPart());
+        break;
       case "Re":
-        result =  new ComplexNumber(result.getRealPart(), 0);  /// real and img operator 
+        result = new ComplexNumber(first.getRealPart(), 0);  /// real and img operator
+        break;
       case "Im":
-        result =  new ComplexNumber(result.getImaginaryPart(), 0);
+        result = new ComplexNumber(first.getImaginaryPart(), 0);
+        break;
       default:
         // do nothing
     }

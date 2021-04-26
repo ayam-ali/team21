@@ -60,74 +60,15 @@ public class ComplexNumber
   {
 
     ComplexNumber result;
-    String str = "";
-    String real;
-    String img;
-    String power = "";
-    boolean squareRoot = false;
-    boolean inverse = false;
-    boolean con = false;
-    boolean log = false;
-    boolean re = false; // real and img operator 
-    boolean im = false;
-    
-    
-    
-    if (string.contains("\u221A"))
-    {
-      // squareRoot
-      str = string.substring(string.indexOf("\u221A") + 1);
-      squareRoot = true;
-    }
-
-    if (string.contains("Inv"))
-    {
-      // inverse
-      str = string.substring(string.indexOf("Inv") + 1);
-      inverse = true;
-    }
-
-    if (string.contains("Con"))
-    {
-      str = string.substring(string.indexOf("Con") + 1);
-      con = true;
-    }
-
-    if (string.contains("LOG"))
-    {
-      str = string.substring(string.indexOf("LOG") + 1);
-      log = true;
-    }
-
-    if (string.contains("^"))
-    {
-      str = string.substring(0, string.indexOf('^'));
-      power = string.substring(string.indexOf('^') + 1);
-    }
-    if (string.contains("Re"))  // real operator 
-    {
-      str = string.substring(0, string.indexOf("Re"));
-      re = true;
-    }
-    if (string.contains("Im"))  // real operator 
-    {
-      str = string.substring(0, string.indexOf("Im"));
-      im = true;
-    }
-    else
-    {
-      str = string;
-      power = "";
-    }
-
-    real = "";
-    img = "";
+    String str = string;
+    String real = "";
+    String img = "";
 
     int i = 0;
     String num = "";
     while (i < str.length())
     {
-      if (Character.isDigit(str.charAt(i)) || str.charAt(i) == '.' || str.charAt(i) == '-')
+      if (Character.isDigit(str.charAt(i)) || str.charAt(i) == '.' || (str.charAt(i) == '-' && num.equals("")))
       {
         int j = i;
         while (j < str.length() && (Character.isDigit(str.charAt(j)) || str.charAt(j) == '.'))
@@ -140,15 +81,19 @@ public class ComplexNumber
         {
           num = "-" + num;
         }
-        if (num.equals("-")) {
+        if (num.equals("-") && (!(str.charAt(0) == '-') || i != 0)) {
           num = "-1";
+        } 
+        else if (num.equals("-"))
+        {
+          num = "";
         }
         if (i + 1 < str.length() && str.charAt(i + 1) == 'i')
         {
           i = i + 1;
           img = num;
         }
-        else
+        else if (real.equals(""))
         {
           real = num;
         }
@@ -173,37 +118,6 @@ public class ComplexNumber
 
     result = new ComplexNumber(Double.parseDouble(real), Double.parseDouble(img));
 
-    if (!power.isEmpty())
-    {
-      result = result.exponent(Integer.parseInt(power));
-    }
-
-    if (squareRoot)
-    {
-      result = result.sqrt();
-    }
-    if (inverse)
-    {
-      result = result.inverse();
-    }
-
-    if (con)
-    {
-      result = result.conjugate();
-    }
-
-    if (log)
-    {
-      result = result.log();
-    }
-    if (re)                                                     // real and img operator 
-    {
-      result = new ComplexNumber(result.getRealPart(), 0);
-    }
-    if (im)
-    {
-      result = new ComplexNumber(result.getImaginaryPart(), 0);
-    }
     return result;
 
   }
@@ -321,17 +235,6 @@ public class ComplexNumber
   }
 
   /**
-   * Change the Sign
-   * 
-   * @return complex number
-   */
-  public ComplexNumber changeSign()
-  {
-    return new ComplexNumber(getRealPart() * -1, getImaginaryPart());
-
-  }
-
-  /**
    * Calculate the inverse
    * 
    * @return the inverse of complex number
@@ -381,7 +284,7 @@ public class ComplexNumber
     {
       return new ComplexNumber(Math.sqrt(this.getRealPart()), 0);
     }
-    if (this.getRealPart() < 0)
+    if (this.getImaginaryPart() == 0 && this.getRealPart() < 0)
     {
       return new ComplexNumber(0, Math.sqrt(Math.abs(getRealPart())));
     }
@@ -401,7 +304,7 @@ public class ComplexNumber
   {
     double n = 1;
     double d = 1;
-    double error = 0.01;
+    double error = 0.0001;
     boolean isNegative = num < 0;
 
     if (num % 1 == 0)
@@ -495,6 +398,7 @@ public class ComplexNumber
     }
     i = tempI + iString;
     if (i.equals("1i")) i = iString;
+    if (i.equals("-1i")) i = "-" + iString;
 
     // change
     String result = "";
