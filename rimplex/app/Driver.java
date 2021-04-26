@@ -1,5 +1,7 @@
 package app;
 
+import java.io.IOException;
+
 import javax.swing.JFrame;
 
 /**
@@ -14,10 +16,11 @@ public class Driver
    * The main method to run rimplex.
    * 
    * @param args
+   * @throws IOException 
    */
-  public static void main(final String[] args)
+  public static void main(final String[] args) throws IOException
   {
-    RimplexWindow gui = new RimplexWindow(new EventHandler());
+    RimplexWindow gui = RimplexWindow.createRimplexWindow();
     gui.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     gui.setSize(620, 320);
     gui.setVisible(true);

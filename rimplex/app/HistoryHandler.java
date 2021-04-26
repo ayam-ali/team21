@@ -1,11 +1,14 @@
 package app;
 
-import java.awt.Dimension;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
+import java.awt.event.ActionListener;
+import java.awt.print.PageFormat;
+import java.awt.print.PrinterException;
+import java.awt.print.PrinterJob;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JTextArea;
 import javax.swing.JWindow;
 
 /**
@@ -37,6 +40,29 @@ public class HistoryHandler implements ActionListener
         break;
       case ">":
         RimplexWindow.animateHistory(true);
+        break;
+      case "Print":
+        JTextArea history = RimplexWindow.getHistoryWindow();
+        PrinterJob pjob = PrinterJob.getPrinterJob();
+        PageFormat preformat = pjob.defaultPage();
+        preformat.setOrientation(PageFormat.PORTRAIT);
+        PageFormat postformat = pjob.pageDialog(preformat);
+        
+        if (preformat != postformat) {
+            //Set print component
+            pjob.setPrintable(new Printer(history), postformat);
+            if (pjob.printDialog()) {
+                try
+                {
+                  pjob.print();
+                }
+                catch (PrinterException e1)
+                {
+                  // TODO Auto-generated catch block
+                  e1.printStackTrace();
+                }
+            }
+        }
         break;
       default:
         JFrame f = new JFrame();

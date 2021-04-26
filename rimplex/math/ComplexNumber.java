@@ -45,7 +45,6 @@ public class ComplexNumber
    */
   public double getImaginaryPart()
   {
-
     return img;
   }
 

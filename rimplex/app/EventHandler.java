@@ -25,9 +25,9 @@ public class EventHandler extends KeyAdapter implements ActionListener
   private Calculator calc = new Calculator();
   private boolean exponential = false;
   private boolean missingParam = false;
+  
   private String rPar = ")";
   private String lPar = "(";
-
   private String zero = "0";
   private String one = "1";
   private String two = "2";
@@ -38,6 +38,9 @@ public class EventHandler extends KeyAdapter implements ActionListener
   private String seven = "7";
   private String eight = "8";
   private String nine = "9";
+  private String sqrt = "\u221A";
+  private String inv = "Inv";
+  private String con = "Con";
 
   /**
    * Reactions for when a button is pressed.
@@ -61,21 +64,21 @@ public class EventHandler extends KeyAdapter implements ActionListener
       isFraction = !isFraction;
     }
     // Square root
-    else if (buttonPressed.equals("\u221A"))
+    else if (buttonPressed.equals(sqrt))
     {
-      currentOperand = currentOperand + "\u221A";
-      appendToDisplay("\u221A");
+      currentOperand = currentOperand + sqrt;
+      appendToDisplay(sqrt);
     }
     // inverse
-    else if (buttonPressed.equals("Inv"))
+    else if (buttonPressed.equals(inv))
     {
-      currentOperand = currentOperand + "Inv";
-      appendToDisplay("Inv");
+      currentOperand = currentOperand + inv;
+      appendToDisplay(inv);
     }
-    else if (buttonPressed.equals("Con")) // con
+    else if (buttonPressed.equals(con)) // con
     {
-      currentOperand = currentOperand + "Con";
-      appendToDisplay("Con");
+      currentOperand = currentOperand + con;
+      appendToDisplay(con);
     }
     else if (buttonPressed.equals("Re")) // real and img part
     {
@@ -113,37 +116,7 @@ public class EventHandler extends KeyAdapter implements ActionListener
     }
     else if (buttonPressed.equals("\u2190")) // backspace
     {
-      if (!currentOperand.isEmpty())
-      {
-        String displayText = getDisplayText();
-
-        if (currentOperand.endsWith("i"))
-        {
-          updateDisplay(displayText.substring(0, displayText.length() - 8));
-        }
-        else if (currentOperand.endsWith(lPar))
-        {
-          updateDisplay(displayText.substring(0, displayText.length() - 1));
-          missingParam = false;
-        }
-        else if (currentOperand.endsWith(rPar))
-        {
-          updateDisplay(displayText.substring(0, displayText.length() - 1));
-          missingParam = true;
-        }
-        else if (currentOperand.endsWith("LOG") || currentOperand.endsWith("Inv")
-            || currentOperand.endsWith("Con"))
-        {
-          updateDisplay(displayText.substring(0, displayText.length() - 3));
-          currentOperand = currentOperand.substring(0, currentOperand.length() - 3);
-          return;
-        }
-        else
-        {
-          updateDisplay(displayText.substring(0, displayText.length() - 1));
-        }
-        currentOperand = currentOperand.substring(0, currentOperand.length() - 1);
-      }
+      backspace();
     }
     else if (calc.isOperation(buttonPressed))
     { // operation symbol
@@ -185,10 +158,10 @@ public class EventHandler extends KeyAdapter implements ActionListener
       currentOperand = currentOperand + "^";
       appendToDisplay("^");
     }
-    else if (buttonPressed.equals("\u221A"))
+    else if (buttonPressed.equals(sqrt))
     {
-      currentOperand = currentOperand + "\u221A";
-      appendToDisplay("\u221A");
+      currentOperand = currentOperand + sqrt;
+      appendToDisplay(sqrt);
     }
     else
     {
@@ -219,6 +192,7 @@ public class EventHandler extends KeyAdapter implements ActionListener
     {
       currentOperand = currentOperand + zero;
       appendToDisplay(zero);
+
     }
     else if (keyCode == KeyEvent.VK_1)
     {
@@ -254,6 +228,11 @@ public class EventHandler extends KeyAdapter implements ActionListener
     {
       currentOperand = currentOperand + seven;
       appendToDisplay(seven);
+    }
+
+    else if (keyCode == KeyEvent.VK_BACK_SPACE)
+    {
+      backspace();
     }
     else if (eKeyStroke.equals(KeyStroke.getKeyStroke('*')))
     {
@@ -333,6 +312,44 @@ public class EventHandler extends KeyAdapter implements ActionListener
       { // if there are no paren missing
         addOperator("+");
       }
+    }
+  }
+
+  /**
+   * Backspace to work with soft and keyboard, avoid code duplication.
+   */
+  private void backspace()
+  {
+    if (!currentOperand.isEmpty())
+    {
+      String displayText = getDisplayText();
+
+      if (currentOperand.endsWith("i"))
+      {
+        updateDisplay(displayText.substring(0, displayText.length() - 8));
+      }
+      else if (currentOperand.endsWith(lPar))
+      {
+        updateDisplay(displayText.substring(0, displayText.length() - 1));
+        missingParam = false;
+      }
+      else if (currentOperand.endsWith(rPar))
+      {
+        updateDisplay(displayText.substring(0, displayText.length() - 1));
+        missingParam = true;
+      }
+      else if (currentOperand.endsWith("LOG") || currentOperand.endsWith(inv)
+          || currentOperand.endsWith(con))
+      {
+        updateDisplay(displayText.substring(0, displayText.length() - 3));
+        currentOperand = currentOperand.substring(0, currentOperand.length() - 3);
+        return;
+      }
+      else
+      {
+        updateDisplay(displayText.substring(0, displayText.length() - 1));
+      }
+      currentOperand = currentOperand.substring(0, currentOperand.length() - 1);
     }
   }
 

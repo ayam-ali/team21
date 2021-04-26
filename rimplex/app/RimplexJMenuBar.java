@@ -5,8 +5,8 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -18,22 +18,39 @@ import javax.swing.JMenuItem;
 
 /**
  * Creates the JMenuBar for the Rimplex application.
- * @author Eric Hernandez-Diaz
+ * 
+ * @author Eric Hernandez-Diaz, Ayam Ali
  * @version 04/28/2021
  */
 public class RimplexJMenuBar extends JMenuBar implements ActionListener
 {
 
+
+  private static final long serialVersionUID = 1L;
   // private JMenuBar menu;
   private JMenu file, settings, languages, help;
   private JMenuItem about, download, print, english, french, helpPage, spanish;
 
-  String aboutInfo = "<html><i>Rimplex calculator for educational organizations <br>" + "<br>"
+  String aboutInfoEng = "<html><i>Rimplex calculator for educational organizations <br>" + "<br>"
       + "<html><i>Version: 2021(3.0)<br>" + "<html><i>Build id: 56739734<br>"
       + "<html><i>(c) Copyright Rimplex contributors and others 2021.  All rights reserved.<br>"
       + "<html><i>This calculator allows the user to work with real numbers, imaginary numbers, and complex numbers."
       + "This calculator can only be distributed among educational organizations."
       + "The Rimplex logo cannot be altered without Rimplexs permission. <br>";
+
+  String aboutInfoFre = "<html><i>Calculateur Rimplex pour les organisations éducatives <br>"
+      + "<br>" + "<html><i>Version: 2021(3.0)<br>" + "<html><i>ID de construction: 56739734<br>"
+      + "<html><i>(c) Copyright contributeurs Rimplex et autres 2021. Tous droits réservés.<br>"
+      + "<html><i>Cette calculatrice permet à l'utilisateur de travailler avec des nombres réels, des nombres imaginaires et des nombres complexes."
+      + "Cette calculatrice ne peut être distribuée que parmi les organisations éducatives."
+      + "Le logo Rimplex ne peut pas être modifié sans l'autorisation de Rimplexs. <br>";
+
+  String aboutInfoSpa = "<html><i>Calculadora Rimplex para organizaciones educativas <br>" + "<br>"
+      + "<html><i>Versión:2021(3.0)<br>" + "<html><i>ID de compilación: 56739734<br>"
+      + "<html><i>(c) Copyright de los colaboradores de Rimplex y otros 2021. Todos los derechos reservados.<br>"
+      + "<html><i>Esta calculadora permite al usuario trabajar con números reales, números imaginarios y números complejos."
+      + "Esta calculadora solo se puede distribuir entre organizaciones educativas."
+      + "El logotipo de Rimplex no se puede modificar sin el permiso de Rimplex.<br>";
 
   /**
    * Constructor for this RimplexJMenuBar.
@@ -53,11 +70,11 @@ public class RimplexJMenuBar extends JMenuBar implements ActionListener
   @Override
   public void actionPerformed(final ActionEvent e)
   {
-    if (e.getActionCommand().equals("Espa�ol"))
+    if (e.getActionCommand().equals("Español"))
     {
       setMenuTexts(ResourceBundle.getBundle("languages/Strings_es_SP", new Locale("es")));
     }
-    else if (e.getActionCommand().equals("Fran�ais"))
+    else if (e.getActionCommand().equals("Français"))
     {
       setMenuTexts(ResourceBundle.getBundle("languages/Strings_fr_FR", new Locale("fr")));
     }
@@ -73,19 +90,42 @@ public class RimplexJMenuBar extends JMenuBar implements ActionListener
       }
       catch (URISyntaxException | IOException e1)
       {
-        // TODO Auto-generated catch block
         e1.printStackTrace();
       }
     }
+    else if (e.getActionCommand().equals("À Propos"))
+    {
+      aboutPage("À Propos De Rimplex", aboutInfoFre);
+    }
     else if (e.getActionCommand().equals("About"))
     {
-      JFrame a = new JFrame("About Rimplex");
-      a.setPreferredSize(new Dimension(500, 300));
-      JLabel text = new JLabel(aboutInfo);
-      a.getContentPane().add(text);
-      a.pack();
-      a.setVisible(true);
+      aboutPage("About Rimplex", aboutInfoEng);
+
     }
+    else if (e.getActionCommand().equals("Acerca De"))
+    {
+      aboutPage("Sobre Rimplex", aboutInfoSpa);
+
+    }
+
+  }
+
+  /**
+   * To add the info for the about page.
+   * 
+   * @param about
+   *          for the title of the JFrame
+   * @param str
+   *          for the translated information
+   */
+  private void aboutPage(final String about, final String str)
+  {
+    JFrame a = new JFrame(about);
+    a.setPreferredSize(new Dimension(500, 300));
+    JLabel text = new JLabel(str);
+    a.getContentPane().add(text);
+    a.pack();
+    a.setVisible(true);
   }
 
   /**
@@ -101,8 +141,11 @@ public class RimplexJMenuBar extends JMenuBar implements ActionListener
     // file menu
     file = new JMenu();
     download = new JMenuItem();
+    
+    // Print
     print = new JMenuItem();
-
+    print.addActionListener(new HistoryHandler());
+    
     file.add(download);
     file.add(print);
 
@@ -121,7 +164,6 @@ public class RimplexJMenuBar extends JMenuBar implements ActionListener
     // help menu
     help = new JMenu();
     about = new JMenuItem(); // about
-    about.setActionCommand("About");
     helpPage = new JMenuItem();
     helpPage.setActionCommand("hp");
 
@@ -133,11 +175,13 @@ public class RimplexJMenuBar extends JMenuBar implements ActionListener
     helpPage.addActionListener(this);
     spanish.addActionListener(this);
     french.addActionListener(this);
+    
 
     this.add(file);
     this.add(settings);
     this.add(help);
     setMenuTexts(strings);
+   
   }
 
   /**
@@ -149,14 +193,15 @@ public class RimplexJMenuBar extends JMenuBar implements ActionListener
   private void loadHelpPage() throws URISyntaxException, IOException
   {
     Desktop desktop = Desktop.getDesktop();
-    URI uri = null;
-    uri = new URI("http://www.jmu.edu");
-    desktop.browse(uri);
+    URL url = this.getClass().getResource("/helpPage/helpPage.html");
+    desktop.browse(url.toURI());
   }
 
   /**
    * Sets the appropriate text for all menu's.
-   * @param strs the bundle that will be used to find the texts for all menu's.
+   * 
+   * @param strs
+   *          the bundle that will be used to find the texts for all menu's.
    */
   private void setMenuTexts(final ResourceBundle strs)
   {
