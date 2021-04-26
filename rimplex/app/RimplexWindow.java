@@ -48,6 +48,27 @@ public class RimplexWindow extends JFrame
   private static JScrollPane scrollList;
   private static JButton expand;
   private static JWindow historyWindow;
+  /**
+   * getHistoryWindow - gets historyWindow.
+   *
+   * @return the historyWindow
+   */
+  public static JTextArea getHistoryWindow()
+  {
+    updateHistory();
+    return historyOutputArea;
+  }
+
+  /**
+   * setHistoryWindow - sets historyWindow.
+   *
+   * @param historyWindow - the historyWindow to set.  
+   */
+  public static void setHistoryWindow(JWindow historyWindow)
+  {
+    RimplexWindow.historyWindow = historyWindow;
+  }
+
   private static JTextArea historyOutputArea;
   private static final int HISTORY_HEIGHT = 263;
 
@@ -165,6 +186,7 @@ public class RimplexWindow extends JFrame
   {
     result = result.replaceAll("<html>", "");
     result = result.replaceAll("<i>i</i>", "i");
+    result = result.replaceAll("<br>", "");
     history.add(result);
   }
 
@@ -440,7 +462,7 @@ public class RimplexWindow extends JFrame
   {
 
     int delay = 1; // milliseconds
-    // Dynamic location setting ---
+    // Dynamic location setting --- OS dependent
     historyWindow.setLocation((int) expand.getLocationOnScreen().getX() + 75,
         (int) expand.getLocationOnScreen().getY() + 1); // Set location right on screen
     if (isOpening) // OPENING

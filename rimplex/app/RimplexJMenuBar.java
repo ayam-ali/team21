@@ -70,11 +70,11 @@ public class RimplexJMenuBar extends JMenuBar implements ActionListener
   @Override
   public void actionPerformed(final ActionEvent e)
   {
-    if (e.getActionCommand().equals("Español"))
+    if (e.getActionCommand().equals("EspaÃ±ol"))
     {
       setMenuTexts(ResourceBundle.getBundle("languages/Strings_es_SP", new Locale("es")));
     }
-    else if (e.getActionCommand().equals("Français"))
+    else if (e.getActionCommand().equals("FranÃ§ais"))
     {
       setMenuTexts(ResourceBundle.getBundle("languages/Strings_fr_FR", new Locale("fr")));
     }
@@ -141,8 +141,11 @@ public class RimplexJMenuBar extends JMenuBar implements ActionListener
     // file menu
     file = new JMenu();
     download = new JMenuItem();
+    
+    // Print
     print = new JMenuItem();
-
+    print.addActionListener(new HistoryHandler());
+    
     file.add(download);
     file.add(print);
 
@@ -172,6 +175,7 @@ public class RimplexJMenuBar extends JMenuBar implements ActionListener
     helpPage.addActionListener(this);
     spanish.addActionListener(this);
     french.addActionListener(this);
+    
 
     this.add(file);
     this.add(settings);
