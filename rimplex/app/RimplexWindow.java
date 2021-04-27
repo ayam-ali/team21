@@ -2,6 +2,7 @@ package app;
 
 import java.awt.BorderLayout;
 
+
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
@@ -17,7 +18,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.ResourceBundle;
-
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -26,7 +26,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-import javax.swing.JWindow;
 import javax.swing.Timer;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -47,11 +46,9 @@ public class RimplexWindow extends JFrame
   private static ArrayList<String> history;
   private static JScrollPane scrollList;
   private static JButton expand;
-  private static JWindow historyWindow;
-
+  private static JFrame historyWindow;
   private static JTextArea historyOutputArea;
   private static final int HISTORY_HEIGHT = 263;
-
   private static String comma = ",";
   private static final long serialVersionUID = 1L;
   private EventHandler eventHandler;
@@ -113,25 +110,39 @@ public class RimplexWindow extends JFrame
   }
 
   /**
-   * createHistory - creates the history jwindow.
+   * createHistory - creates the history JWindow.
    * 
    */
   private void createHistory()
   {
-
     // Windows and buttons ---
-    historyWindow = new JWindow();
-    historyWindow.setVisible(true);
+    historyWindow = new JFrame();
+    historyWindow.addComponentListener(new ComponentHandler());
+    historyWindow.setUndecorated(true);
+    JPanel cp = (JPanel)historyWindow.getContentPane();
+    cp.setLayout(new BorderLayout());
     historyPanel = new JPanel();
+    cp.add(historyPanel, BorderLayout.CENTER);
+    
     historyPanel.setLayout(new BorderLayout());
     contract = new JButton("<");
     contract.addActionListener(new HistoryHandler());
-
+    
     // Text area and scroll
     history = new ArrayList<>();
     historyOutputArea = new JTextArea();
+    historyOutputArea.setEditable(false);
     scrollList = new JScrollPane(historyOutputArea);
 
+    // Edits for copy and pasting history
+    historyOutputArea.setDragEnabled(true);
+    historyOutputArea.setFocusable(true);
+    historyWindow.setFocusable(true);
+    PopupMenu.addTo(historyOutputArea); // Gives edit, copy, etc
+    
+    // Visibility
+    historyWindow.setVisible(true);
+    historyWindow.setAlwaysOnTop(true);
     scrollList.setVisible(true);
     historyWindow.add(scrollList, BorderLayout.CENTER);
     historyWindow.add(contract, BorderLayout.EAST);
@@ -156,7 +167,7 @@ public class RimplexWindow extends JFrame
    * @param historyWindow
    *          - the historyWindow to set.
    */
-  public static void setHistoryWindow(final JWindow historyWindow)
+  public static void setHistoryWindow(final JFrame historyWindow)
   {
     RimplexWindow.historyWindow = historyWindow;
   }
@@ -191,7 +202,7 @@ public class RimplexWindow extends JFrame
     str = str.replaceAll("<html>", "");
     str = str.replaceAll("<i>i</i>", "i");
     str = str.replaceAll("<br>", "");
-    history.add(str);
+    history.add(str.trim());
   }
 
   /**
@@ -450,6 +461,8 @@ public class RimplexWindow extends JFrame
     // Dynamic location setting --- OS dependent
     historyWindow.setLocation((int) expand.getLocationOnScreen().getX() + 75,
         (int) expand.getLocationOnScreen().getY() + 1); // Set location right on screen
+    
+    
     if (isOpening) // OPENING
     {
       expand.setEnabled(false);

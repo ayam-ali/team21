@@ -234,5 +234,6 @@ public class RimplexJMenuBar extends JMenuBar implements ActionListener
     french.setText(strs.getString("french"));
     help.setText(strs.getString("help"));
     helpPage.setText(strs.getString("help_page"));
+//    PopupMenu.setLanguage(strs);
   }
 }

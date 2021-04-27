@@ -68,7 +68,7 @@ public class HistoryHandler implements ActionListener
         break;
       default:
         JFrame f = new JFrame();
-        JOptionPane.showMessageDialog(f, "Error creating menu items", "Alert",
+        JOptionPane.showMessageDialog(f, "Error", "Alert",
             JOptionPane.WARNING_MESSAGE);
         break;
 
