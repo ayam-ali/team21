@@ -49,31 +49,10 @@ public class RimplexWindow extends JFrame
   private static JButton expand;
   private static JWindow historyWindow;
 
-  /**
-   * getHistoryWindow - gets historyWindow.
-   *
-   * @return the historyWindow
-   */
-  public static JTextArea getHistoryWindow()
-  {
-    updateHistory();
-    return historyOutputArea;
-  }
-
-  /**
-   * setHistoryWindow - sets historyWindow.
-   *
-   * @param historyWindow
-   *          - the historyWindow to set.
-   */
-  public static void setHistoryWindow(final JWindow historyWindow)
-  {
-    RimplexWindow.historyWindow = historyWindow;
-  }
-
   private static JTextArea historyOutputArea;
   private static final int HISTORY_HEIGHT = 263;
 
+  private static String comma = ",";
   private static final long serialVersionUID = 1L;
   private EventHandler eventHandler;
   private JPanel buttonPanel;
@@ -161,6 +140,28 @@ public class RimplexWindow extends JFrame
   }
 
   /**
+   * getHistoryWindow - gets historyWindow.
+   *
+   * @return the historyWindow
+   */
+  public static JTextArea getHistoryWindow()
+  {
+    updateHistory();
+    return historyOutputArea;
+  }
+
+  /**
+   * setHistoryWindow - sets historyWindow.
+   *
+   * @param historyWindow
+   *          - the historyWindow to set.
+   */
+  public static void setHistoryWindow(final JWindow historyWindow)
+  {
+    RimplexWindow.historyWindow = historyWindow;
+  }
+
+  /**
    * updateHistory - updates the history display with current expression list.
    */
   public static void updateHistory()
@@ -184,12 +185,13 @@ public class RimplexWindow extends JFrame
    * @param result
    *          - the given expression.
    */
-  public static void addToHistory(String result)
+  public static void addToHistory(final String result)
   {
-    result = result.replaceAll("<html>", "");
-    result = result.replaceAll("<i>i</i>", "i");
-    result = result.replaceAll("<br>", "");
-    history.add(result);
+    String str = result;
+    str = str.replaceAll("<html>", "");
+    str = str.replaceAll("<i>i</i>", "i");
+    str = str.replaceAll("<br>", "");
+    history.add(str);
   }
 
   /**
@@ -286,8 +288,6 @@ public class RimplexWindow extends JFrame
    * 
    * @param button
    *          the button that will change in color.
-   * @param color
-   *          The color to change to.
    * @throws IOException
    */
   private void changeColor(final JButton button) throws IOException
@@ -325,9 +325,9 @@ public class RimplexWindow extends JFrame
     else
     {
       // if the numbers are written with commas and spaces
-      if (str.contains(","))
+      if (str.contains(comma))
       {
-        String[] strColors = str.split(",");
+        String[] strColors = str.split(comma);
 
         colors[0] = Integer.parseInt(strColors[0].trim());
         colors[1] = Integer.parseInt(strColors[1].trim());

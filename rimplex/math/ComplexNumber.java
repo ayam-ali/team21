@@ -10,7 +10,15 @@ public class ComplexNumber
 {
   private static String iString = "i";
   private static String zero = "0";
-
+  private static String minus = "-";
+  private static String sqrt = "\u221A";
+  private static String inv = "Inv";
+  private static String con = "Con";
+  private static String log = "LOG";
+  private static String re = "Re";
+  private static String im = "Im";
+  private static String one = "1";
+  
   private double real;
   private double img;
 
@@ -63,10 +71,10 @@ public class ComplexNumber
     String real = "";
     String img = "";
 
-    String[] strs = findUniary(string);
-    
+    String[] strs = findUnary(string);
+
     str = strs[0];
-    boolean hasUniary = (strs[1] != null);
+    boolean hasunary = (strs[1] != null);
 
     int i = 0;
     String num = "";
@@ -83,9 +91,9 @@ public class ComplexNumber
         }
         if (i - num.length() >= 0 && str.charAt(i - num.length()) == '-')
         {
-          num = "-" + num;
+          num = minus + num;
         }
-        if (num.equals("-"))
+        if (num.equals(minus))
         {
           num = "-1";
         }
@@ -110,7 +118,7 @@ public class ComplexNumber
 
     if (img.isEmpty() && string.contains(iString))
     {
-      img = "1";
+      img = one;
     }
     else if (img.isEmpty())
     {
@@ -119,94 +127,105 @@ public class ComplexNumber
 
     result = new ComplexNumber(Double.parseDouble(real), Double.parseDouble(img));
 
-    if (!hasUniary)
+    if (!hasunary)
     {
       return result;
     }
-    return executeUniary(result, strs[1]);
+    return executeUnary(result, strs[1]);
   }
 
   /**
+   * Parse helper method that is only called if a unary operator is present.
    * 
+   * @param operand
+   *          the operand to be operated on.
+   * @param unary
+   *          the unary function in string for or a string of a number if a exponential function
+   *          needs to be performed.
+   * @return the new ComplexNumber based on what unary operator was performed.
    */
-  private static ComplexNumber executeUniary(ComplexNumber operand, String uniary)
+  private static ComplexNumber executeUnary(final ComplexNumber operand, final String unary)
   {
-    if (uniary.equals("\u221A"))
+    ComplexNumber returnVal = null;
+    if (unary.equals(sqrt))
     {
-      return operand.sqrt();
+      returnVal = operand.sqrt();
     }
-    else if (uniary.equals("Inv"))
+    else if (unary.equals(inv))
     {
-      return operand.inverse();
+      returnVal = operand.inverse();
     }
-    else if (uniary.equals("Con"))
+    else if (unary.equals(con))
     {
-      return operand.conjugate();
+      returnVal = operand.conjugate();
     }
-    else if (uniary.equals("LOG"))
+    else if (unary.equals(log))
     {
-      return operand.log();
+      returnVal = operand.log();
     }
-    else if (uniary.equals("Re")) // real and img operator
+    else if (unary.equals(re)) // real and img operator
     {
-      return new ComplexNumber(operand.getRealPart(), 0);
+      returnVal = new ComplexNumber(operand.getRealPart(), 0);
     }
-    else if (uniary.equals("Im"))
+    else if (unary.equals(im))
     {
-      return new ComplexNumber(operand.getImaginaryPart(), 0);
+      returnVal = new ComplexNumber(operand.getImaginaryPart(), 0);
     }
     else
     {
-      return operand.exponent(Integer.parseInt(uniary));
+      return operand.exponent(Integer.parseInt(unary));
     }
+    return returnVal;
   }
 
   /**
    * Parse Helper Method.
    * 
    * @param str
-   * @return
+   *          String to check for unary operators.
+   * @return A String[] containing the operand and the unary operator in that second index or null
+   *         if there was no unary operator.
    */
-  private static String[] findUniary(final String str)
+  private static String[] findUnary(final String str)
   {
     String[] temp = new String[2];
     String string = str;
-    if (string.contains("\u221A"))
+    if (string.contains(sqrt))
     {
       // squareRoot
-      temp[0] = string.substring(0, string.indexOf("\u221A"));
-      temp[1] = string.substring(string.indexOf("\u221A") + 1);
+      temp[0] = string.substring(0, string.indexOf(sqrt));
+      temp[1] = string.substring(string.indexOf(sqrt) + 1);
     }
-    else if (string.contains("Inv"))
+    else if (string.contains(inv))
     {
       // inverse
-      temp[0] = str.substring(0, str.indexOf("Inv"));
-      temp[1] = "Inv";
+      temp[0] = str.substring(0, str.indexOf(inv));
+      temp[1] = inv;
     }
-    else if (string.contains("Con"))
+    else if (string.contains(con))
     {
-      temp[0] = string.substring(0, string.indexOf("Con"));
-      temp[1] = "Con";
+      temp[0] = string.substring(0, string.indexOf(con));
+      temp[1] = con;
     }
-    else if (string.contains("LOG"))
+    else if (string.contains(log))
     {
-      temp[0] = string.substring(0, string.indexOf("LOG"));
-      temp[1] = "LOG";
+      temp[0] = string.substring(0, string.indexOf(log));
+      temp[1] = log;
     }
     else if (string.contains("^"))
     {
       temp[0] = string.substring(0, string.indexOf('^'));
       temp[1] = string.substring(string.indexOf('^') + 1);
     }
-    else if (string.contains("Re")) // real operator
+    else if (string.contains(re)) // real operator
     {
-      temp[0] = string.substring(0, string.indexOf("Re"));
-      temp[1] = "Re";
+      temp[0] = string.substring(0, string.indexOf(re));
+      temp[1] = re;
     }
-    else if (string.contains("Im")) // real operator
+    else if (string.contains(im)) // real operator
     {
-      temp[0] = string.substring(0, string.indexOf("Im"));
-      temp[1] = "Im";
+      temp[0] = string.substring(0, string.indexOf(im));
+      temp[1] = im;
     }
     else
     {
@@ -250,7 +269,7 @@ public class ComplexNumber
     }
     else if (pow == 0)
     {
-      return ComplexNumber.parse("1");
+      return ComplexNumber.parse(one);
     }
 
     while (pow > 1)
@@ -329,7 +348,7 @@ public class ComplexNumber
   }
 
   /**
-   * Calculate the inverse
+   * Calculate the inverse.
    * 
    * @return the inverse of complex number
    */
@@ -394,29 +413,30 @@ public class ComplexNumber
    *          the decimal
    * @return the fraction form F
    */
-  public String makeFraction(double num)
+  public String makeFraction(final double num)
   {
+    double number = num;
     double n = 1;
     double d = 1;
     double error = 0.0001;
-    boolean isNegative = num < 0;
+    boolean isNegative = number < 0;
 
-    if (num % 1 == 0)
-      return "" + (int) num;
+    if (number % 1 == 0)
+      return "" + (int) number;
     if (isNegative)
-      num = Math.abs(num);
+      number = Math.abs(number);
 
-    while (Math.abs((n / d) - num) >= error)
+    while (Math.abs((n / d) - number) >= error)
     {
-      if ((n / d) > num)
+      if ((n / d) > number)
         d++;
-      if ((n / d) < num)
+      if ((n / d) < number)
         n++;
-    }
+    } 
 
     if (isNegative)
       n = n * -1;
-    return (n == d) ? "1" : (int) n + "/" + (int) d;
+    return (n == d) ? one : (int) n + "/" + (int) d;
   }
 
   /**
@@ -458,6 +478,8 @@ public class ComplexNumber
 
   /**
    * The string to be shown.
+   * 
+   * @return The String of a complex number.
    */
   public String toString()
   {
@@ -467,6 +489,9 @@ public class ComplexNumber
   /**
    * The toString with a boolean, correct output for fraction.
    *
+   * @param isFraction
+   *          If true, the string returned will be in fraction form. If false, the string returned
+   *          will be in decimal form.
    * @return the string for the result
    */
   public String toString(final boolean isFraction)
@@ -494,7 +519,7 @@ public class ComplexNumber
     if (i.equals("1i"))
       i = iString;
     if (i.equals("-1i"))
-      i = "-" + iString;
+      i = minus + iString;
 
     // change
     String result = "";

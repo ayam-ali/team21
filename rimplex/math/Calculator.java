@@ -114,27 +114,6 @@ public class Calculator
       case divide:
         result = first.divide(second);
         break;
-      case sqrt:
-        result = first.sqrt();
-        break;
-      case inv:
-        result = first.inverse();
-        break;
-      case log:
-        result = first.log();
-        break;
-      case con:
-        result = first.conjugate();
-        break;
-      case exp:
-        result = first.exponent((int) second.getRealPart());
-        break;
-      case re:
-        result = new ComplexNumber(first.getRealPart(), 0);  /// real and img operator
-        break;
-      case im:
-        result = new ComplexNumber(first.getImaginaryPart(), 0);
-        break;
       default:
         // do nothing
     }

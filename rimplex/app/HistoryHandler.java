@@ -25,7 +25,7 @@ import javax.swing.JWindow;
  */
 public class HistoryHandler implements ActionListener
 {
-  
+
   JWindow history;
   JWindow about;
 
@@ -47,21 +47,23 @@ public class HistoryHandler implements ActionListener
         PageFormat preformat = pjob.defaultPage();
         preformat.setOrientation(PageFormat.PORTRAIT);
         PageFormat postformat = pjob.pageDialog(preformat);
-        
-        if (preformat != postformat) {
-            //Set print component
-            pjob.setPrintable(new Printer(history), postformat);
-            if (pjob.printDialog()) {
-                try
-                {
-                  pjob.print();
-                }
-                catch (PrinterException e1)
-                {
-                  // TODO Auto-generated catch block
-                  e1.printStackTrace();
-                }
+
+        if (preformat != postformat)
+        {
+          // Set print component
+          pjob.setPrintable(new Printer(history), postformat);
+          if (pjob.printDialog())
+          {
+            try
+            {
+              pjob.print();
             }
+            catch (PrinterException e1)
+            {
+              // TODO Auto-generated catch block
+              e1.printStackTrace();
+            }
+          }
         }
         break;
       default:
