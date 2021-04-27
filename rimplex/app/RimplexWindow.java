@@ -293,7 +293,7 @@ public class RimplexWindow extends JFrame
   private void changeColor(final JButton button) throws IOException
   {
     Color color;
-    int[] colors = getColors(createBufferedReader("/icons/ColorScheme.txt"));
+    int[] colors = getColors(createBufferedReader("/colors/ColorScheme.txt"));
     color = new Color(colors[0], colors[1], colors[2]);
     button.setBackground(color);
     button.setOpaque(true);
