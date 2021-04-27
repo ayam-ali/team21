@@ -329,7 +329,7 @@ public class RimplexWindow extends JFrame
       {
         String[] strColors = str.split(comma);
 
-        colors[0] = Integer.parseInt(strColors[0].trim());
+        colors[0] = Integer.parseInt(strColors[0].trim()); 
         colors[1] = Integer.parseInt(strColors[1].trim());
         colors[2] = Integer.parseInt(strColors[2].trim());
       }
