@@ -25,14 +25,13 @@ import javax.swing.JMenuItem;
 public class RimplexJMenuBar extends JMenuBar implements ActionListener
 {
 
-
   private static final long serialVersionUID = 1L;
   // private JMenuBar menu;
   private JMenu file, settings, languages, help;
   private JMenuItem about, download, print, english, french, helpPage, spanish;
 
   private String hp = "hp";
-  
+
   private String aboutInfoEng = "<html><i>Rimplex calculator for educational organizations <br> "
       + "<br><html><i>Version: 2021(3.0)<br>" + "<html><i>Build id: 56739734<br>"
       + "<html><i>(c) Copyright Rimplex contributors and others 2021.  All rights reserved.<br>"
@@ -42,8 +41,8 @@ public class RimplexJMenuBar extends JMenuBar implements ActionListener
       + "The Rimplex logo cannot be altered without Rimplexs permission. <br>";
 
   private String aboutInfoFre = "<html> <i> Calculateur Rimplex pour les "
-      + "\u00E9tablissements d'enseignement <br> "
-      + "<br> <html> <i> Version: 2021 (3.0) " + "<br> <html> ID de build: 56739734 "
+      + "\u00E9tablissements d'enseignement <br> " + "<br> <html> <i> Version: 2021 (3.0) "
+      + "<br> <html> ID de build: 56739734 "
       + "<br> <html> <i> (c) Copyright contributeurs Rimplex et autres 2021. "
       + "Tous droits r\u00E9serv\u00E9s. "
       + "<br> <html> <i> Cette calculatrice permet \u00E0 l'utilisateur de travailler avec des "
@@ -68,10 +67,10 @@ public class RimplexJMenuBar extends JMenuBar implements ActionListener
    * @param strings
    *          bundle that will be used for translations
    */
-  RimplexJMenuBar(final ResourceBundle strings)
+  private RimplexJMenuBar(final ResourceBundle strings)
   {
     super();
-    createJMenuBar(strings);
+    layoutJMenuBar(strings);
   }
 
   /**
@@ -123,19 +122,29 @@ public class RimplexJMenuBar extends JMenuBar implements ActionListener
   /**
    * To add the info for the about page.
    * 
-   * @param about
+   * @param abt
    *          for the title of the JFrame
    * @param str
    *          for the translated information
    */
-  private void aboutPage(final String about, final String str)
+  private void aboutPage(final String abt, final String str)
   {
-    JFrame a = new JFrame(about);
+    JFrame a = new JFrame(abt);
     a.setPreferredSize(new Dimension(500, 300));
     JLabel text = new JLabel(str);
     a.getContentPane().add(text);
     a.pack();
     a.setVisible(true);
+  }
+
+  /**
+   * @return an instance of RimplexJMenuBar.
+   */
+  public static RimplexJMenuBar createJMenuBar()
+  {
+    RimplexJMenuBar rimplex = new RimplexJMenuBar(
+        ResourceBundle.getBundle("languages/Strings_en_US", Locale.US));
+    return rimplex;
   }
 
   /**
@@ -145,17 +154,17 @@ public class RimplexJMenuBar extends JMenuBar implements ActionListener
    *          the bundle of strings that will be used to set the text of all menus and menu items
    *          and translate them to other languages when appropriate.
    */
-  void createJMenuBar(final ResourceBundle strings)
+  void layoutJMenuBar(final ResourceBundle strings)
   {
 
     // file menu
     file = new JMenu();
     download = new JMenuItem();
-    
+
     // Print
     print = new JMenuItem();
     print.addActionListener(new HistoryHandler());
-    
+
     file.add(download);
     file.add(print);
 
@@ -185,13 +194,12 @@ public class RimplexJMenuBar extends JMenuBar implements ActionListener
     helpPage.addActionListener(this);
     spanish.addActionListener(this);
     french.addActionListener(this);
-    
 
     this.add(file);
     this.add(settings);
     this.add(help);
     setMenuTexts(strings);
-   
+
   }
 
   /**

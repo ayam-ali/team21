@@ -449,8 +449,7 @@ public class RimplexWindow extends JFrame
     expand = new JButton(">");
     expand.addActionListener(new HistoryHandler());
     this.add(expand, BorderLayout.EAST);
-    this.setJMenuBar(
-        new RimplexJMenuBar(ResourceBundle.getBundle("languages/Strings_en_US", Locale.US)));
+    this.setJMenuBar(RimplexJMenuBar.createJMenuBar());
 
     this.pack();
   }

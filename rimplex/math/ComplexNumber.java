@@ -194,7 +194,7 @@ public class ComplexNumber
     {
       // squareRoot
       temp[0] = string.substring(0, string.indexOf(sqrt));
-      temp[1] = string.substring(string.indexOf(sqrt) + 1);
+      temp[1] = sqrt;
     }
     else if (string.contains(inv))
     {

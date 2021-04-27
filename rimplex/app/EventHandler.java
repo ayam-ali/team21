@@ -21,10 +21,10 @@ public class EventHandler extends KeyAdapter implements ActionListener
 {
   private static String currentOperand = "";
   private static boolean isFraction = false;
+  private static boolean missingParam = false;
 
   private Calculator calc = new Calculator();
   private boolean exponential = false;
-  private boolean missingParam = false;
   
   private String rPar = ")";
   private String lPar = "(";
@@ -181,11 +181,13 @@ public class EventHandler extends KeyAdapter implements ActionListener
     if (eKeyStroke == KeyStroke.getKeyStroke('('))
     {
       missingParam = true;
+      currentOperand = currentOperand + lPar;
       appendToDisplay(lPar);
     }
     else if (eKeyStroke == KeyStroke.getKeyStroke(')'))
     {
       missingParam = false;
+      currentOperand = currentOperand + rPar;
       appendToDisplay(rPar);
     }
     else if (keyCode == KeyEvent.VK_0)
