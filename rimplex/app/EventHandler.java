@@ -431,6 +431,21 @@ public class EventHandler extends KeyAdapter implements ActionListener
   {
     RimplexWindow.expression.add(str);
   }
+  
+  /**
+   * addToCalculations - combination of add to expression and appendToDisplay 
+   * - used by copy and paste.
+   * 
+   * 
+   * @param str - string to add to display and expression.
+   */
+  public static void addToCalculations(final String str)
+  {
+    if (str != null) {
+    currentOperand = currentOperand + str;
+    appendToDisplay(str);
+    }
+  }
 
   /**
    * Helper method for requesting operators.
