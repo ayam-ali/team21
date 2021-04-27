@@ -25,7 +25,7 @@ public class EventHandler extends KeyAdapter implements ActionListener
 
   private Calculator calc = new Calculator();
   private boolean exponential = false;
-  
+
   private String rPar = ")";
   private String lPar = "(";
   private String zero = "0";
@@ -95,7 +95,7 @@ public class EventHandler extends KeyAdapter implements ActionListener
       currentOperand = currentOperand + "LOG";
       appendToDisplay("Log");
     }
-    else if (buttonPressed.equals("\u00B1")) // +- sign 
+    else if (buttonPressed.equals("\u00B1")) // +- sign
     {
 
       ComplexNumber num = ComplexNumber.parse(currentOperand);
@@ -474,7 +474,7 @@ public class EventHandler extends KeyAdapter implements ActionListener
     String displayText = getDisplayText();
     String upperLine = displayText.substring(displayText.indexOf("<html>"),
         displayText.indexOf("<br>"));
-    updateDisplay(upperLine + currentOperand + op + "<br>");
+    updateDisplay(upperLine + italicize(currentOperand) + op + "<br>");
     currentOperand = "";
 
   }
@@ -493,7 +493,7 @@ public class EventHandler extends KeyAdapter implements ActionListener
     String upperLine = displayText.substring(displayText.indexOf("<html>"),
         displayText.indexOf("<br>"));
     updateDisplay(
-        upperLine + currentOperand + "=" + italicize(solved.toString(isFraction)) + "<br>");
+        upperLine + italicize(currentOperand) + "=" + italicize(solved.toString(isFraction)) + "<br>");
 
     currentOperand = "";
 
