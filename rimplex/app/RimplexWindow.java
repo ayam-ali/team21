@@ -333,23 +333,6 @@ public class RimplexWindow extends JFrame
         colors[1] = Integer.parseInt(strColors[1].trim());
         colors[2] = Integer.parseInt(strColors[2].trim());
       }
-      else
-      {
-        // if commas are left out and numbers are separated by spaces
-        if (str.contains(" "))
-        {
-          colors[0] = Integer.parseInt(str.substring(0, 3));
-          colors[1] = Integer.parseInt(str.substring(4, 7));
-          colors[2] = Integer.parseInt(str.substring(8, 11));
-        }
-        else
-        {
-          // if all of the numbers are typed together
-          colors[0] = Integer.parseInt(str.substring(0, 3).trim());
-          colors[1] = Integer.parseInt(str.substring(3, 6).trim());
-          colors[2] = Integer.parseInt(str.substring(6, 9).trim());
-        }
-      }
 
     }
     return colors;

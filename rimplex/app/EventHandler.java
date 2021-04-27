@@ -95,7 +95,7 @@ public class EventHandler extends KeyAdapter implements ActionListener
       currentOperand = currentOperand + "LOG";
       appendToDisplay("Log");
     }
-    else if (buttonPressed.equals("\u00B1"))
+    else if (buttonPressed.equals("\u00B1")) // +- sign 
     {
 
       ComplexNumber num = ComplexNumber.parse(currentOperand);
