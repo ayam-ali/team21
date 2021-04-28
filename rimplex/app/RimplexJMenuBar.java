@@ -1,12 +1,8 @@
 package app;
 
-import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
-import java.net.URISyntaxException;
-import java.net.URL;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -29,9 +25,9 @@ public class RimplexJMenuBar extends JMenuBar implements ActionListener
   private static String en = "languages/Strings_en_US";
   // private JMenuBar menu;
   private JMenu file, settings, languages, help;
-  private JMenuItem about, download, print, english, french, helpPage, spanish;
+  private JMenuItem about, print, english, french, spanish;
 
-  private String hp = "hp";
+//  private String hp = "hp";
 
   private String aboutInfoEng = "<html><i>Rimplex calculator for educational organizations <br> "
       + "<br><html><i>Version: 2021(3.0)<br>" + "<html><i>Build id: 56739734<br>"
@@ -200,18 +196,18 @@ public class RimplexJMenuBar extends JMenuBar implements ActionListener
 
   }
 
-  /**
-   * Loads the help page via a web browser on the user's device.
-   * 
-   * @throws URISyntaxException
-   * @throws IOException
-   */
-  private void loadHelpPage() throws URISyntaxException, IOException
-  {
-    Desktop desktop = Desktop.getDesktop();
-    URL url = this.getClass().getResource("/helpPage/helpPage.html");
-    desktop.browse(url.toURI());
-  }
+//  /**
+//   * Loads the help page via a web browser on the user's device.
+//   * 
+//   * @throws URISyntaxException
+//   * @throws IOException
+//   */
+//  private void loadHelpPage() throws URISyntaxException, IOException
+//  {
+//    Desktop desktop = Desktop.getDesktop();
+//    URL url = this.getClass().getResource("/helpPage/helpPage.html");
+//    desktop.browse(url.toURI());
+//  }
 
   /**
    * Sets the appropriate text for all menu's.
@@ -231,6 +227,5 @@ public class RimplexJMenuBar extends JMenuBar implements ActionListener
     french.setText(strs.getString("french"));
     help.setText(strs.getString("help"));
     // helpPage.setText(strs.getString("help_page"));
-    // PopupMenu.setLanguage(strs);
   }
 }

@@ -312,10 +312,12 @@ public class EventHandler extends KeyAdapter implements ActionListener
     }
   }
 
+  /**
+   * Reaction for when the "+" button is released.
+   */
   @Override
   public void keyReleased(final KeyEvent e)
   {
-    int keyCode = e.getKeyCode();
     KeyStroke eKeyStroke = KeyStroke.getKeyStroke(e.getKeyChar());
 
     if (eKeyStroke.equals(KeyStroke.getKeyStroke('+')))

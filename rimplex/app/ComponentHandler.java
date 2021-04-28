@@ -24,6 +24,9 @@ public class ComponentHandler implements ComponentListener
 
   } // end componentResized
 
+  /**
+   * Moves the history window with the Rimplex main window.
+   */
   @Override
   public void componentMoved(final ComponentEvent e)
   {

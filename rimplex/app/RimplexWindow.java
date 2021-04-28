@@ -2,7 +2,6 @@ package app;
 
 import java.awt.BorderLayout;
 
-
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
@@ -118,15 +117,15 @@ public class RimplexWindow extends JFrame
     // Windows and buttons ---
     historyWindow = new JFrame();
     historyWindow.setUndecorated(true);
-    JPanel cp = (JPanel)historyWindow.getContentPane();
+    JPanel cp = (JPanel) historyWindow.getContentPane();
     cp.setLayout(new BorderLayout());
     historyPanel = new JPanel();
     cp.add(historyPanel, BorderLayout.CENTER);
-    
+
     historyPanel.setLayout(new BorderLayout());
     contract = new JButton("<");
     contract.addActionListener(new HistoryHandler());
-    
+
     // Text area and scroll
     history = new ArrayList<>();
     historyOutputArea = new JTextArea();
@@ -139,7 +138,7 @@ public class RimplexWindow extends JFrame
     historyWindow.setFocusable(true);
     PopupMenu.addTo(historyOutputArea); // Gives edit, copy, etc
     this.addComponentListener(new ComponentHandler());
-    
+
     // Visibility
     historyWindow.setVisible(true);
     historyWindow.setAlwaysOnTop(true);
@@ -340,7 +339,7 @@ public class RimplexWindow extends JFrame
       {
         String[] strColors = str.split(comma);
 
-        colors[0] = Integer.parseInt(strColors[0].trim()); 
+        colors[0] = Integer.parseInt(strColors[0].trim());
         colors[1] = Integer.parseInt(strColors[1].trim());
         colors[2] = Integer.parseInt(strColors[2].trim());
       }
@@ -447,15 +446,18 @@ public class RimplexWindow extends JFrame
 
     this.pack();
   }
-  
+
   /**
-   * moveHistoryWindow - updates history window location. 
+   * moveHistoryWindow - updates history window location.
    * 
    * 
-   * @param x - x coordinate. 
-   * @param y - y coordinate.
+   * @param x
+   *          - x coordinate.
+   * @param y
+   *          - y coordinate.
    */
-  public static void moveHistoryWindow(int x, int y) {
+  public static void moveHistoryWindow(final int x, final int y)
+  {
     historyWindow.setLocation(x, y);
   }
 
@@ -468,7 +470,7 @@ public class RimplexWindow extends JFrame
   public static void animateHistory(final boolean isOpening)
   {
     int delay = 1; // milliseconds
-    
+
     if (isOpening) // OPENING
     {
       expand.setEnabled(false);

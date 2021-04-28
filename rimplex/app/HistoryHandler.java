@@ -29,6 +29,9 @@ public class HistoryHandler implements ActionListener
   JWindow historyWindow;
   JWindow about;
 
+  /**
+   * Reactions for the History window.
+   */
   @Override
   public void actionPerformed(final ActionEvent e)
   {

@@ -89,10 +89,4 @@ public class PopupMenu
     historyOutputArea.setComponentPopupMenu(popup);
   }
 
-  // public static void setLanguage(ResourceBundle strs)
-  // {
-  // ((JTextComponent) copyAction).setText(strs.getString("copy"));
-  // ((JTextComponent) pasteAction).setText(strs.getString("paste"));
-  // }
-
 }
