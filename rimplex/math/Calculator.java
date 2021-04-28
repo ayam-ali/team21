@@ -86,7 +86,7 @@ public class Calculator
   public boolean isOperation(final String string)
   {
     return string == plus || string == minus || string == multiply || string == divide
-        || string == inv || string == sqrt || string == log || string == con || string == exp
+        || string == inv || string == sqrt || string == log || string == con
         || string == re || string == im; // real and img operator
   }
 
