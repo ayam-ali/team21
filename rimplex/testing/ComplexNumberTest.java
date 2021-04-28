@@ -8,6 +8,7 @@ import math.ComplexNumber;
 
 class ComplexNumberTest
 {
+  String one = "1";
 
   @Test
   void testConstructorAndGetters()
@@ -15,7 +16,7 @@ class ComplexNumberTest
     ComplexNumber cm = ComplexNumber.parse("3^2");
     assertEquals(9, cm.getRealPart());
   }
-  
+
   @Test
   void testParse()
   {
@@ -32,7 +33,7 @@ class ComplexNumberTest
     num = ComplexNumber.parse(".8");
     assertEquals(.8, num.getRealPart());
     assertEquals(0, num.getImaginaryPart());
-    
+
     // just imaginary
     num = ComplexNumber.parse("55i");
     assertEquals(0, num.getRealPart());
@@ -40,7 +41,7 @@ class ComplexNumberTest
     num = ComplexNumber.parse("-2i");
     assertEquals(0, num.getRealPart());
     assertEquals(-2, num.getImaginaryPart());
-    
+
     // complex
     num = ComplexNumber.parse("3+8i");
     assertEquals(3, num.getRealPart());
@@ -63,7 +64,7 @@ class ComplexNumberTest
     assertEquals("1/5", num.toString(true));
     num = ComplexNumber.parse("-1.5");
     assertEquals("-3/2", num.toString(true));
-    num = ComplexNumber.parse("1");
-    assertEquals("1", num.toString(true));
+    num = ComplexNumber.parse(one);
+    assertEquals(one, num.toString(true));
   }
 }

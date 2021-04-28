@@ -26,6 +26,7 @@ public class RimplexJMenuBar extends JMenuBar implements ActionListener
 {
 
   private static final long serialVersionUID = 1L;
+  private static String en = "languages/Strings_en_US";
   // private JMenuBar menu;
   private JMenu file, settings, languages, help;
   private JMenuItem about, download, print, english, french, helpPage, spanish;
@@ -89,19 +90,19 @@ public class RimplexJMenuBar extends JMenuBar implements ActionListener
     }
     else if (e.getActionCommand().equals("English"))
     {
-      setMenuTexts(ResourceBundle.getBundle("languages/Strings_en_US", Locale.US));
+      setMenuTexts(ResourceBundle.getBundle(en, Locale.US));
     }
-    else if (e.getActionCommand().equals(hp))
-    {
-      try
-      {
-        loadHelpPage();
-      }
-      catch (URISyntaxException | IOException e1)
-      {
-        e1.printStackTrace();
-      }
-    }
+    // else if (e.getActionCommand().equals(hp))
+    // {
+    // try
+    // {
+    // loadHelpPage();
+    // }
+    // catch (URISyntaxException | IOException e1)
+    // {
+    // e1.printStackTrace();
+    // }
+    // }
     else if (e.getActionCommand().equals("\u00C0 Propos"))
     {
       aboutPage("\u00C0 Propos De Rimplex", aboutInfoFre);
@@ -142,8 +143,7 @@ public class RimplexJMenuBar extends JMenuBar implements ActionListener
    */
   public static RimplexJMenuBar createJMenuBar()
   {
-    RimplexJMenuBar rimplex = new RimplexJMenuBar(
-        ResourceBundle.getBundle("languages/Strings_en_US", Locale.US));
+    RimplexJMenuBar rimplex = new RimplexJMenuBar(ResourceBundle.getBundle(en, Locale.US));
     return rimplex;
   }
 
@@ -159,13 +159,11 @@ public class RimplexJMenuBar extends JMenuBar implements ActionListener
 
     // file menu
     file = new JMenu();
-    download = new JMenuItem();
 
     // Print
     print = new JMenuItem();
     print.addActionListener(new HistoryHandler());
 
-    file.add(download);
     file.add(print);
 
     // setting menu
@@ -183,15 +181,15 @@ public class RimplexJMenuBar extends JMenuBar implements ActionListener
     // help menu
     help = new JMenu();
     about = new JMenuItem(); // about
-    helpPage = new JMenuItem();
-    helpPage.setActionCommand(hp);
+    // helpPage = new JMenuItem();
+    // helpPage.setActionCommand(hp);
 
     help.add(about);
-    help.add(helpPage);
+    // help.add(helpPage);
 
     about.addActionListener(this);
     english.addActionListener(this);
-    helpPage.addActionListener(this);
+    // helpPage.addActionListener(this);
     spanish.addActionListener(this);
     french.addActionListener(this);
 
@@ -225,7 +223,6 @@ public class RimplexJMenuBar extends JMenuBar implements ActionListener
   {
     about.setText(strs.getString("about"));
     file.setText(strs.getString("file"));
-    download.setText(strs.getString("download"));
     print.setText(strs.getString("print"));
     settings.setText(strs.getString("setting"));
     languages.setText(strs.getString("languages"));
@@ -233,7 +230,7 @@ public class RimplexJMenuBar extends JMenuBar implements ActionListener
     spanish.setText(strs.getString("spanish"));
     french.setText(strs.getString("french"));
     help.setText(strs.getString("help"));
-    helpPage.setText(strs.getString("help_page"));
-//    PopupMenu.setLanguage(strs);
+    // helpPage.setText(strs.getString("help_page"));
+    // PopupMenu.setLanguage(strs);
   }
 }

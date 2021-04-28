@@ -18,14 +18,14 @@ public class ComponentHandler implements ComponentListener
 {
 
   @Override
-  public void componentResized(ComponentEvent e)
+  public void componentResized(final ComponentEvent e)
   {
     // TODO Auto-generated method stub
 
   } // end componentResized
 
   @Override
-  public void componentMoved(ComponentEvent e)
+  public void componentMoved(final ComponentEvent e)
   {
     int xOffset = 611;
     int yOffset = 51;
@@ -36,14 +36,14 @@ public class ComponentHandler implements ComponentListener
   } // end componentMoved
 
   @Override
-  public void componentShown(ComponentEvent e)
+  public void componentShown(final ComponentEvent e)
   {
     // TODO Auto-generated method stub
 
   } // end componentShown
 
   @Override
-  public void componentHidden(ComponentEvent e)
+  public void componentHidden(final ComponentEvent e)
   {
     // TODO Auto-generated method stub
 

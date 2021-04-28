@@ -19,7 +19,7 @@ public class Calculator
   private final String log = "LOG";
   private final String con = "Con";
   private final String exp = "^";
-  private final String re = "Re"; // real and img operator 
+  private final String re = "Re"; // real and img operator
   private final String im = "Im";
 
   private String recentResult;
@@ -52,7 +52,7 @@ public class Calculator
     }
     if (isOperation(input.get(0)))
     {
-        input.add(0, recentResult);
+      input.add(0, recentResult);
     }
     if (input.size() == 1)
     {
@@ -61,7 +61,7 @@ public class Calculator
     else if (input.size() == 2)
     {
       total = ComplexNumber.parse(input.get(0) + input.get(1));
-    } 
+    }
     else
     {
       total = ComplexNumber.parse(input.get(0));
@@ -86,8 +86,8 @@ public class Calculator
   public boolean isOperation(final String string)
   {
     return string == plus || string == minus || string == multiply || string == divide
-        || string == inv || string == sqrt || string == log || string == con
-        || string == exp || string == re || string == im; // real and img operator 
+        || string == inv || string == sqrt || string == log || string == con || string == exp
+        || string == re || string == im; // real and img operator
   }
 
   /**

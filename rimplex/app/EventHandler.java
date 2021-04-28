@@ -23,8 +23,10 @@ public class EventHandler extends KeyAdapter implements ActionListener
   private static boolean isFraction = false;
   private static boolean missingParam = false;
 
+  private static String i = "i";
+  private static String ht = "<i>i</i>";
+
   private Calculator calc = new Calculator();
-  private boolean exponential = false;
 
   private String rPar = ")";
   private String lPar = "(";
@@ -41,6 +43,20 @@ public class EventHandler extends KeyAdapter implements ActionListener
   private String sqrt = "\u221A";
   private String inv = "Inv";
   private String con = "Con";
+  private String real = "Re";
+  private String imaginary = "Im";
+  private String log = "LOG";
+  private String multi = "\u00D7";
+  private String star = "*";
+  private String exp = "^";
+  private String equals = "=";
+  private String minus = "-";
+  private String divide = "\u00F7";
+  private String slash = "/";
+  private String dec = ".";
+  private String plus = "+";
+  private String html = "<html>";
+  private String br = "<br>";
 
   /**
    * Reactions for when a button is pressed.
@@ -80,20 +96,20 @@ public class EventHandler extends KeyAdapter implements ActionListener
       currentOperand = currentOperand + con;
       appendToDisplay(con);
     }
-    else if (buttonPressed.equals("Re")) // real and img part
+    else if (buttonPressed.equals(real)) // real and img part
     {
-      currentOperand = currentOperand + "Re";
-      appendToDisplay("Re");
+      currentOperand = currentOperand + real;
+      appendToDisplay(real);
     }
-    else if (buttonPressed.equals("Im"))
+    else if (buttonPressed.equals(imaginary))
     {
-      currentOperand = currentOperand + "Im";
-      appendToDisplay("Im");
+      currentOperand = currentOperand + imaginary;
+      appendToDisplay(imaginary);
     }
-    else if (buttonPressed.equals("LOG"))
+    else if (buttonPressed.equals(log))
     {
-      currentOperand = currentOperand + "LOG";
-      appendToDisplay("Log");
+      currentOperand = currentOperand + log;
+      appendToDisplay(log);
     }
     else if (buttonPressed.equals("\u00B1")) // +- sign
     {
@@ -133,8 +149,8 @@ public class EventHandler extends KeyAdapter implements ActionListener
     }
     else if (buttonPressed.equals("\uD835\uDC8A"))
     {
-      currentOperand = currentOperand + "i";
-      appendToDisplay("i");
+      currentOperand = currentOperand + i;
+      appendToDisplay(i);
     }
     else if (buttonPressed.equals(lPar))
     { // left paren
@@ -149,14 +165,14 @@ public class EventHandler extends KeyAdapter implements ActionListener
       currentOperand = currentOperand + rPar;
 
     }
-    else if (buttonPressed.equals("="))
+    else if (buttonPressed.equals(equals))
     {
       findSolution();
     }
     else if (buttonPressed.equals("x^y"))
     {
-      currentOperand = currentOperand + "^";
-      appendToDisplay("^");
+      currentOperand = currentOperand + exp;
+      appendToDisplay(exp);
     }
     else if (buttonPressed.equals(sqrt))
     {
@@ -240,13 +256,13 @@ public class EventHandler extends KeyAdapter implements ActionListener
     {
       if (missingParam)
       { // if there is a left paren but no right paren
-        currentOperand = currentOperand + "\u00D7";
-        appendToDisplay("\u00D7");
+        currentOperand = currentOperand + multi;
+        appendToDisplay(multi);
 
       }
       else
       { // if there are no paren missing
-        addOperator("*");
+        addOperator(star);
       }
     }
     else if (keyCode == KeyEvent.VK_8)
@@ -267,32 +283,32 @@ public class EventHandler extends KeyAdapter implements ActionListener
     {
       if (missingParam)
       { // if there is a left paren but no right paren
-        currentOperand = currentOperand + "-";
-        appendToDisplay("-");
+        currentOperand = currentOperand + minus;
+        appendToDisplay(minus);
 
       }
       else
       { // if there are no paren missing
-        addOperator("-");
+        addOperator(minus);
       }
     }
     else if (keyCode == KeyEvent.VK_SLASH)
     { // division on key
       if (missingParam)
       { // if there is a left paren but no right paren
-        currentOperand = currentOperand + "\u00F7";
-        appendToDisplay("\u00F7");
+        currentOperand = currentOperand + divide;
+        appendToDisplay(divide);
 
       }
       else
       { // if there are no paren missing
-        addOperator("/");
+        addOperator(slash);
       }
     }
     else if (keyCode == KeyEvent.VK_PERIOD)
     {
-      currentOperand = currentOperand + ".";
-      appendToDisplay(".");
+      currentOperand = currentOperand + dec;
+      appendToDisplay(dec);
     }
   }
 
@@ -306,13 +322,13 @@ public class EventHandler extends KeyAdapter implements ActionListener
     {
       if (missingParam)
       { // if there is a left paren but no right paren
-        currentOperand = currentOperand + "+";
-        appendToDisplay("+");
+        currentOperand = currentOperand + plus;
+        appendToDisplay(plus);
 
       }
       else
       { // if there are no paren missing
-        addOperator("+");
+        addOperator(plus);
       }
     }
   }
@@ -326,7 +342,7 @@ public class EventHandler extends KeyAdapter implements ActionListener
     {
       String displayText = getDisplayText();
 
-      if (currentOperand.endsWith("i"))
+      if (currentOperand.endsWith(i))
       {
         updateDisplay(displayText.substring(0, displayText.length() - 8));
       }
@@ -340,7 +356,7 @@ public class EventHandler extends KeyAdapter implements ActionListener
         updateDisplay(displayText.substring(0, displayText.length() - 1));
         missingParam = true;
       }
-      else if (currentOperand.endsWith("LOG") || currentOperand.endsWith(inv)
+      else if (currentOperand.endsWith(log) || currentOperand.endsWith(inv)
           || currentOperand.endsWith(con))
       {
         updateDisplay(displayText.substring(0, displayText.length() - 3));
@@ -360,7 +376,7 @@ public class EventHandler extends KeyAdapter implements ActionListener
    */
   private static void clear()
   {
-    currentOperand = currentOperand.replaceAll("i", "<i>i</i>");
+    currentOperand = currentOperand.replaceAll(i, ht);
     RimplexWindow.display.setText(
         getDisplayText().substring(0, getDisplayText().length() - currentOperand.length()));
     currentOperand = "";
@@ -396,7 +412,7 @@ public class EventHandler extends KeyAdapter implements ActionListener
    */
   private static String italicize(final String toItalicize)
   {
-    String str = toItalicize.replace("i", "<i>i</i>");
+    String str = toItalicize.replace(i, ht);
     return str;
   }
 
@@ -431,19 +447,21 @@ public class EventHandler extends KeyAdapter implements ActionListener
   {
     RimplexWindow.expression.add(str);
   }
-  
+
   /**
-   * addToCalculations - combination of add to expression and appendToDisplay 
-   * - used by copy and paste.
+   * addToCalculations - combination of add to expression and appendToDisplay - used by copy and
+   * paste.
    * 
    * 
-   * @param str - string to add to display and expression.
+   * @param str
+   *          - string to add to display and expression.
    */
   public static void addToCalculations(final String str)
   {
-    if (str != null) {
-    currentOperand = currentOperand + str;
-    appendToDisplay(str);
+    if (str != null)
+    {
+      currentOperand = currentOperand + str;
+      appendToDisplay(str);
     }
   }
 
@@ -456,13 +474,13 @@ public class EventHandler extends KeyAdapter implements ActionListener
   private void addOperator(final String operator)
   {
     String op = operator;
-    if (op.equals("*"))
+    if (op.equals(star))
     {
-      op = "\u00D7";
+      op = multi;
     }
-    else if (op.equals("/"))
+    else if (op.equals(slash))
     {
-      op = "\u00F7";
+      op = divide;
     }
 
     if (!currentOperand.isEmpty())
@@ -472,9 +490,8 @@ public class EventHandler extends KeyAdapter implements ActionListener
     addToExpression(op);
     // appendToDisplay(op);
     String displayText = getDisplayText();
-    String upperLine = displayText.substring(displayText.indexOf("<html>"),
-        displayText.indexOf("<br>"));
-    updateDisplay(upperLine + italicize(currentOperand) + op + "<br>");
+    String upperLine = displayText.substring(displayText.indexOf(html), displayText.indexOf(br));
+    updateDisplay(upperLine + italicize(currentOperand) + op + br);
     currentOperand = "";
 
   }
@@ -490,10 +507,9 @@ public class EventHandler extends KeyAdapter implements ActionListener
     RimplexWindow.expression.add(solved.toString());
 
     String displayText = getDisplayText();
-    String upperLine = displayText.substring(displayText.indexOf("<html>"),
-        displayText.indexOf("<br>"));
-    updateDisplay(
-        upperLine + italicize(currentOperand) + "=" + italicize(solved.toString(isFraction)) + "<br>");
+    String upperLine = displayText.substring(displayText.indexOf(html), displayText.indexOf(br));
+    updateDisplay(upperLine + italicize(currentOperand) + equals
+        + italicize(solved.toString(isFraction)) + br);
 
     currentOperand = "";
 

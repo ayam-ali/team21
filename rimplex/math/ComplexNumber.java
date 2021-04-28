@@ -3,7 +3,7 @@ package math;
 /**
  * An object class to represent a complex number.
  * 
- * @author Ava Momberger, Rhea Morris, Eric Hernandez
+ * @author Ava Momberger, Rhea Morris, Eric Hernandez, Ayam Ali
  * @version 3/24/2021
  */
 public class ComplexNumber
@@ -18,7 +18,7 @@ public class ComplexNumber
   private static String re = "Re";
   private static String im = "Im";
   private static String one = "1";
-  
+
   private double real;
   private double img;
 
@@ -399,7 +399,8 @@ public class ComplexNumber
   {
     if (this.getImaginaryPart() == 0)
     {
-      if (this.getRealPart() > 0) {
+      if (this.getRealPart() > 0)
+      {
         return new ComplexNumber(Math.sqrt(this.getRealPart()), 0);
       }
       else
@@ -438,7 +439,7 @@ public class ComplexNumber
         d++;
       if ((n / d) < number)
         n++;
-    } 
+    }
 
     if (isNegative)
       n = n * -1;

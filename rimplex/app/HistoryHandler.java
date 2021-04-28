@@ -26,7 +26,7 @@ import javax.swing.JWindow;
 public class HistoryHandler implements ActionListener
 {
 
-  JWindow history;
+  JWindow historyWindow;
   JWindow about;
 
   @Override
@@ -60,7 +60,6 @@ public class HistoryHandler implements ActionListener
             }
             catch (PrinterException e1)
             {
-              // TODO Auto-generated catch block
               e1.printStackTrace();
             }
           }

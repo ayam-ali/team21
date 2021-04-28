@@ -24,8 +24,13 @@ import javax.swing.KeyStroke;
  */
 public class PopupMenu
 {
-  
-  public static void addTo(JTextArea historyOutputArea)
+  /**
+   * Allows copy and paste to work.
+   * 
+   * @param historyOutputArea
+   *          to copy from
+   */
+  public static void addTo(final JTextArea historyOutputArea)
   {
 
     ResourceBundle strings = ResourceBundle.getBundle("languages/Strings_en_US", Locale.US);
@@ -38,7 +43,7 @@ public class PopupMenu
       private static final long serialVersionUID = 834850189170044294L;
 
       @Override
-      public void actionPerformed(ActionEvent ae)
+      public void actionPerformed(final ActionEvent ae)
       {
         historyOutputArea.copy();
       }
@@ -49,7 +54,7 @@ public class PopupMenu
       private static final long serialVersionUID = 4292559549538669190L;
 
       @Override
-      public void actionPerformed(ActionEvent ae)
+      public void actionPerformed(final ActionEvent ae)
       {
         if (historyOutputArea != null)
         {
@@ -84,10 +89,10 @@ public class PopupMenu
     historyOutputArea.setComponentPopupMenu(popup);
   }
 
-//  public static void setLanguage(ResourceBundle strs)
-//  {
-//    ((JTextComponent) copyAction).setText(strs.getString("copy"));
-//    ((JTextComponent) pasteAction).setText(strs.getString("paste"));
-//  }
+  // public static void setLanguage(ResourceBundle strs)
+  // {
+  // ((JTextComponent) copyAction).setText(strs.getString("copy"));
+  // ((JTextComponent) pasteAction).setText(strs.getString("paste"));
+  // }
 
 }
