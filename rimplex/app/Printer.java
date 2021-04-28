@@ -11,8 +11,6 @@ import java.awt.print.PrinterException;
 /**
  * Printer.java - Handles printing for the history.
  *
- * 
- * This work complies with the JMU Honor Code.
  *
  * Modifications: None
  *
@@ -32,6 +30,15 @@ public class Printer implements Printable
     this.comp = comp;
   }
 
+  /**
+   * print - prints the history page after formatting.
+   * 
+   * @param g - The graphics rendering of the page to be printed.
+   * @param format - portrait or landscape format.
+   * @param pageIndex - the page number. 
+   * 
+   * @throws PrinterException - thrown if there is an error in the print system.
+   */
   @Override
   public int print(final Graphics g, final PageFormat format, final int pageIndex)
       throws PrinterException
