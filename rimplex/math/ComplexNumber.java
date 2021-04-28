@@ -93,16 +93,20 @@ public class ComplexNumber
         {
           num = minus + num;
         }
-        if (num.equals(minus))
+        if (num.equals(minus) && (!(str.charAt(0) == '-') || i != 0))
         {
           num = "-1";
+        }
+        else if (num.equals(minus))
+        {
+          num = "";
         }
         if (i + 1 < str.length() && str.charAt(i + 1) == 'i')
         {
           i = i + 1;
           img = num;
         }
-        else
+        else if (real.equals(""))
         {
           real = num;
         }
@@ -393,13 +397,15 @@ public class ComplexNumber
    */
   public ComplexNumber sqrt()
   {
-    if (this.getImaginaryPart() == 0 && this.getRealPart() > 0)
+    if (this.getImaginaryPart() == 0)
     {
-      return new ComplexNumber(Math.sqrt(this.getRealPart()), 0);
-    }
-    if (this.getImaginaryPart() == 0 && this.getRealPart() < 0)
-    {
-      return new ComplexNumber(0, Math.sqrt(Math.abs(getRealPart())));
+      if (this.getRealPart() > 0) {
+        return new ComplexNumber(Math.sqrt(this.getRealPart()), 0);
+      }
+      else
+      {
+        return new ComplexNumber(0, Math.sqrt(Math.abs(getRealPart())));
+      }
     }
     double r = Math.sqrt(this.mod());
     double theta = this.arg() / 2;
@@ -436,44 +442,7 @@ public class ComplexNumber
 
     if (isNegative)
       n = n * -1;
-    return (n == d) ? one : (int) n + "/" + (int) d;
-  }
-
-  /**
-   * The greatest common divisor.
-   * 
-   * @param a
-   *          the first input
-   * @param b
-   *          the second input
-   * @return the divisor
-   */
-  public int gcd(final int a, final int b)
-  {
-    int dividend;
-    int divisor;
-    int remainder;
-
-    if (a > b)
-    {
-      dividend = a;
-      divisor = b;
-    }
-    else
-    {
-      dividend = b;
-      divisor = a;
-    }
-    remainder = dividend % divisor;
-
-    while (remainder != 0)
-    {
-      dividend = divisor;
-      divisor = remainder;
-      remainder = dividend % divisor;
-    }
-
-    return divisor;
+    return (int) n + "/" + (int) d;
   }
 
   /**
@@ -523,13 +492,9 @@ public class ComplexNumber
 
     // change
     String result = "";
-    if (real == 0 && img != 0)
+    if (real == 0)
     {
-      result = "" + i;
-    }
-    else if (getRealPart() == 0 && getImaginaryPart() == 0)
-    {
-      result = zero;
+      result = (getImaginaryPart() != 0) ? "" + i : zero;
     }
     else if (getImaginaryPart() == 0)
     {

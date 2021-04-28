@@ -18,7 +18,7 @@ public class Calculator
   private final String inv = "Inv";
   private final String log = "LOG";
   private final String con = "Con";
-  private final String exp = "Exp";
+  private final String exp = "^";
   private final String re = "Re"; // real and img operator 
   private final String im = "Im";
 
@@ -45,9 +45,14 @@ public class Calculator
       return ComplexNumber.parse(recentResult);
     ComplexNumber total;
     // this part handles running calculations
+    if (input.get(0).contains(exp) && input.get(0).indexOf(exp) == 0)
+    {
+      input.add(0, recentResult + input.get(0));
+      input.remove(1);
+    }
     if (isOperation(input.get(0)))
     {
-      input.add(0, recentResult);
+        input.add(0, recentResult);
     }
     if (input.size() == 1)
     {
@@ -55,7 +60,7 @@ public class Calculator
     }
     else if (input.size() == 2)
     {
-      total = performOperation(ComplexNumber.parse(input.get(0)), null, input.get(1));
+      total = ComplexNumber.parse(input.get(0) + input.get(1));
     } 
     else
     {

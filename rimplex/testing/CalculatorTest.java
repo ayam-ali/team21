@@ -19,7 +19,7 @@ class CalculatorTest
   private String inv = "Inv";
   private String log = "LOG";
   private String con = "Con";
-  private String exp = "Exp";
+  private String exp = "^";
   private String re = "Re"; // real and img operator 
   private String im = "Im";
   
@@ -172,55 +172,47 @@ class CalculatorTest
     List<String> input = new ArrayList<String>();
     
     // purely real operands
-    input.add("1");
-    input.add(log);
+    input.add("1" + log);
     assertEquals("0", calc.calculate(input).toString());
     input.clear();
-    input.add("25");
-    input.add(sqrt);
-    assertEquals("5", calc.calculate(input).toString());
+    input.add("-25" + sqrt);
+    assertEquals("5i", calc.calculate(input).toString());
     input.clear();
-    input.add("2");
-    input.add(inv);
+    input.add("2" + inv);
     assertEquals("0.5", calc.calculate(input).toString());
+    input.clear();
+    input.add("0" + log);
+    assertEquals("-Infinity", calc.calculate(input).toString());
     input.clear();
     
     // purely imaginary operands
-    input.add("i");
-    input.add(log);
+    input.add("i" + log);
     assertEquals(""+Math.PI/2+"i", calc.calculate(input).toString());
     input.clear();
-    input.add("-1");
-    input.add(sqrt);
+    input.add("-1" + sqrt);
     assertEquals("i", calc.calculate(input).toString());
     input.clear();
-    input.add("2i");
-    input.add(inv);
+    input.add("2i" + inv);
     assertEquals("-0.5i", calc.calculate(input).toString());
     input.clear();
-    input.add("18i");
-    input.add(con);
+    input.add("18i" + con);
     assertEquals("-18i", calc.calculate(input).toString());
     input.clear();
     
     // complex operands
-    input.add("3+2i");
-    input.add(log);
+    input.add("3+2i" + log);
     assertTrue(Math.abs(1.28247 - calc.calculate(input).getRealPart()) < 0.001);
     assertTrue(Math.abs(0.588 - calc.calculate(input).getImaginaryPart()) < 0.001);
     input.clear();
-    input.add("2-6i");
-    input.add(sqrt);
+    input.add("2-6i" + sqrt);
     calc.calculate(input);
     assertTrue(Math.abs(2.04016 - calc.calculate(input).getRealPart()) < 0.001);
     assertTrue(Math.abs(-1.47046 - calc.calculate(input).getImaginaryPart()) < 0.001);
     input.clear();
-    input.add("3+4i");
-    input.add(inv);
+    input.add("3+4i" + inv);
     assertEquals("0.12-0.16i", calc.calculate(input).toString());
     input.clear();
-    input.add("18+22i");
-    input.add(con);
+    input.add("18+22i" + con);
     assertEquals("18-22i", calc.calculate(input).toString());
   }
   
@@ -300,23 +292,23 @@ class CalculatorTest
     List<String> input = new ArrayList<String>();
     
     // purely real operands
-    input.add("2");
-    input.add(exp);
-    input.add("3");
+    input.add("2" + exp + "3");
     assertEquals("8", calc.calculate(input).toString());
+    input.clear();
+    input.add("5" + exp + "1");
+    assertEquals("5", calc.calculate(input).toString());
+    input.clear();
+    input.add("18" + exp + "0");
+    assertEquals("1", calc.calculate(input).toString());
     input.clear();
     
     // purely imaginary operands
-    input.add("2i");
-    input.add(exp);
-    input.add("4");
+    input.add("2i" + exp + "4");
     assertEquals("16", calc.calculate(input).toString());
     input.clear();
     
     // complex operands
-    input.add("2+4i");
-    input.add(exp);
-    input.add("2");
+    input.add("2+4i" + exp + "2");
     assertEquals("-12+16i", calc.calculate(input).toString());
     input.clear();
   }
@@ -332,8 +324,8 @@ class CalculatorTest
     assertEquals("3", calc.calculate(input).toString());
     input.clear();
     
-    input.add(exp);
-    input.add("4");
+    input.add(exp + "4");
+    //input.add("4");
     assertEquals("81", calc.calculate(input).toString());
     input.clear();
     
