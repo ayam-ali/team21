@@ -117,7 +117,6 @@ public class RimplexWindow extends JFrame
   {
     // Windows and buttons ---
     historyWindow = new JFrame();
-    historyWindow.addComponentListener(new ComponentHandler());
     historyWindow.setUndecorated(true);
     JPanel cp = (JPanel)historyWindow.getContentPane();
     cp.setLayout(new BorderLayout());
@@ -139,6 +138,7 @@ public class RimplexWindow extends JFrame
     historyOutputArea.setFocusable(true);
     historyWindow.setFocusable(true);
     PopupMenu.addTo(historyOutputArea); // Gives edit, copy, etc
+    this.addComponentListener(new ComponentHandler());
     
     // Visibility
     historyWindow.setVisible(true);
@@ -447,6 +447,17 @@ public class RimplexWindow extends JFrame
 
     this.pack();
   }
+  
+  /**
+   * moveHistoryWindow - updates history window location. 
+   * 
+   * 
+   * @param x - x coordinate. 
+   * @param y - y coordinate.
+   */
+  public static void moveHistoryWindow(int x, int y) {
+    historyWindow.setLocation(x, y);
+  }
 
   /**
    * animateHistory - smoothly animates history.
@@ -456,12 +467,7 @@ public class RimplexWindow extends JFrame
    */
   public static void animateHistory(final boolean isOpening)
   {
-
     int delay = 1; // milliseconds
-    // Dynamic location setting --- OS dependent
-    historyWindow.setLocation((int) expand.getLocationOnScreen().getX() + 75,
-        (int) expand.getLocationOnScreen().getY() + 1); // Set location right on screen
-    
     
     if (isOpening) // OPENING
     {
