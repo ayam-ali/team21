@@ -119,15 +119,6 @@ public class EventHandler extends KeyAdapter implements ActionListener
       clear();
       currentOperand = num.toString();
 
-      if (!currentOperand.startsWith(lPar))
-      {
-        currentOperand = lPar + currentOperand;
-      }
-      if (!currentOperand.endsWith(rPar))
-      {
-        currentOperand = currentOperand + rPar;
-      }
-
       appendToDisplay(currentOperand);
     }
     else if (buttonPressed.equals("\u2190")) // backspace
