@@ -60,7 +60,7 @@ public class RimplexWindow extends JFrame
    * 
    * @param eventHandler
    *          to deal with the buttons
-   * @throws IOException
+   * @throws IOException Thrown if no logoRimplex.png is present.
    */
   private RimplexWindow(final EventHandler eventHandler) throws IOException
   {
@@ -99,7 +99,7 @@ public class RimplexWindow extends JFrame
   }
 
   /**
-   * @throws IOException
+   * @throws IOException Thrown if RimplexWindow was unable to find the logoRimplex.png.
    * @return A RimplexWindow object
    */
   static RimplexWindow createRimplexWindow() throws IOException
@@ -218,7 +218,7 @@ public class RimplexWindow extends JFrame
    * @param height
    *          the height of the button
    * @return the button created
-   * @throws IOException
+   * @throws IOException Thrown if colorChange is unable to find the colorScheme file.
    */
   private JButton addButton(final String name, final int x, final int y, final int width,
       final int height) throws IOException
@@ -298,7 +298,7 @@ public class RimplexWindow extends JFrame
    * 
    * @param button
    *          the button that will change in color.
-   * @throws IOException
+   * @throws IOException Thrown if unable to fine colorScheme file.
    */
   private void changeColor(final JButton button) throws IOException
   {
@@ -366,7 +366,7 @@ public class RimplexWindow extends JFrame
   /**
    * Creates the layout and sets the buttons.
    * 
-   * @throws IOException
+   * @throws IOException Thrown if unable to find colorScheme file or iconRimplex.png.
    */
   private void makeLayout() throws IOException
   {

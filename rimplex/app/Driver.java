@@ -11,11 +11,11 @@ import javax.swing.JFrame;
  * @version 3/30/2021
  */
 public class Driver
-{
+{ 
   /**
    * The main method to run rimplex.
    * 
-   * @param args
+   * @param args command line arguments (not used)
    * @throws IOException 
    */
   public static void main(final String[] args) throws IOException

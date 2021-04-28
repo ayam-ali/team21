@@ -23,7 +23,7 @@ public class Printer implements Printable
 
   /**
    * Printer Constructor.
-   * @param comp
+   * @param comp A component.
    */
   public Printer(final Component comp)
   {
